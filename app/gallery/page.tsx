@@ -1,12 +1,19 @@
-import { FadeInUp, FadeIn, DrawLine, TextReveal } from "@/components/animations/viewport-animations"
-import appConfig from "@/config/app-config"
+import {
+  FadeInUp,
+  FadeIn,
+  DrawLine,
+  TextReveal,
+} from "@/components/animations/viewport-animations";
+import appConfig from "@/config/app-config";
 
 export default function GalleryPage() {
-  const currentLocale = "en"
-  const gallerySection = appConfig[currentLocale].sections.find((section) => section.id === "gallery")
+  const currentLocale = "vi";
+  const gallerySection = appConfig[currentLocale].sections.find(
+    (section) => section.id === "gallery"
+  );
 
   if (!gallerySection) {
-    return <div>Gallery section not found.</div>
+    return <div>Gallery section not found.</div>;
   }
 
   return (
@@ -24,12 +31,13 @@ export default function GalleryPage() {
         </FadeIn>
         <FadeInUp delay={0.8}>
           <p className="font-sans text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto">
-            A curated collection of our work, process, and the spaces where craftsmanship comes to life.
+            A curated collection of our work, process, and the spaces where
+            craftsmanship comes to life.
           </p>
         </FadeInUp>
       </div>
 
       {gallerySection.component}
     </div>
-  )
+  );
 }

@@ -1,34 +1,35 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
-import { useRouter, usePathname } from "next/navigation"
-import appConfig from "@/config/app-config" // Import the new config file
-import "./globals.css"
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import appConfig from "@/config/app-config"; // Import the new config file
+import "./globals.css";
 
 export default function ClientLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // For now, hardcode locale to 'en'. This can be made dynamic later.
-  const currentLocale = "en"
-  const sections = appConfig[currentLocale].sections
+  // For now, hardcode locale to 'vi'. This can be made dynamic later.
+  const currentLocale = "vi";
+  const sections = appConfig[currentLocale].sections;
 
   // Find current section based on pathname
-  const currentSection = sections.find((section) => section.path === pathname) || sections[0]
+  const currentSection =
+    sections.find((section) => section.path === pathname) || sections[0];
 
   const handleSectionClick = (path: string) => {
-    router.push(path)
-    setIsMenuOpen(false)
-  }
+    router.push(path);
+    setIsMenuOpen(false);
+  };
 
   return (
     <div className="h-screen overflow-hidden bg-neutral-50 font-sans">
@@ -43,15 +44,20 @@ export default function ClientLayout({
           className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer"
           onClick={() => handleSectionClick("/")}
         >
-          <h1 className="font-serif text-xl font-light text-neutral-900">ATELIER</h1>
+          <h1 className="font-serif text-xl font-light text-neutral-900">
+            SƠN HỒNG
+          </h1>
         </div>
       </motion.div>
 
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200 p-4">
         <div className="flex items-center justify-between">
-          <h1 className="font-serif text-lg font-light cursor-pointer" onClick={() => handleSectionClick("/")}>
-            ATELIER
+          <h1
+            className="font-serif text-lg font-light cursor-pointer"
+            onClick={() => handleSectionClick("/")}
+          >
+            TRẦM HƯƠNG
           </h1>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -77,7 +83,9 @@ export default function ClientLayout({
                   transition={{ delay: index * 0.1 }}
                   onClick={() => handleSectionClick(section.path)}
                   className={`block w-full text-left font-serif text-lg font-light transition-colors ${
-                    pathname === section.path ? "text-accent-600" : "text-neutral-600 hover:text-neutral-900"
+                    pathname === section.path
+                      ? "text-accent-600"
+                      : "text-neutral-600 hover:text-neutral-900"
                   }`}
                 >
                   {section.title}
@@ -96,7 +104,7 @@ export default function ClientLayout({
             className={`relative cursor-pointer ${section.color} ${section.textColor} overflow-hidden border-r border-neutral-200 last:border-r-0`}
             initial={false}
             animate={{
-              width: pathname === section.path ? "80%" : "4%",
+              width: pathname === section.path ? "84%" : "4%",
             }}
             transition={{
               duration: 0.8,
@@ -115,7 +123,9 @@ export default function ClientLayout({
                   className="absolute inset-0 flex items-center justify-center"
                 >
                   <div className="transform -rotate-90 whitespace-nowrap">
-                    <h2 className="font-serif text-2xl font-light tracking-widest">{section.title}</h2>
+                    <h2 className="font-serif text-2xl font-light tracking-widest">
+                      {section.title}
+                    </h2>
                   </div>
                 </motion.div>
               )}
@@ -135,7 +145,8 @@ export default function ClientLayout({
                     msOverflowStyle: "none",
                   }}
                 >
-                  <div className="p-16 pb-32 pt-24">{section.component}</div> {/* Render component from config */}
+                  <div className="p-16 pb-32 pt-24">{section.component}</div>{" "}
+                  {/* Render component from config */}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -169,7 +180,9 @@ export default function ClientLayout({
                 msOverflowStyle: "none",
               }}
             >
-              <div className={`${currentSection.color} ${currentSection.textColor} p-6 pb-32 min-h-full`}>
+              <div
+                className={`${currentSection.color} ${currentSection.textColor} p-6 pb-32 min-h-full`}
+              >
                 {currentSection.component} {/* Render component from config */}
               </div>
             </motion.div>
@@ -187,5 +200,5 @@ export default function ClientLayout({
         }
       `}</style>
     </div>
-  )
+  );
 }

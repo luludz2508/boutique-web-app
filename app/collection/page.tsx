@@ -6,15 +6,17 @@ import {
   StaggerItem,
   DrawLine,
   TextReveal,
-} from "@/components/animations/viewport-animations"
-import appConfig from "@/config/app-config"
+} from "@/components/animations/viewport-animations";
+import appConfig from "@/config/app-config";
 
 export default function CollectionPage() {
-  const currentLocale = "en"
-  const collectionSection = appConfig[currentLocale].sections.find((section) => section.id === "collection")
+  const currentLocale = "vi";
+  const collectionSection = appConfig[currentLocale].sections.find(
+    (section) => section.id === "collection"
+  );
 
   if (!collectionSection) {
-    return <div>Collection section not found.</div>
+    return <div>Collection section not found.</div>;
   }
 
   return (
@@ -32,26 +34,37 @@ export default function CollectionPage() {
         </FadeIn>
         <FadeInUp delay={0.8}>
           <p className="font-sans text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto">
-            Curated pieces that embody our commitment to excellence, each telling its own story of craftsmanship and
-            care.
+            Curated pieces that embody our commitment to excellence, each
+            telling its own story of craftsmanship and care.
           </p>
         </FadeInUp>
       </div>
 
-      <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" staggerDelay={0.1}>
+      <StaggerContainer
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        staggerDelay={0.1}
+      >
         {collectionSection.items.map((item, index) => (
           <StaggerItem key={index}>
             <div className="border border-neutral-700 bg-neutral-800 hover:border-neutral-600 transition-colors">
               <div className="bg-neutral-700 h-48 border-b border-neutral-600"></div>
               <div className="p-8">
-                <h3 className="font-serif text-2xl font-light mb-3 text-neutral-50">{item.name}</h3>
-                <p className="font-mono text-lg text-primary-400 mb-4">{item.price}</p>
-                <p className="text-neutral-300 leading-relaxed mb-6 font-sans">{item.description}</p>
+                <h3 className="font-serif text-2xl font-light mb-3 text-neutral-50">
+                  {item.name}
+                </h3>
+                <p className="font-mono text-lg text-primary-400 mb-4">
+                  {item.price}
+                </p>
+                <p className="text-neutral-300 leading-relaxed mb-6 font-sans">
+                  {item.description}
+                </p>
                 <div className="space-y-2 mb-8">
                   {item.details.map((detail, idx) => (
                     <div key={idx} className="flex items-center space-x-3">
                       <div className="w-1 h-1 bg-primary-400"></div>
-                      <span className="text-neutral-400 text-sm font-sans">{detail}</span>
+                      <span className="text-neutral-400 text-sm font-sans">
+                        {detail}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -67,10 +80,12 @@ export default function CollectionPage() {
       <SlideInUp>
         <div className="bg-primary-600 -mx-16 px-16 py-20 border-t border-primary-500">
           <div className="text-center">
-            <h2 className="font-serif text-5xl font-light mb-8 text-neutral-900">Bespoke Service</h2>
+            <h2 className="font-serif text-5xl font-light mb-8 text-neutral-900">
+              Bespoke Service
+            </h2>
             <p className="font-sans text-xl text-neutral-800 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Every piece can be customized to your exact specifications. Our artisans work closely with you to bring
-              your vision to life.
+              Every piece can be customized to your exact specifications. Our
+              artisans work closely with you to bring your vision to life.
             </p>
             <FadeInUp delay={0.3}>
               <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-md mx-auto">
@@ -88,5 +103,5 @@ export default function CollectionPage() {
         </div>
       </SlideInUp>
     </div>
-  )
+  );
 }

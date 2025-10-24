@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: ["class"],
@@ -31,7 +31,7 @@ const config: Config = {
           900: "#7f4606",
         },
         neutral: {
-          50: "#fafafa",
+          50: "#F7F5EF", // Ivory Mist
           100: "#f5f5f5",
           200: "#e5e5e5",
           300: "#d4d4d4",
@@ -40,21 +40,33 @@ const config: Config = {
           600: "#525252",
           700: "#404040",
           800: "#262626",
-          900: "#171717",
+          900: "#1C1C1C", // Charcoal Ash
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-          50: "#f8f6f0",
-          100: "#f0ebe0",
-          200: "#e8dcc6",
-          300: "#d4c4a8",
-          400: "#c4a882",
-          500: "#b8956a",
-          600: "#a67c52",
-          700: "#8b6914",
-          800: "#6d5411",
-          900: "#5c470f",
+          50: "#faf7ed",
+          100: "#f4efd9",
+          200: "#e9deb3",
+          300: "#ddc983",
+          400: "#D9B45A", // Imperial Gold (brand color)
+          500: "#d1a84e",
+          600: "#c59342",
+          700: "#a47638",
+          800: "#855f33",
+          900: "#6e4f2b",
+        },
+        brown: {
+          50: "#f6f3f0",
+          100: "#ede7e0",
+          200: "#d9cdc0",
+          300: "#c5b3a0",
+          400: "#a18871",
+          500: "#7d6551",
+          600: "#5E3B1E", // Agarwood Brown (brand color)
+          700: "#4a2f18",
+          800: "#3C2F26", // Forest Umber (brand color)
+          900: "#2d221c",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -104,6 +116,6 @@ const config: Config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
 
-export default config
+export default config;
