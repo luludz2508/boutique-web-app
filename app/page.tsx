@@ -12,6 +12,7 @@ import {
 } from "@/components/animations/viewport-animations";
 import content from "@/config/content";
 import Link from "next/link";
+import VideoPlayer from "@/components/VideoPlayer";
 
 // Export the content component for the accordion layout
 export function HomeContent() {
@@ -171,60 +172,10 @@ export function HomeContent() {
         </FadeInLeft>
         <FadeInRight>
           <div className="relative aspect-[3/4] border border-neutral-300 shadow-xl rounded-lg overflow-hidden">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover"
-              webkit-playsinline="true"
-              x-webkit-airplay="allow"
-              controls={false}
-              onError={(e) => {
-                console.log("Video failed to load, trying fallback");
-                const video = e.target as HTMLVideoElement;
-                const container = video.parentElement;
-                if (container) {
-                  // Try to load local fallback
-                  const fallbackVideo = document.createElement("video");
-                  fallbackVideo.src = "/tramhuong-sonhong/master-video-1.mp4";
-                  fallbackVideo.autoplay = true;
-                  fallbackVideo.loop = true;
-                  fallbackVideo.muted = true;
-                  fallbackVideo.setAttribute("playsinline", "true");
-                  fallbackVideo.setAttribute("webkit-playsinline", "true");
-                  fallbackVideo.className = "w-full h-full object-cover";
-                  fallbackVideo.onerror = () => {
-                    // If local also fails, show static fallback
-                    container.innerHTML = `
-                      <div class="w-full h-full bg-gradient-to-br from-accent-100 to-neutral-100 flex items-center justify-center">
-                        <div class="text-center p-8">
-                          <div class="w-16 h-16 bg-accent-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-neutral-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                          </div>
-                          <h3 class="font-serif text-lg text-neutral-700 mb-2">Trầm Hương Tinh Túy</h3>
-                          <p class="text-sm text-neutral-500">Nghệ thuật truyền thống</p>
-                        </div>
-                      </div>
-                    `;
-                  };
-                  container.appendChild(fallbackVideo);
-                }
-              }}
-            >
-              <source
-                src="/tramhuong-sonhong/master-video-1.mp4"
-                type="video/mp4"
-              />
-              <source
-                src="https://pidgjpxcfuuiorylnjik.supabase.co/storage/v1/object/public/public_assets/master-video-1.mp4"
-                type="video/mp4"
-              />
-              Your browser does not support the video tag.
-            </video>
+            <VideoPlayer
+              src="https://pidgjpxcfuuiorylnjik.supabase.co/storage/v1/object/public/public_assets/master-video-1.mp4"
+              fallbackSrc="/tramhuong-sonhong/master-video-1.mp4"
+            />
           </div>
         </FadeInRight>
       </div>
