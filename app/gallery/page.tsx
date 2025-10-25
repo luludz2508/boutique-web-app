@@ -8,6 +8,7 @@ import {
   SlideInUp,
   ScaleIn,
 } from "@/components/animations/viewport-animations";
+import Image from "next/image";
 
 // Export the content component for the accordion layout
 export function GalleryContent() {
@@ -32,26 +33,78 @@ export function GalleryContent() {
         </FadeInUp>
       </div>
 
-      {/* Gallery Content - Placeholder for now */}
+      {/* Customer & Expo Gallery */}
       <div>
         <FadeInUp>
           <h2 className="font-serif text-4xl font-light mb-12 text-neutral-50">
-            Xưởng Sản Xuất
+            Khách Hàng & Triển Lãm
           </h2>
         </FadeInUp>
         <StaggerContainer
-          className="grid md:grid-cols-3 gap-4"
-          staggerDelay={0.05}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          staggerDelay={0.1}
         >
-          {Array.from({ length: 9 }, (_, i) => (
-            <StaggerItem key={i}>
-              <div className="bg-neutral-800 h-64 border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300">
-                <div className="h-full flex items-center justify-center text-neutral-500 font-sans">
-                  Xưởng {i + 1}
-                </div>
-              </div>
-            </StaggerItem>
-          ))}
+          {/* Customer Images */}
+          <StaggerItem>
+            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
+              <Image
+                src="/tramhuong-sonhong/customers-1.jpg"
+                alt="Khách hàng tại showroom"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </StaggerItem>
+
+          <StaggerItem>
+            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
+              <Image
+                src="/tramhuong-sonhong/customers-2.jpg"
+                alt="Khách hàng tham quan showroom"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </StaggerItem>
+
+          <StaggerItem>
+            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
+              <Image
+                src="/tramhuong-sonhong/customer-3.jpg"
+                alt="Khách hàng tại triển lãm"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </StaggerItem>
+
+          <StaggerItem>
+            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
+              <Image
+                src="/tramhuong-sonhong/customer-4.jpg"
+                alt="Khách hàng tại triển lãm"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </StaggerItem>
+
+          {/* Expo Images */}
+          <StaggerItem>
+            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
+              <Image
+                src="/tramhuong-sonhong/caexpo-1.jpg"
+                alt="Triển lãm CAEXPO"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </StaggerItem>
         </StaggerContainer>
       </div>
 

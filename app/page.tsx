@@ -148,7 +148,7 @@ export function HomeContent() {
             <p>
               Từ năm 1985, chúng tôi đã âm thầm vun đắp nghề trầm hương tại
               trung tâm thành phố. Khởi nguồn từ một xưởng nhỏ, nay đã trở thành
-              nơi lưu giữ tinh hoa nghệ thuật—nơi kỹ thuật truyền thống gặp gỡ
+              nơi lưu giữ tinh hoa nghệ thuật, nơi kỹ thuật truyền thống gặp gỡ
               tầm nhìn đương đại.
             </p>
             <p>
@@ -164,16 +164,26 @@ export function HomeContent() {
                 câu chuyện chờ được kể."
               </p>
               <p className="text-sm text-accent-600 mt-3 font-sans font-medium">
-                — Nghệ nhân trưởng, 1985
+                Nguyễn Văn Sơn - Nghệ nhân trưởng, 1995
               </p>
             </div>
           </ScaleIn>
         </FadeInLeft>
         <FadeInRight>
-          <div className="bg-gradient-to-br from-neutral-200 to-neutral-300 h-96 border border-neutral-300 shadow-xl flex items-center justify-center rounded-lg overflow-hidden">
-            <p className="text-neutral-500 font-sans text-lg">
-              Hình ảnh xưởng chế tác
-            </p>
+          <div className="relative aspect-[3/4] border border-neutral-300 shadow-xl rounded-lg overflow-hidden">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source
+                src="/tramhuong-sonhong/master-video-1.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </FadeInRight>
       </div>
