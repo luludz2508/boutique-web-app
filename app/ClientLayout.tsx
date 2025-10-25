@@ -101,6 +101,7 @@ export default function ClientLayout({
               width={40}
               height={40}
               className="object-contain"
+              priority
             />
           </div>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">

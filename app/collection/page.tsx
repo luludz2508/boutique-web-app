@@ -10,18 +10,13 @@ import {
 import content from "@/config/content";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, ShoppingBag } from "lucide-react";
-import { getAllProducts } from "@/lib/db/products";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 // Export the content component for the accordion layout
-export async function CollectionContent() {
+export function CollectionContent() {
   const currentLocale = "vi";
   const pageContent = content[currentLocale].collection;
-
-  // Fetch featured products for the collection showcase
-  const allProducts = await getAllProducts();
-  const featuredProducts = allProducts.slice(0, 6); // Show first 6 products
 
   return (
     <div className="space-y-20">
@@ -49,123 +44,75 @@ export async function CollectionContent() {
           <Button
             asChild
             size="lg"
-            className="gap-2 bg-primary-500 hover:bg-primary-600 text-white font-semibold shadow-lg"
+            className="bg-primary-600 hover:bg-primary-700 text-neutral-50 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <Link href="/products">
-              <ShoppingBag className="h-5 w-5" />
-              Xem Tất Cả Sản Phẩm
+            <Link href="/products" className="flex items-center gap-3">
+              <span>Xem Tất Cả Sản Phẩm</span>
               <ArrowRight className="h-5 w-5" />
             </Link>
           </Button>
         </div>
       </div>
 
-      <StaggerContainer
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        staggerDelay={0.1}
-      >
-        {featuredProducts.map((product, index) => {
-          const primaryImage =
-            product.images?.find((img) => img.is_primary) ||
-            product.images?.[0];
-          const minPrice =
-            product.variants?.length > 0
-              ? Math.min(...product.variants.map((v) => v.price))
-              : 0;
-
-          return (
-            <StaggerItem key={product.id}>
-              <div className="border border-neutral-700 bg-neutral-800 hover:border-neutral-600 transition-colors">
-                <div className="relative h-48 border-b border-neutral-600 overflow-hidden">
-                  {primaryImage ? (
+      {/* Collection Showcase */}
+      <div className="mt-20">
+        <FadeInUp>
+          <h2 className="font-serif text-4xl font-light mb-12 text-center text-neutral-50">
+            Bộ Sưu Tập
+          </h2>
+        </FadeInUp>
+        <StaggerContainer className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Trầm Hương Cao Cấp",
+              description:
+                "Những tác phẩm trầm hương được chọn lọc kỹ lưỡng từ nguồn nguyên liệu tốt nhất",
+              image: "/tramhuong-sonhong/gallery-1.jpg",
+            },
+            {
+              title: "Nghệ Thuật Truyền Thống",
+              description:
+                "Kỹ thuật chế tác được truyền từ đời này sang đời khác, giữ gìn tinh hoa văn hóa",
+              image: "/tramhuong-sonhong/gallery-2.jpg",
+            },
+            {
+              title: "Tinh Túy Đất Trời",
+              description:
+                "Mỗi sản phẩm đều mang trong mình hương thơm tự nhiên và giá trị tinh thần sâu sắc",
+              image: "/tramhuong-sonhong/gallery-3.jpg",
+            },
+          ].map((item, index) => (
+            <StaggerItem key={index}>
+              <Link href="/products">
+                <div className="group bg-neutral-800 border border-neutral-700 hover:border-neutral-600 transition-all duration-300 hover:shadow-xl rounded-lg overflow-hidden cursor-pointer">
+                  <div className="aspect-square relative overflow-hidden">
                     <Image
-                      src={primaryImage.url}
-                      alt={primaryImage.alt_text_vi || product.name_vi}
+                      src={item.image}
+                      alt={item.title}
                       fill
-                      className="object-cover hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-neutral-500">
-                      Không có hình ảnh
-                    </div>
-                  )}
-                </div>
-                <div className="p-8">
-                  <h3 className="font-serif text-2xl font-light mb-3 text-neutral-50">
-                    {product.name_vi}
-                  </h3>
-                  <p className="font-mono text-lg text-primary-400 mb-4">
-                    {minPrice > 0
-                      ? `${minPrice.toLocaleString("vi-VN")} ₫`
-                      : "Liên hệ"}
-                  </p>
-                  <p className="text-neutral-300 leading-relaxed mb-6 font-sans">
-                    {product.excerpt_vi ||
-                      "Sản phẩm trầm hương cao cấp được chế tác thủ công."}
-                  </p>
-                  <div className="space-y-2 mb-8">
-                    {product.product_type && (
-                      <div className="flex items-center space-x-3">
-                        <div className="w-1 h-1 bg-primary-400"></div>
-                        <span className="text-neutral-400 text-sm font-sans">
-                          Loại: {product.product_type}
-                        </span>
-                      </div>
-                    )}
-                    {product.brand && (
-                      <div className="flex items-center space-x-3">
-                        <div className="w-1 h-1 bg-primary-400"></div>
-                        <span className="text-neutral-400 text-sm font-sans">
-                          Thương hiệu: {product.brand}
-                        </span>
-                      </div>
-                    )}
-                    {product.variants && product.variants.length > 1 && (
-                      <div className="flex items-center space-x-3">
-                        <div className="w-1 h-1 bg-primary-400"></div>
-                        <span className="text-neutral-400 text-sm font-sans">
-                          {product.variants.length} phiên bản
-                        </span>
-                      </div>
-                    )}
                   </div>
-                  <Link href={`/products/${product.slug}`}>
-                    <button className="w-full bg-primary-600 hover:bg-primary-700 text-neutral-900 font-medium py-3 transition-colors font-sans">
-                      Xem Chi Tiết
-                    </button>
-                  </Link>
+                  <div className="p-6">
+                    <h3 className="font-serif text-xl font-light mb-2 text-neutral-100 group-hover:text-primary-300 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-neutral-400 text-sm mb-4 line-clamp-2">
+                      {item.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-lg font-semibold text-primary-400">
+                        Xem Sản Phẩm
+                      </span>
+                      <ArrowRight className="w-5 h-5 text-neutral-400 group-hover:text-primary-300 transition-colors" />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </StaggerItem>
-          );
-        })}
-      </StaggerContainer>
-
-      <SlideInUp>
-        <div className="bg-primary-600 -mx-16 px-16 py-20 border-t border-primary-500">
-          <div className="text-center">
-            <h2 className="font-serif text-5xl font-light mb-8 text-neutral-900">
-              {pageContent.bespokeTitle}
-            </h2>
-            <p className="font-sans text-xl text-neutral-800 mb-12 max-w-2xl mx-auto leading-relaxed">
-              {pageContent.bespokeDescription}
-            </p>
-            <FadeInUp delay={0.3}>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder={pageContent.bespokeEmailPlaceholder}
-                  className="flex-1 px-6 py-4 bg-neutral-50 text-neutral-900 border border-neutral-300 focus:outline-none focus:border-neutral-500 font-sans"
-                />
-                <button className="bg-neutral-900 text-neutral-50 font-medium px-8 py-4 hover:bg-neutral-800 transition-colors font-sans">
-                  {pageContent.bespokeButtonText}
-                </button>
-              </div>
-            </FadeInUp>
-          </div>
-        </div>
-      </SlideInUp>
+          ))}
+        </StaggerContainer>
+      </div>
     </div>
   );
 }
