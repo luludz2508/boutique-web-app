@@ -6,9 +6,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
-import appConfig from "@/config/app-config"; // Import the new config file
+import Image from "next/image";
+import content from "@/config/content";
 import "./globals.css";
 
+// Import page content components (only for accordion sections)
+import { HomeContent } from "./page";
+import { CollectionContent } from "./collection/page";
+import { ServicesContent } from "./services/page";
+import { GalleryContent } from "./gallery/page";
+import { AtelierContent } from "./atelier/page";
+
+// Accordion layout with clean content architecture
 export default function ClientLayout({
   children,
 }: {
@@ -20,17 +29,39 @@ export default function ClientLayout({
 
   // For now, hardcode locale to 'vi'. This can be made dynamic later.
   const currentLocale = "vi";
-  const sections = appConfig[currentLocale].sections;
+  const navItems = content[currentLocale].navigation as any[];
 
-  // Find current section based on pathname
-  const currentSection =
-    sections.find((section) => section.path === pathname) || sections[0];
+  // Find current nav item based on pathname
+  const currentNav =
+    navItems.find((item) => item.path === pathname) || navItems[0];
 
   const handleSectionClick = (path: string) => {
     router.push(path);
     setIsMenuOpen(false);
   };
 
+  // Map sections to their components (only accordion sections)
+  const sectionComponents: Record<string, React.ReactNode> = {
+    "/": <HomeContent />,
+    "/collection": <CollectionContent />,
+    "/services": <ServicesContent />,
+    "/gallery": <GalleryContent />,
+    "/atelier": <AtelierContent />,
+  };
+
+  // Check if current path is an accordion section
+  const isAccordionPath = navItems.some((item) => item.path === pathname);
+
+  // If not an accordion path (e.g., /products), render as a regular page
+  if (!isAccordionPath) {
+    return (
+      <div className="min-h-screen bg-neutral-900 text-neutral-50">
+        {children}
+      </div>
+    );
+  }
+
+  // Render accordion layout for main sections
   return (
     <div className="h-screen overflow-hidden bg-neutral-50 font-sans">
       {/* Fixed Logo */}
@@ -41,9 +72,16 @@ export default function ClientLayout({
         transition={{ duration: 0.8, delay: 0.5 }}
       >
         <div
-          className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer"
+          className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer flex items-center gap-3"
           onClick={() => handleSectionClick("/")}
         >
+          <Image
+            src="/logo.png"
+            alt="Sơn Hồng Logo"
+            width={40}
+            height={40}
+            className="object-contain scale-125"
+          />
           <h1 className="font-serif text-xl font-light text-neutral-900">
             SƠN HỒNG
           </h1>
@@ -53,12 +91,19 @@ export default function ClientLayout({
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200 p-4">
         <div className="flex items-center justify-between">
-          <h1
-            className="font-serif text-lg font-light cursor-pointer"
+          <div
+            className="flex items-center gap-2 cursor-pointer"
             onClick={() => handleSectionClick("/")}
           >
-            TRẦM HƯƠNG
-          </h1>
+            <Image
+              src="/logo.png"
+              alt="Sơn Hồng Logo"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
+            <h1 className="font-serif text-lg font-light">TRẦM HƯƠNG</h1>
+          </div>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -75,20 +120,20 @@ export default function ClientLayout({
             className="md:hidden fixed top-16 left-0 right-0 z-30 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200"
           >
             <div className="p-6 space-y-6">
-              {sections.map((section, index) => (
+              {navItems.map((item, index) => (
                 <motion.button
-                  key={section.id}
+                  key={item.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  onClick={() => handleSectionClick(section.path)}
+                  onClick={() => handleSectionClick(item.path)}
                   className={`block w-full text-left font-serif text-lg font-light transition-colors ${
-                    pathname === section.path
+                    pathname === item.path
                       ? "text-accent-600"
                       : "text-neutral-600 hover:text-neutral-900"
                   }`}
                 >
-                  {section.title}
+                  {item.title}
                 </motion.button>
               ))}
             </div>
@@ -96,12 +141,16 @@ export default function ClientLayout({
         )}
       </AnimatePresence>
 
-      {/* Desktop Layout */}
+      {/* Desktop Accordion Layout */}
       <div className="hidden md:flex h-full">
-        {sections.map((section) => (
+        {navItems.map((section) => (
           <motion.div
             key={section.id}
-            className={`relative cursor-pointer ${section.color} ${section.textColor} overflow-hidden border-r border-neutral-200 last:border-r-0`}
+            className={`relative ${
+              pathname !== section.path ? "cursor-pointer" : ""
+            } ${section.color} ${
+              section.textColor
+            } overflow-hidden border-r border-neutral-200 last:border-r-0`}
             initial={false}
             animate={{
               width: pathname === section.path ? "84%" : "4%",
@@ -110,7 +159,11 @@ export default function ClientLayout({
               duration: 0.8,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            onClick={() => handleSectionClick(section.path)}
+            onClick={
+              pathname !== section.path
+                ? () => handleSectionClick(section.path)
+                : undefined
+            }
           >
             {/* Collapsed State - Vertical Title */}
             <AnimatePresence>
@@ -145,8 +198,9 @@ export default function ClientLayout({
                     msOverflowStyle: "none",
                   }}
                 >
-                  <div className="p-16 pb-32 pt-24">{section.component}</div>{" "}
-                  {/* Render component from config */}
+                  <div className="p-16 pb-32 pt-24">
+                    {sectionComponents[section.path]}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -167,9 +221,9 @@ export default function ClientLayout({
       {/* Mobile Content */}
       <div className="md:hidden pt-16">
         <AnimatePresence mode="wait">
-          {currentSection && (
+          {currentNav && (
             <motion.div
-              key={currentSection.id}
+              key={currentNav.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -181,9 +235,9 @@ export default function ClientLayout({
               }}
             >
               <div
-                className={`${currentSection.color} ${currentSection.textColor} p-6 pb-32 min-h-full`}
+                className={`${currentNav.color} ${currentNav.textColor} p-6 pb-32 min-h-full`}
               >
-                {currentSection.component} {/* Render component from config */}
+                {sectionComponents[currentNav.path]}
               </div>
             </motion.div>
           )}

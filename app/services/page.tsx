@@ -8,26 +8,23 @@ import {
   DrawLine,
   TextReveal,
 } from "@/components/animations/viewport-animations";
-import appConfig from "@/config/app-config";
+import content from "@/config/content";
 
-export default function ServicesPage() {
+// Export the content component for the accordion layout
+export function ServicesContent() {
   const currentLocale = "vi";
-  const servicesSection = appConfig[currentLocale].sections.find(
-    (section) => section.id === "services"
-  );
-
-  if (!servicesSection) {
-    return <div>Services section not found.</div>;
-  }
+  const pageContent = content[currentLocale].services;
 
   return (
     <div className="space-y-20">
       <div className="pt-12 text-center">
         <TextReveal>
           <h1 className="font-serif text-8xl font-light mb-8 tracking-tight leading-none text-neutral-900">
-            Our
+            {pageContent.title}
             <br />
-            <span className="font-normal text-accent-700">Services</span>
+            <span className="font-normal text-accent-700">
+              {pageContent.subtitle}
+            </span>
           </h1>
         </TextReveal>
         <FadeIn delay={0.5}>
@@ -35,8 +32,7 @@ export default function ServicesPage() {
         </FadeIn>
         <FadeInUp delay={0.8}>
           <p className="font-sans text-xl text-neutral-600 leading-relaxed max-w-2xl mx-auto">
-            Beyond creation, we offer comprehensive services to ensure your
-            pieces remain treasured for generations.
+            {pageContent.description}
           </p>
         </FadeInUp>
       </div>
@@ -45,7 +41,7 @@ export default function ServicesPage() {
         className="grid md:grid-cols-2 gap-16"
         staggerDelay={0.2}
       >
-        {servicesSection.services.map((service, index) => (
+        {pageContent.services?.map((service, index) => (
           <StaggerItem key={index}>
             <div className="bg-neutral-50 border border-neutral-200 p-10 hover:border-neutral-300 transition-colors">
               <h3 className="font-serif text-3xl font-light mb-4 text-neutral-900">
@@ -73,7 +69,7 @@ export default function ServicesPage() {
                 ))}
               </div>
               <button className="w-full bg-neutral-900 hover:bg-neutral-800 text-neutral-50 font-medium py-4 transition-colors font-sans">
-                Learn More
+                Tìm Hiểu Thêm
               </button>
             </div>
           </StaggerItem>
@@ -84,17 +80,17 @@ export default function ServicesPage() {
         <div className="bg-neutral-900 -mx-16 px-16 py-20 border-t border-neutral-800">
           <div className="text-center">
             <h2 className="font-serif text-5xl font-light mb-8 text-neutral-50">
-              Service Packages
+              Gói Dịch Vụ
             </h2>
             <p className="font-sans text-xl text-neutral-300 mb-16 max-w-2xl mx-auto leading-relaxed">
-              Comprehensive care packages designed to protect your investment
-              and maintain its beauty over time.
+              Các gói chăm sóc toàn diện được thiết kế để bảo vệ khoản đầu tư
+              của bạn và duy trì vẻ đẹp theo thời gian.
             </p>
             <StaggerContainer
               className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
               staggerDelay={0.15}
             >
-              {servicesSection.packages.map((pkg, index) => (
+              {pageContent.packages?.map((pkg, index) => (
                 <StaggerItem key={index}>
                   <div
                     className={`p-8 border-2 hover:scale-105 transition-all duration-300 ${
@@ -141,3 +137,6 @@ export default function ServicesPage() {
     </div>
   );
 }
+
+// Default export for route access
+export default ServicesContent;

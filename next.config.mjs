@@ -8,7 +8,19 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "product.hstatic.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "file.hstatic.net",
+        pathname: "/**",
+      },
+    ],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
