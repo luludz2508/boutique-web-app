@@ -181,15 +181,30 @@ export function HomeContent() {
               webkit-playsinline="true"
               x-webkit-airplay="allow"
               controls={false}
+              onError={(e) => {
+                console.log("Video failed to load, showing fallback image");
+                const video = e.target as HTMLVideoElement;
+                const container = video.parentElement;
+                if (container) {
+                  container.innerHTML = `
+                    <div class="w-full h-full bg-gradient-to-br from-accent-100 to-neutral-100 flex items-center justify-center">
+                      <div class="text-center p-8">
+                        <div class="w-16 h-16 bg-accent-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                          <svg class="w-8 h-8 text-neutral-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </div>
+                        <h3 class="font-serif text-lg text-neutral-700 mb-2">Trầm Hương Tinh Túy</h3>
+                        <p class="text-sm text-neutral-500">Nghệ thuật truyền thống</p>
+                      </div>
+                    </div>
+                  `;
+                }
+              }}
             >
               <source
-                src="/tramhuong-sonhong/master-video-1.mp4"
+                src="https://pidgjpxcfuuiorylnjik.supabase.co/storage/v1/object/sign/public_assets/master-video-1.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kZWMwNDYyZi0zZmJkLTRhNWQtOWZiZS1mYWM1MDE3YjNlZTgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwdWJsaWNfYXNzZXRzL21hc3Rlci12aWRlby0xLm1wNCIsImlhdCI6MTc2MTM5MzQzMywiZXhwIjoxOTE5MDczNDMzfQ.Vvdo261eJEnlKJWyZ7Ak2I2ONUxFb1q7E3Rm3DlbaS0"
                 type="video/mp4"
-              />
-              <source
-                src="/tramhuong-sonhong/master-video-1.mp4"
-                type="video/mp4"
-                media="(max-width: 768px)"
               />
               Your browser does not support the video tag.
             </video>
