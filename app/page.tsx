@@ -176,7 +176,9 @@ export function HomeContent() {
               loop
               muted
               playsInline
+              preload="auto"
               className="w-full h-full object-cover"
+              webkit-playsinline="true"
             >
               <source
                 src="/tramhuong-sonhong/master-video-1.mp4"

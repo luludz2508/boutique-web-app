@@ -63,7 +63,7 @@ export default function ClientLayout({
 
   // Render accordion layout for main sections
   return (
-    <div className="h-screen overflow-hidden bg-neutral-50 font-sans">
+    <div className="h-screen overflow-hidden bg-neutral-50 font-sans w-full max-w-screen">
       {/* Fixed Logo - Hidden on Mobile */}
       <motion.div
         className="hidden md:block fixed top-8 left-8 z-50"
@@ -89,7 +89,7 @@ export default function ClientLayout({
       </motion.div>
 
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200 p-4">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200 p-4 w-full max-w-screen">
         <div className="flex items-center justify-between">
           <div
             className="cursor-pointer"
@@ -218,7 +218,7 @@ export default function ClientLayout({
       </div>
 
       {/* Mobile Content */}
-      <div className="md:hidden pt-16">
+      <div className="md:hidden pt-16 overflow-x-hidden w-full max-w-screen">
         <AnimatePresence mode="wait">
           {currentNav && (
             <motion.div
@@ -227,7 +227,7 @@ export default function ClientLayout({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="h-screen overflow-y-auto scrollbar-hide"
+              className="h-screen overflow-y-none scrollbar-hide"
               style={{
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
