@@ -1,0 +1,67 @@
+{
+  "name": "Trầm Hương Sơn Hồng - Tinh Túy Của Đất Trời",
+  "short_name": "Trầm Hương Sơn Hồng",
+  "description": "Tinh túy của đất trời trong từng thớ gỗ trầm. Nghệ thuật trầm hương cao cấp với truyền thống và tâm huyết nghệ nhân.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f4",
+  "theme_color": "#a3a3a3",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "vi",
+  "categories": ["shopping", "lifestyle", "business"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/tramhuong-sonhong/gallery-1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/tramhuong-sonhong/gallery-2.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sản Phẩm",
+      "short_name": "Sản Phẩm",
+      "description": "Xem bộ sưu tập trầm hương",
+      "url": "/products",
+      "icons": [
+        {
+          "src": "/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Collection",
+      "short_name": "Collection",
+      "description": "Khám phá bộ sưu tập",
+      "url": "/collection",
+      "icons": [
+        {
+          "src": "/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

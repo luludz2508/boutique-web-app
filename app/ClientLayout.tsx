@@ -1,67 +1,54 @@
-"use client";
+'use client';
 
-import type React from "react";
+import React, { Fragment, cloneElement, isValidElement, useMemo, useState } from 'react';
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
-import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
-import content from "@/config/content";
-import "./globals.css";
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 
-// Import page content components (only for accordion sections)
-import { HomeContent } from "./page";
-import { CollectionContent } from "./collection/page";
-import { ServicesContent } from "./services/page";
-import { GalleryContent } from "./gallery/page";
-import { AtelierContent } from "./atelier/page";
+import content, { type NavItem } from '@/config/content';
 
-// Accordion layout with clean content architecture
-export default function ClientLayout({
-  children,
-}: {
+interface ClientLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function ClientLayout({ children }: ClientLayoutProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname ?? '/';
 
-  // For now, hardcode locale to 'vi'. This can be made dynamic later.
-  const currentLocale = "vi";
-  const navItems = content[currentLocale].navigation as any[];
+  // Locale can be made dynamic later.
+  const currentLocale = 'vi';
 
-  // Find current nav item based on pathname
-  const currentNav =
-    navItems.find((item) => item.path === pathname) || navItems[0];
+  const navItems = useMemo<NavItem[]>(() => content[currentLocale].navigation, [currentLocale]);
+
+  const isAccordionPath = navItems.some((item) => item.path === pathname);
+  const currentNav = navItems.find((item) => item.path === pathname) ?? navItems[0];
+
+  const renderChildren = (key: string) => {
+    if (isValidElement(children)) {
+      return cloneElement(children, { key });
+    }
+
+    return <Fragment key={key}>{children}</Fragment>;
+  };
 
   const handleSectionClick = (path: string) => {
+    if (pathname === path) {
+      setIsMenuOpen(false);
+      return;
+    }
+
     router.push(path);
     setIsMenuOpen(false);
   };
 
-  // Map sections to their components (only accordion sections)
-  const sectionComponents: Record<string, React.ReactNode> = {
-    "/": <HomeContent />,
-    "/collection": <CollectionContent />,
-    "/services": <ServicesContent />,
-    "/gallery": <GalleryContent />,
-    "/atelier": <AtelierContent />,
-  };
-
-  // Check if current path is an accordion section
-  const isAccordionPath = navItems.some((item) => item.path === pathname);
-
-  // If not an accordion path (e.g., /products), render as a regular page
   if (!isAccordionPath) {
-    return (
-      <div className="min-h-screen bg-neutral-900 text-neutral-50">
-        {children}
-      </div>
-    );
+    return <div className="min-h-screen bg-neutral-900 text-neutral-50 w-full">{children}</div>;
   }
 
-  // Render accordion layout for main sections
   return (
     <div className="h-screen overflow-hidden bg-neutral-50 font-sans w-full max-w-screen">
       {/* Fixed Logo - Hidden on Mobile */}
@@ -72,39 +59,39 @@ export default function ClientLayout({
         transition={{ duration: 0.8, delay: 0.5 }}
       >
         <div
-          className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer flex items-center gap-3 shadow-lg"
-          onClick={() => handleSectionClick("/")}
+          className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer flex items-center gap-3"
+          onClick={() => handleSectionClick('/')}
         >
           <Image
             src="/logo.png"
-            alt="Sơn Hồng Logo"
+            alt="Son Hong Logo"
             width={40}
             height={40}
             className="object-contain"
           />
-          <h1 className="font-serif text-xl font-light text-neutral-900">
-            SƠN HỒNG
-          </h1>
+          <h1 className="font-serif text-xl font-light text-neutral-900">SON HONG</h1>
         </div>
       </motion.div>
 
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200 p-4 w-full max-w-screen">
         <div className="flex items-center justify-between">
-          <div
-            className="cursor-pointer"
-            onClick={() => handleSectionClick("/")}
-          >
+          <button type="button" className="cursor-pointer" onClick={() => handleSectionClick('/')}>
             <Image
               src="/logo.png"
-              alt="Sơn Hồng Logo"
+              alt="Son Hong Logo"
               width={40}
               height={40}
               className="object-contain"
               priority
             />
-          </div>
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="p-2"
+            aria-label={isMenuOpen ? 'Close navigation' : 'Open navigation'}
+          >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -114,133 +101,144 @@ export default function ClientLayout({
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            className="md:hidden fixed top-16 left-0 right-0 z-30 bg-neutral-50 border-b border-neutral-200 shadow-lg"
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden fixed top-16 left-0 right-0 z-30 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
           >
-            <div className="p-6 space-y-6">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => handleSectionClick(item.path)}
-                  className={`block w-full text-left font-serif text-lg font-light transition-colors ${
-                    pathname === item.path
-                      ? "text-accent-600"
-                      : "text-neutral-600 hover:text-neutral-900"
-                  }`}
-                >
-                  {item.title}
-                </motion.button>
+            <ul className="flex flex-col divide-y divide-neutral-200">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <button
+                    type="button"
+                    onClick={() => handleSectionClick(item.path)}
+                    className={`w-full text-left px-6 py-4 ${item.color ?? ''} ${item.textColor ?? ''}`}
+                  >
+                    <span className="font-serif text-lg tracking-wide uppercase">{item.title}</span>
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Desktop Accordion Layout */}
       <div className="hidden md:flex h-full">
-        {navItems.map((section) => (
-          <motion.div
-            key={section.id}
-            className={`relative ${
-              pathname !== section.path ? "cursor-pointer" : ""
-            } ${section.color} ${
-              section.textColor
-            } overflow-hidden border-r border-neutral-200 last:border-r-0`}
-            initial={false}
-            animate={{
-              width: pathname === section.path ? "84%" : "4%",
-            }}
-            transition={{
-              duration: 0.8,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-            onClick={
-              pathname !== section.path
-                ? () => handleSectionClick(section.path)
-                : undefined
-            }
-          >
-            {/* Collapsed State - Vertical Title */}
-            <AnimatePresence>
-              {pathname !== section.path && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute inset-0 flex items-center justify-center"
-                >
-                  <div className="transform -rotate-90 whitespace-nowrap">
-                    <h2 className="font-serif text-2xl font-light tracking-widest">
-                      {section.title}
-                    </h2>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+        {navItems.map((section) => {
+          const isActive = pathname === section.path;
 
-            {/* Expanded State - Page Content */}
-            <AnimatePresence>
-              {pathname === section.path && (
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 50 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="absolute inset-0 overflow-y-auto scrollbar-hide"
-                  style={{
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none",
-                  }}
-                >
-                  <div className="p-16 pb-32 pt-24">
-                    {sectionComponents[section.path]}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+          return (
+            <motion.div
+              key={section.id}
+              className={`relative ${!isActive ? 'cursor-pointer' : ''} ${section.color ?? ''} ${
+                section.textColor ?? ''
+              } overflow-hidden`}
+              style={{
+                backgroundColor: section.color?.includes('bg-neutral-50')
+                  ? '#F7F5EF'
+                  : section.color?.includes('bg-brown-600')
+                    ? '#5E3B1E'
+                    : section.color?.includes('bg-accent-400')
+                      ? '#D9B45A'
+                      : section.color?.includes('bg-brown-800')
+                        ? '#3C2F26'
+                        : section.color?.includes('bg-neutral-100')
+                          ? '#F7F5EF'
+                          : undefined,
+                color: section.textColor?.includes('text-neutral-900')
+                  ? '#1C1C1C'
+                  : section.textColor?.includes('text-accent-400')
+                    ? '#D9B45A'
+                    : undefined,
+              }}
+              initial={false}
+              animate={{
+                width: isActive ? '84%' : '4%',
+              }}
+              transition={{
+                duration: 0.8,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+              onClick={!isActive ? () => handleSectionClick(section.path) : undefined}
+            >
+              {/* Collapsed State - Vertical Title */}
+              <AnimatePresence>
+                {!isActive && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <div className="transform -rotate-90 whitespace-nowrap">
+                      <h2 className="font-serif text-2xl font-light tracking-widest">
+                        {section.title}
+                      </h2>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-            {/* Hover Effect for Collapsed Sections */}
-            {pathname !== section.path && (
+              {/* Expanded State - Page Content */}
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="absolute inset-0 overflow-y-auto scrollbar-hide"
+                    style={{
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none',
+                    }}
+                  >
+                    <div className="p-16 pb-32 pt-24">
+                      {renderChildren(`desktop-${section.path}`)}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Hover Effect for Collapsed Sections */}
               <motion.div
                 className="absolute inset-0 bg-neutral-900/5"
                 initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
+                whileHover={{ opacity: !isActive ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
+                style={{
+                  pointerEvents: !isActive ? 'auto' : 'none',
+                }}
               />
-            )}
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Mobile Content */}
       <div className="md:hidden pt-16 overflow-x-hidden w-full max-w-screen">
         <AnimatePresence mode="wait">
-          {currentNav && (
-            <motion.div
-              key={currentNav.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="h-screen overflow-y-none scrollbar-hide"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
+          <motion.div
+            key={currentNav.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="min-h-screen overflow-y-auto scrollbar-hide"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            <div
+              className={`${currentNav.color ?? ''} ${currentNav.textColor ?? ''} p-6 pb-32 min-h-full`}
             >
-              <div
-                className={`${currentNav.color} ${currentNav.textColor} p-6 pb-32 min-h-full`}
-              >
-                {sectionComponents[currentNav.path]}
-              </div>
-            </motion.div>
-          )}
+              {renderChildren(`mobile-${currentNav.path}`)}
+            </div>
+          </motion.div>
         </AnimatePresence>
       </div>
 

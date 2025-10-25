@@ -73,7 +73,7 @@ export const supabaseAdmin = supabaseServiceRoleKey
 
 // Type definitions for your database
 // Update these as your schema evolves
-export type Database = {
+export interface Database {
   public: {
     Tables: {
       products: {
@@ -196,7 +196,7 @@ export type Database = {
       inventory_policy: "deny" | "continue";
     };
   };
-};
+}
 
 // Typed Supabase client
 export type TypedSupabaseClient = ReturnType<typeof createClient<Database>>;

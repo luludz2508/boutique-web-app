@@ -201,7 +201,7 @@ export async function searchProducts(keyword: string) {
 /**
  * Get featured products
  */
-export async function getFeaturedProducts(limit: number = 10) {
+export async function getFeaturedProducts(limit = 10) {
   const { data, error } = await supabase
     .from("products")
     .select(

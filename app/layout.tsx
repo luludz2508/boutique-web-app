@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   manifest: "/manifest.json",
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "apple-mobile-web-app-title": "Trầm Hương Sơn Hồng",
+  },
 };
 
 export default function RootLayout({
@@ -49,8 +54,9 @@ export default function RootLayout({
     <html
       lang="vi"
       className={`${cormorantGaramond.variable} ${sourceSans3.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
     >
-      <body>
+      <body suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

@@ -136,9 +136,17 @@ See [Brand Guidelines](docs/brand-guidelines.md) for details.
 | `pnpm dev`            | Start development server      |
 | `pnpm build`          | Build for production          |
 | `pnpm start`          | Start production server       |
-| `pnpm lint`           | Run ESLint                    |
+| `pnpm lint`           | Run ESLint via Next.js        |
+| `pnpm lint:check`     | Run ESLint directly (CI safe) |
+| `pnpm lint:fix`       | Fix lint issues where possible|
+| `pnpm format`         | Format files with Prettier    |
+| `pnpm format:check`   | Verify formatting (CI)        |
 | `pnpm setup:env`      | Interactive environment setup |
 | `pnpm import:haravan` | Import Haravan products       |
+
+### Linting & Formatting
+
+After pulling these changes run `pnpm install` so Prettier and the updated ESLint stack are available locally. Use `pnpm lint:check` before commits to surface hydration-prone patterns (async client components, unsafe DOM mutations, missing hook deps) and `pnpm format:check` in CI to keep diffs consistent.
 
 ## 🔐 Environment Variables
 

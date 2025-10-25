@@ -1,15 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertCircle } from 'lucide-react';
 
 export default function Error({
   error,
@@ -19,7 +13,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Products page error:", error);
+    console.error('Products page error:', error);
   }, [error]);
 
   return (
@@ -38,7 +32,7 @@ export default function Error({
           <CardContent className="space-y-4">
             <div className="p-4 bg-neutral-700 rounded-lg">
               <p className="text-sm font-mono text-neutral-300">
-                {error.message || "Lỗi không xác định"}
+                {error.message || 'Lỗi không xác định'}
               </p>
             </div>
 
@@ -46,7 +40,11 @@ export default function Error({
               <Button onClick={reset} className="bg-primary-600 hover:bg-primary-700 text-white">
                 Thử lại
               </Button>
-              <Button variant="outline" asChild className="bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700">
+              <Button
+                variant="outline"
+                asChild
+                className="bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700"
+              >
                 <a href="/test-db">Kiểm tra kết nối cơ sở dữ liệu</a>
               </Button>
             </div>
@@ -55,12 +53,13 @@ export default function Error({
               <p className="font-semibold mb-2 text-neutral-200">Các bước khắc phục:</p>
               <ol className="list-decimal list-inside space-y-1">
                 <li>
-                  Kiểm tra file{" "}
-                  <code className="bg-neutral-700 px-1 rounded text-neutral-200">.env.local</code> có tồn tại
+                  Kiểm tra file{' '}
+                  <code className="bg-neutral-700 px-1 rounded text-neutral-200">.env.local</code>{' '}
+                  có tồn tại
                 </li>
                 <li>Xác minh thông tin Supabase chính xác</li>
                 <li>
-                  Kiểm tra kết nối tại{" "}
+                  Kiểm tra kết nối tại{' '}
                   <code className="bg-neutral-700 px-1 rounded text-neutral-200">/test-db</code>
                 </li>
                 <li>Kiểm tra console trình duyệt để biết thêm chi tiết</li>
@@ -72,4 +71,3 @@ export default function Error({
     </div>
   );
 }
-

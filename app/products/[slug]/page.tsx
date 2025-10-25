@@ -1,12 +1,12 @@
-import { getProductBySlug, getAllProducts } from "@/lib/db/products";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, ShoppingCart, MessageCircle } from "lucide-react";
-import { ProductImageGallery } from "@/components/products/product-image-gallery";
+import { getProductBySlug, getAllProducts } from '@/lib/db/products';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowLeft, ShoppingCart, MessageCircle } from 'lucide-react';
+import { ProductImageGallery } from '@/components/products/product-image-gallery';
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -15,17 +15,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
   if (!product) {
     return {
-      title: "Product Not Found",
+      title: 'Product Not Found',
     };
   }
 
@@ -35,11 +31,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
@@ -56,12 +48,8 @@ export default async function ProductDetailPage({
       })
     : [];
 
-  const minPrice = product.variants
-    ? Math.min(...product.variants.map((v) => v.price))
-    : 0;
-  const maxPrice = product.variants
-    ? Math.max(...product.variants.map((v) => v.price))
-    : 0;
+  const minPrice = product.variants ? Math.min(...product.variants.map((v) => v.price)) : 0;
+  const maxPrice = product.variants ? Math.max(...product.variants.map((v) => v.price)) : 0;
 
   return (
     <div className="min-h-screen bg-neutral-900 text-neutral-50">
@@ -85,20 +73,17 @@ export default async function ProductDetailPage({
           <Link href="/" className="hover:text-neutral-200">
             Trang chủ
           </Link>
-          {" / "}
+          {' / '}
           <Link href="/products" className="hover:text-neutral-200">
             Sản phẩm
           </Link>
-          {" / "}
+          {' / '}
           <span className="text-neutral-200">{product.name_vi}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 px-4">
           {/* Image Gallery */}
-          <ProductImageGallery
-            images={sortedImages}
-            productName={product.name_vi}
-          />
+          <ProductImageGallery images={sortedImages} productName={product.name_vi} />
 
           {/* Product Info */}
           <div className="space-y-8">
@@ -108,10 +93,7 @@ export default async function ProductDetailPage({
               </h1>
               {product.brand && (
                 <p className="text-neutral-400 text-lg">
-                  Thương hiệu:{" "}
-                  <span className="font-medium text-neutral-200">
-                    {product.brand}
-                  </span>
+                  Thương hiệu: <span className="font-medium text-neutral-200">{product.brand}</span>
                 </p>
               )}
             </div>
@@ -121,10 +103,8 @@ export default async function ProductDetailPage({
               <p className="text-sm text-neutral-400 mb-2">Giá bán</p>
               <p className="text-4xl font-bold text-primary-400">
                 {minPrice === maxPrice
-                  ? `${minPrice.toLocaleString("vi-VN")} ₫`
-                  : `${minPrice.toLocaleString(
-                      "vi-VN"
-                    )} - ${maxPrice.toLocaleString("vi-VN")} ₫`}
+                  ? `${minPrice.toLocaleString('vi-VN')} ₫`
+                  : `${minPrice.toLocaleString('vi-VN')} - ${maxPrice.toLocaleString('vi-VN')} ₫`}
               </p>
             </div>
 
@@ -139,11 +119,7 @@ export default async function ProductDetailPage({
                 </Badge>
               )}
               {product.tags?.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="outline"
-                  className="border-neutral-700 text-neutral-300"
-                >
+                <Badge key={tag} variant="outline" className="border-neutral-700 text-neutral-300">
                   {tag}
                 </Badge>
               ))}
@@ -154,9 +130,7 @@ export default async function ProductDetailPage({
             {/* Excerpt */}
             {product.excerpt_vi && (
               <div>
-                <p className="text-neutral-300 text-lg leading-relaxed">
-                  {product.excerpt_vi}
-                </p>
+                <p className="text-neutral-300 text-lg leading-relaxed">{product.excerpt_vi}</p>
               </div>
             )}
 
@@ -176,31 +150,25 @@ export default async function ProductDetailPage({
                         <div>
                           <p className="font-medium text-neutral-100">
                             {variant.option1_value}
-                            {variant.option2_value &&
-                              ` - ${variant.option2_value}`}
-                            {variant.option3_value &&
-                              ` - ${variant.option3_value}`}
+                            {variant.option2_value && ` - ${variant.option2_value}`}
+                            {variant.option3_value && ` - ${variant.option3_value}`}
                           </p>
                           {variant.sku && (
-                            <p className="text-xs text-neutral-500 mt-1">
-                              SKU: {variant.sku}
-                            </p>
+                            <p className="text-xs text-neutral-500 mt-1">SKU: {variant.sku}</p>
                           )}
                         </div>
                         <div className="text-right">
                           <p className="font-bold text-primary-400">
-                            {variant.price.toLocaleString("vi-VN")} ₫
+                            {variant.price.toLocaleString('vi-VN')} ₫
                           </p>
                           <p
                             className={`text-xs mt-1 ${
-                              variant.inventory_quantity > 0
-                                ? "text-green-400"
-                                : "text-red-400"
+                              variant.inventory_quantity > 0 ? 'text-green-400' : 'text-red-400'
                             }`}
                           >
                             {variant.inventory_quantity > 0
                               ? `Còn ${variant.inventory_quantity} sp`
-                              : "Hết hàng"}
+                              : 'Hết hàng'}
                           </p>
                         </div>
                       </div>
@@ -234,9 +202,7 @@ export default async function ProductDetailPage({
         {/* Description */}
         {product.description_vi && (
           <div className="mt-16 px-4">
-            <h2 className="font-serif text-3xl font-light mb-6 text-neutral-50">
-              Mô tả sản phẩm
-            </h2>
+            <h2 className="font-serif text-3xl font-light mb-6 text-neutral-50">Mô tả sản phẩm</h2>
             <Card className="bg-neutral-800 border-neutral-700">
               <CardContent className="pt-6">
                 <div

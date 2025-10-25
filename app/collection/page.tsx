@@ -6,16 +6,16 @@ import {
   StaggerItem,
   DrawLine,
   TextReveal,
-} from "@/components/animations/viewport-animations";
-import content from "@/config/content";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+} from '@/components/animations/viewport-animations';
+import content from '@/config/content';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 // Export the content component for the accordion layout
 export function CollectionContent() {
-  const currentLocale = "vi";
+  const currentLocale = 'vi';
   const pageContent = content[currentLocale].collection;
 
   return (
@@ -25,13 +25,11 @@ export function CollectionContent() {
           <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none">
             {pageContent.title}
             <br />
-            <span className="font-normal text-primary-400">
-              {pageContent.subtitle}
-            </span>
+            <span className="font-normal text-accent-400">{pageContent.subtitle}</span>
           </h1>
         </TextReveal>
         <FadeIn delay={0.5}>
-          <DrawLine className="w-32 mx-auto mb-8 bg-neutral-600" />
+          <DrawLine className="w-32 mx-auto mb-8 bg-accent-400" />
         </FadeIn>
         <FadeInUp delay={0.8}>
           <p className="font-sans text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto">
@@ -44,7 +42,7 @@ export function CollectionContent() {
           <Button
             asChild
             size="lg"
-            className="bg-primary-600 hover:bg-primary-700 text-neutral-50 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-accent-400 hover:bg-accent-500 text-neutral-900 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <Link href="/products" className="flex items-center gap-3">
               <span>Xem Tất Cả Sản Phẩm</span>
@@ -64,27 +62,27 @@ export function CollectionContent() {
         <StaggerContainer className="grid md:grid-cols-3 gap-8">
           {[
             {
-              title: "Trầm Hương Cao Cấp",
+              title: 'Trầm Hương Cao Cấp',
               description:
-                "Những tác phẩm trầm hương được chọn lọc kỹ lưỡng từ nguồn nguyên liệu tốt nhất",
-              image: "/tramhuong-sonhong/gallery-1.jpg",
+                'Những tác phẩm trầm hương được chọn lọc kỹ lưỡng từ nguồn nguyên liệu tốt nhất',
+              image: '/tramhuong-sonhong/gallery-1.jpg',
             },
             {
-              title: "Nghệ Thuật Truyền Thống",
+              title: 'Nghệ Thuật Truyền Thống',
               description:
-                "Kỹ thuật chế tác được truyền từ đời này sang đời khác, giữ gìn tinh hoa văn hóa",
-              image: "/tramhuong-sonhong/gallery-2.jpg",
+                'Kỹ thuật chế tác được truyền từ đời này sang đời khác, giữ gìn tinh hoa văn hóa',
+              image: '/tramhuong-sonhong/gallery-2.jpg',
             },
             {
-              title: "Tinh Túy Đất Trời",
+              title: 'Tinh Túy Đất Trời',
               description:
-                "Mỗi sản phẩm đều mang trong mình hương thơm tự nhiên và giá trị tinh thần sâu sắc",
-              image: "/tramhuong-sonhong/gallery-3.jpg",
+                'Mỗi sản phẩm đều mang trong mình hương thơm tự nhiên và giá trị tinh thần sâu sắc',
+              image: '/tramhuong-sonhong/gallery-3.jpg',
             },
           ].map((item, index) => (
             <StaggerItem key={index}>
               <Link href="/products">
-                <div className="group bg-neutral-800 border border-neutral-700 hover:border-neutral-600 transition-all duration-300 hover:shadow-xl rounded-lg overflow-hidden cursor-pointer">
+                <div className="group bg-brown-800 border border-brown-700 hover:border-accent-400 transition-all duration-300 hover:shadow-xl rounded-lg overflow-hidden cursor-pointer">
                   <div className="aspect-square relative overflow-hidden">
                     <Image
                       src={item.image}
@@ -94,17 +92,15 @@ export function CollectionContent() {
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="font-serif text-xl font-light mb-2 text-neutral-100 group-hover:text-primary-300 transition-colors">
+                    <h3 className="font-serif text-xl font-light mb-2 text-accent-100 group-hover:text-accent-300 transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-neutral-400 text-sm mb-4 line-clamp-2">
-                      {item.description}
-                    </p>
+                    <p className="text-accent-200 text-sm mb-4 line-clamp-2">{item.description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-lg font-semibold text-primary-400">
+                      <span className="font-mono text-lg font-semibold text-accent-400">
                         Xem Sản Phẩm
                       </span>
-                      <ArrowRight className="w-5 h-5 text-neutral-400 group-hover:text-primary-300 transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-accent-300 group-hover:text-accent-400 transition-colors" />
                     </div>
                   </div>
                 </div>
