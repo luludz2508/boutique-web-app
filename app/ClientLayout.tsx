@@ -64,15 +64,15 @@ export default function ClientLayout({
   // Render accordion layout for main sections
   return (
     <div className="h-screen overflow-hidden bg-neutral-50 font-sans">
-      {/* Fixed Logo */}
+      {/* Fixed Logo - Hidden on Mobile */}
       <motion.div
-        className="fixed top-8 left-8 z-50"
+        className="hidden md:block fixed top-8 left-8 z-50"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
       >
         <div
-          className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer flex items-center gap-3"
+          className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer flex items-center gap-3 shadow-lg"
           onClick={() => handleSectionClick("/")}
         >
           <Image
@@ -80,7 +80,7 @@ export default function ClientLayout({
             alt="Sơn Hồng Logo"
             width={40}
             height={40}
-            className="object-contain scale-125"
+            className="object-contain"
           />
           <h1 className="font-serif text-xl font-light text-neutral-900">
             SƠN HỒNG
@@ -92,17 +92,16 @@ export default function ClientLayout({
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-neutral-50/95 backdrop-blur-sm border-b border-neutral-200 p-4">
         <div className="flex items-center justify-between">
           <div
-            className="flex items-center gap-2 cursor-pointer"
+            className="cursor-pointer"
             onClick={() => handleSectionClick("/")}
           >
             <Image
               src="/logo.png"
               alt="Sơn Hồng Logo"
-              width={32}
-              height={32}
+              width={40}
+              height={40}
               className="object-contain"
             />
-            <h1 className="font-serif text-lg font-light">TRẦM HƯƠNG</h1>
           </div>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

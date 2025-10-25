@@ -99,7 +99,7 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
         {/* Back Button - Improved visibility */}
         <div className="mb-12">
           <Button
@@ -141,7 +141,7 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
 
           {/* Filters Section */}
           <FadeInUp delay={0.3}>
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto px-4">
               <ProductFilters
                 productTypes={productTypes}
                 totalProducts={allProducts.length}
@@ -163,15 +163,19 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
           </FadeInUp>
 
           {/* Products Grid */}
-          <ProductsGrid products={paginatedProducts} />
+          <div className="px-4">
+            <ProductsGrid products={paginatedProducts} />
+          </div>
 
           {/* Pagination */}
-          <ProductPagination
-            currentPage={page}
-            totalPages={totalPages}
-            totalItems={totalProducts}
-            itemsPerPage={ITEMS_PER_PAGE}
-          />
+          <div className="px-4">
+            <ProductPagination
+              currentPage={page}
+              totalPages={totalPages}
+              totalItems={totalProducts}
+              itemsPerPage={ITEMS_PER_PAGE}
+            />
+          </div>
         </div>
       </div>
     </div>

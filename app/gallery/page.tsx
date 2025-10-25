@@ -15,7 +15,7 @@ export function GalleryContent() {
     <div className="space-y-20">
       <div className="pt-12 text-center">
         <TextReveal>
-          <h1 className="font-serif text-8xl font-light mb-8 tracking-tight leading-none">
+          <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none">
             Hình Ảnh
             <br />
             <span className="font-normal text-primary-400">Trầm Hương</span>
@@ -25,7 +25,7 @@ export function GalleryContent() {
           <DrawLine className="w-32 mx-auto mb-8 bg-neutral-600" />
         </FadeIn>
         <FadeInUp delay={0.8}>
-          <p className="font-sans text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="font-sans text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto">
             Bộ sưu tập hình ảnh được tuyển chọn về tác phẩm, quy trình sản xuất
             và không gian nơi nghệ thuật trầm hương được tạo nên.
           </p>

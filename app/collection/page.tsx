@@ -21,7 +21,7 @@ export function CollectionContent() {
     <div className="space-y-20">
       <div className="pt-12 text-center">
         <TextReveal>
-          <h1 className="font-serif text-8xl font-light mb-8 tracking-tight leading-none">
+          <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none">
             {pageContent.title}
             <br />
             <span className="font-normal text-primary-400">
@@ -33,7 +33,7 @@ export function CollectionContent() {
           <DrawLine className="w-32 mx-auto mb-8 bg-neutral-600" />
         </FadeIn>
         <FadeInUp delay={0.8}>
-          <p className="font-sans text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="font-sans text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto">
             {pageContent.description}
           </p>
         </FadeInUp>

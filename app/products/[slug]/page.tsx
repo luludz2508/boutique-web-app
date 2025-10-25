@@ -65,7 +65,7 @@ export default async function ProductDetailPage({
 
   return (
     <div className="min-h-screen bg-neutral-900 text-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
         {/* Back Button */}
         <div className="mb-8">
           <Button
@@ -93,7 +93,7 @@ export default async function ProductDetailPage({
           <span className="text-neutral-200">{product.name_vi}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 px-4">
           {/* Image Gallery */}
           <ProductImageGallery
             images={sortedImages}
@@ -233,7 +233,7 @@ export default async function ProductDetailPage({
 
         {/* Description */}
         {product.description_vi && (
-          <div className="mt-16">
+          <div className="mt-16 px-4">
             <h2 className="font-serif text-3xl font-light mb-6 text-neutral-50">
               Mô tả sản phẩm
             </h2>
