@@ -179,10 +179,17 @@ export function HomeContent() {
               preload="auto"
               className="w-full h-full object-cover"
               webkit-playsinline="true"
+              x-webkit-airplay="allow"
+              controls={false}
             >
               <source
                 src="/tramhuong-sonhong/master-video-1.mp4"
                 type="video/mp4"
+              />
+              <source
+                src="/tramhuong-sonhong/master-video-1.mp4"
+                type="video/mp4"
+                media="(max-width: 768px)"
               />
               Your browser does not support the video tag.
             </video>
