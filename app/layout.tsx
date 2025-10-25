@@ -1,20 +1,24 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Source_Sans_3,
+  JetBrains_Mono,
+} from "next/font/google";
 import ClientLayout from "./ClientLayout";
 import "./globals.css"; // Import globals.css at the top of the file
 
 // Define font subsets and weights
-const playfairDisplay = Playfair_Display({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-playfair-display",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-cormorant-garamond",
 });
 
-const inter = Inter({
+const sourceSans3 = Source_Sans_3({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
+  weight: ["300", "400", "600", "700"],
+  variable: "--font-source-sans-3",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -43,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${playfairDisplay.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${cormorantGaramond.variable} ${sourceSans3.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         <ClientLayout>{children}</ClientLayout>
