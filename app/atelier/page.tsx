@@ -244,7 +244,7 @@ export function AtelierContent() {
             <h2 className="font-serif text-5xl font-light mb-8 text-neutral-900">
               {pageContent.consultationTitle || 'Tư Vấn Riêng Tư'}
             </h2>
-            <ImperialDivider variant="pattern" className="mb-8" />
+            <ImperialDivider variant="lotus" className="mb-8" />
             <p className="font-sans text-xl text-neutral-600 mb-12 max-w-2xl mx-auto leading-relaxed">
               {pageContent.consultationDescription ||
                 'Dành cho những người sưu tầm và chuyên gia muốn có sự hướng dẫn cá nhân hóa trong việc xây dựng bộ sưu tập trầm hương của họ.'}

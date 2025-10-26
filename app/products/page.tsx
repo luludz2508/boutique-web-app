@@ -100,7 +100,7 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
           <Button
             asChild
             size="lg"
-            className="gap-2 bg-accent-600 hover:bg-accent-700 border border-accent-500 hover:border-accent-400 text-neutral-50 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="gap-2 bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20 hover:border-white/30 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <Link href="/collection">
               <ArrowLeft className="h-5 w-5" />

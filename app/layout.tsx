@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   other: {
-    'apple-mobile-web-app-capable': 'yes',
+    'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
     'apple-mobile-web-app-title': 'Trầm Hương Sơn Hồng',
   },
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="vi"
       className={`${cormorantGaramond.variable} ${sourceSans3.variable} ${jetbrainsMono.variable}`}
     >
-      <body>
+      <body suppressHydrationWarning={true}>
         <ClientLayoutV2>{children}</ClientLayoutV2>
       </body>
     </html>

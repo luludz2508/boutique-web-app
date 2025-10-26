@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
 import content, { type NavItem } from '@/config/content';
+import { BackgroundImage } from '@/components/ui/background-image';
 
 interface ClientLayoutV2Props {
   children: React.ReactNode;
@@ -25,7 +26,6 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
   const navItems = useMemo<NavItem[]>(() => {
     try {
       const items = content[currentLocale]?.navigation || [];
-      console.log('ClientLayoutV2 - Loaded navItems:', items);
       return items;
     } catch (error) {
       console.error('Error loading navigation items:', error);
@@ -35,13 +35,11 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
 
   const isAccordionPath = useMemo(() => {
     const result = navItems.length > 0 && navItems.some((item) => item.path === pathname);
-    console.log('ClientLayoutV2 - isAccordionPath:', result, 'pathname:', pathname);
     return result;
   }, [navItems, pathname]);
 
   const currentNav = useMemo(() => {
     const nav = navItems.find((item) => item.path === pathname) ?? navItems[0];
-    console.log('ClientLayoutV2 - currentNav:', nav);
     return nav;
   }, [navItems, pathname]);
 
@@ -80,10 +78,11 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
     );
   }
 
-  console.log('ClientLayoutV2 - Rendering main layout, navItems length:', navItems.length);
-
   return (
-    <div className="min-h-screen overflow-x-none bg-neutral-50 font-sans w-full max-w-screen">
+    <div
+      className="min-h-screen overflow-x-none bg-neutral-50 font-sans w-full max-w-screen"
+      suppressHydrationWarning={true}
+    >
       {/* Fixed Logo - Hidden on Mobile */}
       <motion.div
         className="hidden md:block fixed top-8 left-8 z-50"
@@ -172,7 +171,7 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
               key={section.id}
               className={`relative ${!isActive ? 'cursor-pointer' : ''} ${section.color ?? ''} ${
                 section.textColor ?? ''
-              }`}
+              } overflow-hidden`}
               style={{
                 backgroundColor: section.color?.includes('bg-neutral-50')
                   ? '#F7F5EF' // original ivory-mist
@@ -201,56 +200,58 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
               }}
               onClick={!isActive ? () => handleSectionClick(section.path) : undefined}
             >
-              {/* Collapsed State - Vertical Title */}
-              <AnimatePresence>
-                {!isActive && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex items-center justify-center"
-                  >
-                    <div className="transform -rotate-90 whitespace-nowrap">
-                      <h2 className="font-serif text-2xl font-light tracking-widest">
-                        {section.title}
-                      </h2>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <BackgroundImage config={section.background} className="absolute inset-0">
+                {/* Collapsed State - Vertical Title */}
+                <AnimatePresence>
+                  {!isActive && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <div className="transform -rotate-90 whitespace-nowrap">
+                        <h2 className="font-serif text-2xl font-light tracking-widest">
+                          {section.title}
+                        </h2>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              {/* Expanded State - Page Content */}
-              <AnimatePresence>
-                {isActive && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="absolute inset-0 overflow-y-auto scrollbar-hide"
-                    style={{
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none',
-                    }}
-                  >
-                    <div className="p-16 pb-32 pt-24">
-                      {renderChildren(`desktop-${section.path}`)}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                {/* Expanded State - Page Content */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 50 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                      className="absolute inset-0 overflow-y-auto scrollbar-hide"
+                      style={{
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                      }}
+                    >
+                      <div className="p-16 pb-32 pt-24">
+                        {renderChildren(`desktop-${section.path}`)}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              {/* Hover Effect for Collapsed Sections */}
-              <motion.div
-                className="absolute inset-0 bg-neutral-900/5"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: !isActive ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  pointerEvents: !isActive ? 'auto' : 'none',
-                }}
-              />
+                {/* Hover Effect for Collapsed Sections */}
+                <motion.div
+                  className="absolute inset-0 bg-neutral-900/5"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: !isActive ? 1 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    pointerEvents: !isActive ? 'auto' : 'none',
+                  }}
+                />
+              </BackgroundImage>
             </motion.div>
           );
         })}
@@ -267,29 +268,31 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
             transition={{ duration: 0.4 }}
             className="min-h-screen"
           >
-            <div
-              className={`${currentNav?.color ?? 'bg-neutral-50'} ${currentNav?.textColor ?? 'text-neutral-900'} p-6 pb-32 min-h-full`}
-              style={{
-                backgroundColor: currentNav?.color?.includes('bg-neutral-50')
-                  ? '#F7F5EF' // original ivory-mist
-                  : currentNav?.color?.includes('bg-brown-600')
-                    ? '#1e4049' // cyphr-teal (much darker) - KEEPING THIS
-                    : currentNav?.color?.includes('bg-accent-400')
+            <BackgroundImage config={currentNav?.background}>
+              <div
+                className={`${currentNav?.color ?? 'bg-neutral-50'} ${currentNav?.textColor ?? 'text-neutral-900'} p-6 pb-32 min-h-full`}
+                style={{
+                  backgroundColor: currentNav?.color?.includes('bg-neutral-50')
+                    ? '#F7F5EF' // original ivory-mist
+                    : currentNav?.color?.includes('bg-brown-600')
+                      ? '#1e4049' // cyphr-teal (much darker) - KEEPING THIS
+                      : currentNav?.color?.includes('bg-accent-400')
+                        ? '#D9B45A' // original imperial-gold
+                        : currentNav?.color?.includes('bg-brown-800')
+                          ? '#3C2F26' // original forest-umber
+                          : currentNav?.color?.includes('bg-neutral-100')
+                            ? '#F7F5EF' // original ivory-mist
+                            : '#F7F5EF', // default to original ivory-mist
+                  color: currentNav?.textColor?.includes('text-neutral-900')
+                    ? '#1C1C1C' // original charcoal-ash
+                    : currentNav?.textColor?.includes('text-accent-400')
                       ? '#D9B45A' // original imperial-gold
-                      : currentNav?.color?.includes('bg-brown-800')
-                        ? '#3C2F26' // original forest-umber
-                        : currentNav?.color?.includes('bg-neutral-100')
-                          ? '#F7F5EF' // original ivory-mist
-                          : '#F7F5EF', // default to original ivory-mist
-                color: currentNav?.textColor?.includes('text-neutral-900')
-                  ? '#1C1C1C' // original charcoal-ash
-                  : currentNav?.textColor?.includes('text-accent-400')
-                    ? '#D9B45A' // original imperial-gold
-                    : '#1C1C1C', // default to original charcoal-ash
-              }}
-            >
-              {renderChildren(`mobile-${currentNav?.path || '/'}`)}
-            </div>
+                      : '#1C1C1C', // default to original charcoal-ash
+                }}
+              >
+                {renderChildren(`mobile-${currentNav?.path || '/'}`)}
+              </div>
+            </BackgroundImage>
           </motion.div>
         </AnimatePresence>
       </div>

@@ -9,14 +9,14 @@ import {
   StaggerContainer,
   StaggerItem,
   SlideInUp,
-} from "@/components/animations/viewport-animations";
-import content from "@/config/content";
-import Link from "next/link";
-import VideoPlayer from "@/components/VideoPlayer";
+} from '@/components/animations/viewport-animations';
+import content from '@/config/content';
+import Link from 'next/link';
+import VideoPlayer from '@/components/VideoPlayer';
 
 // Export the content component for the accordion layout
 export function HomeContent() {
-  const currentLocale = "vi";
+  const currentLocale = 'vi';
   const pageContent = content[currentLocale].home;
 
   return (
@@ -26,9 +26,7 @@ export function HomeContent() {
           <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none text-neutral-900">
             {pageContent.title}
             <br />
-            <span className="font-normal text-accent-600">
-              {pageContent.subtitle}
-            </span>
+            <span className="font-normal text-accent-600">{pageContent.subtitle}</span>
           </h1>
         </TextReveal>
         <FadeIn delay={0.5}>
@@ -80,8 +78,8 @@ export function HomeContent() {
                 100% Tự Nhiên
               </h3>
               <p className="text-neutral-600 leading-relaxed">
-                Cam kết sản phẩm Trầm Hương nguyên chất, nguồn gốc rõ ràng, có
-                chứng nhận chất lượng đầy đủ
+                Cam kết sản phẩm Trầm Hương nguyên chất, nguồn gốc rõ ràng, có chứng nhận chất lượng
+                đầy đủ
               </p>
             </div>
           </StaggerItem>
@@ -106,8 +104,8 @@ export function HomeContent() {
                 30+ Năm Kinh Nghiệm
               </h3>
               <p className="text-neutral-600 leading-relaxed">
-                Hơn 3 thập kỷ tâm huyết với nghề, am hiểu sâu sắc về trầm hương
-                và nghệ thuật chế tác truyền thống
+                Hơn 3 thập kỷ tâm huyết với nghề, am hiểu sâu sắc về trầm hương và nghệ thuật chế
+                tác truyền thống
               </p>
             </div>
           </StaggerItem>
@@ -132,8 +130,8 @@ export function HomeContent() {
                 Hàng Nghìn Khách Hài Lòng
               </h3>
               <p className="text-neutral-600 leading-relaxed">
-                Được tin tưởng bởi khách hàng trên toàn quốc, đánh giá 5 sao về
-                chất lượng sản phẩm và dịch vụ
+                Được tin tưởng bởi khách hàng trên toàn quốc, đánh giá 5 sao về chất lượng sản phẩm
+                và dịch vụ
               </p>
             </div>
           </StaggerItem>
@@ -142,27 +140,23 @@ export function HomeContent() {
 
       <div className="grid md:grid-cols-2 gap-20 py-16">
         <FadeInLeft>
-          <h2 className="font-serif text-4xl font-light mb-8 text-neutral-900">
-            Di Sản Văn Hóa
-          </h2>
+          <h2 className="font-serif text-4xl font-light mb-8 text-neutral-900">Di Sản Văn Hóa</h2>
           <div className="space-y-6 text-neutral-600 leading-relaxed">
             <p>
-              Từ năm 1985, chúng tôi đã âm thầm vun đắp nghề trầm hương tại
-              trung tâm thành phố. Khởi nguồn từ một xưởng nhỏ, nay đã trở thành
-              nơi lưu giữ tinh hoa nghệ thuật, nơi kỹ thuật truyền thống gặp gỡ
-              tầm nhìn đương đại.
+              Từ năm 1985, chúng tôi đã âm thầm vun đắp nghề trầm hương tại trung tâm thành phố.
+              Khởi nguồn từ một xưởng nhỏ, nay đã trở thành nơi lưu giữ tinh hoa nghệ thuật, nơi kỹ
+              thuật truyền thống gặp gỡ tầm nhìn đương đại.
             </p>
             <p>
-              Mỗi tác phẩm chúng tôi tạo ra đều mang trong mình lời thì thầm của
-              truyền thống, sự chính xác của đổi mới hiện đại, và tâm hồn của
-              nghệ nhân chân chính.
+              Mỗi tác phẩm chúng tôi tạo ra đều mang trong mình lời thì thầm của truyền thống, sự
+              chính xác của đổi mới hiện đại, và tâm hồn của nghệ nhân chân chính.
             </p>
           </div>
           <ScaleIn delay={0.3}>
             <div className="mt-12 p-8 bg-accent-50 border-l-4 border-accent-600 shadow-lg">
               <p className="font-serif text-lg text-accent-800 italic leading-relaxed">
-                "Trong từng thớ gỗ, từng đường cong kim loại, chúng tôi tìm thấy
-                câu chuyện chờ được kể."
+                "Trong từng thớ gỗ, từng đường cong kim loại, chúng tôi tìm thấy câu chuyện chờ được
+                kể."
               </p>
               <p className="text-sm text-accent-600 mt-3 font-sans font-medium">
                 Nguyễn Văn Sơn - Nghệ nhân trưởng, 1995
@@ -189,34 +183,30 @@ export function HomeContent() {
         <StaggerContainer className="grid md:grid-cols-3 gap-12">
           {[
             {
-              title: "Thiết Kế Vượt Thời Gian",
+              title: 'Thiết Kế Vượt Thời Gian',
               description:
-                "Chúng tôi tạo ra những tác phẩm siêu việt xu hướng, tập trung vào vẻ đẹp và chức năng bền vững.",
-              symbol: "∞",
+                'Chúng tôi tạo ra những tác phẩm siêu việt xu hướng, tập trung vào vẻ đẹp và chức năng bền vững.',
+              symbol: '∞',
             },
             {
-              title: "Quy Trình Tỉnh Thức",
+              title: 'Quy Trình Tỉnh Thức',
               description:
-                "Mỗi bước đi được cân nhắc kỹ lưỡng, mỗi chi tiết được suy ngẫm, mỗi lựa chọn đều có chủ ý.",
-              symbol: "◯",
+                'Mỗi bước đi được cân nhắc kỹ lưỡng, mỗi chi tiết được suy ngẫm, mỗi lựa chọn đều có chủ ý.',
+              symbol: '◯',
             },
             {
-              title: "Nguyên Liệu Chân Thực",
+              title: 'Nguyên Liệu Chân Thực',
               description:
-                "Chúng tôi chỉ tuyển chọn những nguyên liệu tốt nhất, tôn trọng đặc tính tự nhiên và nguồn gốc của chúng.",
-              symbol: "△",
+                'Chúng tôi chỉ tuyển chọn những nguyên liệu tốt nhất, tôn trọng đặc tính tự nhiên và nguồn gốc của chúng.',
+              symbol: '△',
             },
           ].map((principle, index) => (
             <StaggerItem key={index} className="text-center">
-              <div className="text-6xl font-light text-accent-500 mb-6">
-                {principle.symbol}
-              </div>
+              <div className="text-6xl font-light text-accent-500 mb-6">{principle.symbol}</div>
               <h3 className="font-serif text-2xl font-light mb-4 text-neutral-900">
                 {principle.title}
               </h3>
-              <p className="text-neutral-600 leading-relaxed font-sans">
-                {principle.description}
-              </p>
+              <p className="text-neutral-600 leading-relaxed font-sans">{principle.description}</p>
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -230,8 +220,7 @@ export function HomeContent() {
               Khách Hàng Nói Gì Về Chúng Tôi
             </h2>
             <p className="text-accent-100 text-lg">
-              Hàng nghìn khách hàng tin tưởng và hài lòng với sản phẩm của chúng
-              tôi
+              Hàng nghìn khách hàng tin tưởng và hài lòng với sản phẩm của chúng tôi
             </p>
           </div>
           <StaggerContainer className="grid md:grid-cols-3 gap-8">
@@ -250,18 +239,15 @@ export function HomeContent() {
                   ))}
                 </div>
                 <p className="text-neutral-700 italic mb-6 leading-relaxed">
-                  "Sản phẩm trầm hương tự nhiên 100%, mùi hương rất thơm và dịu.
-                  Chất lượng vượt mong đợi, đội ngũ tư vấn nhiệt tình và chuyên
-                  nghiệp."
+                  "Sản phẩm trầm hương tự nhiên 100%, mùi hương rất thơm và dịu. Chất lượng vượt
+                  mong đợi, đội ngũ tư vấn nhiệt tình và chuyên nghiệp."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-accent-200 rounded-full flex items-center justify-center font-bold text-accent-700">
                     N
                   </div>
                   <div>
-                    <p className="font-semibold text-neutral-900">
-                      Nguyễn Văn A
-                    </p>
+                    <p className="font-semibold text-neutral-900">Nguyễn Văn A</p>
                     <p className="text-sm text-neutral-500">Hà Nội</p>
                   </div>
                 </div>
@@ -282,8 +268,8 @@ export function HomeContent() {
                   ))}
                 </div>
                 <p className="text-neutral-700 italic mb-6 leading-relaxed">
-                  "Mua vòng trầm cho bố, ông rất thích. Sản phẩm đẹp, đóng gói
-                  kỹ càng. Giao hàng nhanh, giá cả hợp lý. Sẽ tiếp tục ủng hộ!"
+                  "Mua vòng trầm cho bố, ông rất thích. Sản phẩm đẹp, đóng gói kỹ càng. Giao hàng
+                  nhanh, giá cả hợp lý. Sẽ tiếp tục ủng hộ!"
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-accent-200 rounded-full flex items-center justify-center font-bold text-accent-700">
@@ -311,9 +297,8 @@ export function HomeContent() {
                   ))}
                 </div>
                 <p className="text-neutral-700 italic mb-6 leading-relaxed">
-                  "Showroom đẹp, nhân viên tư vấn tận tình. Được trải nghiệm
-                  nhiều loại trầm khác nhau. Rất hài lòng với chất lượng và dịch
-                  vụ."
+                  "Showroom đẹp, nhân viên tư vấn tận tình. Được trải nghiệm nhiều loại trầm khác
+                  nhau. Rất hài lòng với chất lượng và dịch vụ."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-accent-200 rounded-full flex items-center justify-center font-bold text-accent-700">
@@ -336,41 +321,22 @@ export function HomeContent() {
             <h2 className="font-serif text-4xl font-light mb-8 text-neutral-900">
               Con Số Nói Lên Tất Cả
             </h2>
-            <StaggerContainer
-              className="grid md:grid-cols-4 gap-8"
-              staggerDelay={0.15}
-            >
+            <StaggerContainer className="grid md:grid-cols-4 gap-8" staggerDelay={0.15}>
               <StaggerItem>
-                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">
-                  30+
-                </div>
-                <p className="text-neutral-600 font-sans text-lg">
-                  Năm Kinh Nghiệm
-                </p>
+                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">30+</div>
+                <p className="text-neutral-600 font-sans text-lg">Năm Kinh Nghiệm</p>
               </StaggerItem>
               <StaggerItem>
-                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">
-                  10K+
-                </div>
-                <p className="text-neutral-600 font-sans text-lg">
-                  Khách Hàng Tin Tưởng
-                </p>
+                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">10K+</div>
+                <p className="text-neutral-600 font-sans text-lg">Khách Hàng Tin Tưởng</p>
               </StaggerItem>
               <StaggerItem>
-                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">
-                  99%
-                </div>
-                <p className="text-neutral-600 font-sans text-lg">
-                  Đánh Giá 5 Sao
-                </p>
+                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">99%</div>
+                <p className="text-neutral-600 font-sans text-lg">Đánh Giá 5 Sao</p>
               </StaggerItem>
               <StaggerItem>
-                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">
-                  100%
-                </div>
-                <p className="text-neutral-600 font-sans text-lg">
-                  Trầm Tự Nhiên
-                </p>
+                <div className="font-mono text-5xl font-bold text-accent-600 mb-2">100%</div>
+                <p className="text-neutral-600 font-sans text-lg">Trầm Tự Nhiên</p>
               </StaggerItem>
             </StaggerContainer>
           </div>

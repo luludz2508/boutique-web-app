@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
 import content, { type NavItem } from '@/config/content';
+import { BackgroundImage } from '@/components/ui/background-image';
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -163,56 +164,58 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
               }}
               onClick={!isActive ? () => handleSectionClick(section.path) : undefined}
             >
-              {/* Collapsed State - Vertical Title */}
-              <AnimatePresence>
-                {!isActive && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex items-center justify-center"
-                  >
-                    <div className="transform -rotate-90 whitespace-nowrap">
-                      <h2 className="font-serif text-2xl font-light tracking-widest">
-                        {section.title}
-                      </h2>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <BackgroundImage config={section.background} className="absolute inset-0">
+                {/* Collapsed State - Vertical Title */}
+                <AnimatePresence>
+                  {!isActive && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <div className="transform -rotate-90 whitespace-nowrap">
+                        <h2 className="font-serif text-2xl font-light tracking-widest">
+                          {section.title}
+                        </h2>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              {/* Expanded State - Page Content */}
-              <AnimatePresence>
-                {isActive && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="absolute inset-0 overflow-y-auto scrollbar-hide"
-                    style={{
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none',
-                    }}
-                  >
-                    <div className="p-16 pb-32 pt-24">
-                      {renderChildren(`desktop-${section.path}`)}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                {/* Expanded State - Page Content */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 50 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                      className="absolute inset-0 overflow-y-auto scrollbar-hide"
+                      style={{
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                      }}
+                    >
+                      <div className="p-16 pb-32 pt-24">
+                        {renderChildren(`desktop-${section.path}`)}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              {/* Hover Effect for Collapsed Sections */}
-              <motion.div
-                className="absolute inset-0 bg-neutral-900/5"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: !isActive ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  pointerEvents: !isActive ? 'auto' : 'none',
-                }}
-              />
+                {/* Hover Effect for Collapsed Sections */}
+                <motion.div
+                  className="absolute inset-0 bg-neutral-900/5"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: !isActive ? 1 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    pointerEvents: !isActive ? 'auto' : 'none',
+                  }}
+                />
+              </BackgroundImage>
             </motion.div>
           );
         })}
@@ -229,11 +232,13 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
             transition={{ duration: 0.4 }}
             className="min-h-screen"
           >
-            <div
-              className={`${currentNav.color ?? ''} ${currentNav.textColor ?? ''} p-6 pb-32 min-h-full`}
-            >
-              {renderChildren(`mobile-${currentNav.path}`)}
-            </div>
+            <BackgroundImage config={currentNav.background}>
+              <div
+                className={`${currentNav.color ?? ''} ${currentNav.textColor ?? ''} p-6 pb-32 min-h-full`}
+              >
+                {renderChildren(`mobile-${currentNav.path}`)}
+              </div>
+            </BackgroundImage>
           </motion.div>
         </AnimatePresence>
       </div>

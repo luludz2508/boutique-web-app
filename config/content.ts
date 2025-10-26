@@ -59,12 +59,21 @@ export interface PageContent {
   emailResponseTime?: string;
 }
 
+export interface BackgroundConfig {
+  image?: string;
+  repeat?: boolean;
+  opacity?: number;
+  position?: string;
+  size?: string;
+}
+
 export interface NavItem {
   id: string;
   title: string;
   path: string;
   color?: string;
   textColor?: string;
+  background?: BackgroundConfig;
 }
 
 export interface CollectionPageContent {
@@ -148,6 +157,13 @@ const content: ContentConfig = {
         path: '/',
         color: 'bg-neutral-50',
         textColor: 'text-neutral-900',
+        background: {
+          image: '/tramhuong-sonhong/homepage-bg.png',
+          repeat: true,
+          opacity: 0.08,
+          position: 'center',
+          size: 'cover',
+        },
       },
       {
         id: 'collection',
