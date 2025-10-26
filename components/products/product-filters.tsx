@@ -1,64 +1,58 @@
-"use client";
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Search, X } from "lucide-react";
-import { useState } from "react";
+} from '@/components/ui/select';
+import { Search, X } from 'lucide-react';
+import { useState } from 'react';
 
 interface ProductFiltersProps {
   productTypes: string[];
   totalProducts: number;
 }
 
-export function ProductFilters({
-  productTypes,
-  totalProducts,
-}: ProductFiltersProps) {
+export function ProductFilters({ productTypes, totalProducts }: ProductFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || ""
-  );
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
 
-  const currentType = searchParams.get("type") || "all";
-  const currentSort = searchParams.get("sort") || "newest";
+  const currentType = searchParams.get('type') || 'all';
+  const currentSort = searchParams.get('sort') || 'newest';
 
   const updateFilters = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (value === "all" || value === "") {
+    if (value === 'all' || value === '') {
       params.delete(key);
     } else {
       params.set(key, value);
     }
 
     // Reset to page 1 when filters change
-    params.delete("page");
+    params.delete('page');
 
     router.push(`/products?${params.toString()}`);
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    updateFilters("search", searchQuery);
+    updateFilters('search', searchQuery);
   };
 
   const clearFilters = () => {
-    setSearchQuery("");
-    router.push("/products");
+    setSearchQuery('');
+    router.push('/products');
   };
 
-  const hasActiveFilters =
-    currentType !== "all" || currentSort !== "newest" || searchQuery;
+  const hasActiveFilters = currentType !== 'all' || currentSort !== 'newest' || searchQuery;
 
   return (
     <div className="space-y-4">
@@ -71,13 +65,10 @@ export function ProductFilters({
             placeholder="Tìm kiếm sản phẩm..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 bg-neutral-800 border-neutral-700 text-neutral-100 placeholder:text-neutral-400 focus:border-neutral-600"
+            className="pl-9 bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 placeholder:text-neutral-400 focus:border-accent-400"
           />
         </div>
-        <Button
-          type="submit"
-          className="bg-primary-600 hover:bg-primary-700 text-white"
-        >
+        <Button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white">
           Tìm kiếm
         </Button>
       </form>
@@ -87,17 +78,14 @@ export function ProductFilters({
         {/* Product Type Filter */}
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-neutral-300">Loại:</span>
-          <Select
-            value={currentType}
-            onValueChange={(value) => updateFilters("type", value)}
-          >
-            <SelectTrigger className="w-[200px] bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-750">
+          <Select value={currentType} onValueChange={(value) => updateFilters('type', value)}>
+            <SelectTrigger className="w-[200px] bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-neutral-800 border-neutral-700">
+            <SelectContent className="bg-white/10 backdrop-blur-sm border-white/20">
               <SelectItem
                 value="all"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Tất cả ({totalProducts})
               </SelectItem>
@@ -105,7 +93,7 @@ export function ProductFilters({
                 <SelectItem
                   key={type}
                   value={type}
-                  className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                  className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
                 >
                   {type}
                 </SelectItem>
@@ -117,47 +105,44 @@ export function ProductFilters({
         {/* Sort Filter */}
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-neutral-300">Sắp xếp:</span>
-          <Select
-            value={currentSort}
-            onValueChange={(value) => updateFilters("sort", value)}
-          >
-            <SelectTrigger className="w-[180px] bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-750">
+          <Select value={currentSort} onValueChange={(value) => updateFilters('sort', value)}>
+            <SelectTrigger className="w-[180px] bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-neutral-800 border-neutral-700">
+            <SelectContent className="bg-white/10 backdrop-blur-sm border-white/20">
               <SelectItem
                 value="newest"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Mới nhất
               </SelectItem>
               <SelectItem
                 value="oldest"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Cũ nhất
               </SelectItem>
               <SelectItem
                 value="price-asc"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Giá tăng dần
               </SelectItem>
               <SelectItem
                 value="price-desc"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Giá giảm dần
               </SelectItem>
               <SelectItem
                 value="name-asc"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Tên A-Z
               </SelectItem>
               <SelectItem
                 value="name-desc"
-                className="text-neutral-100 focus:bg-neutral-700 focus:text-neutral-100"
+                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
               >
                 Tên Z-A
               </SelectItem>
@@ -171,7 +156,7 @@ export function ProductFilters({
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="gap-2 text-neutral-300 hover:text-neutral-100 hover:bg-neutral-800"
+            className="gap-2 text-neutral-300 hover:text-neutral-100 hover:bg-white/10"
           >
             <X className="h-4 w-4" />
             Xóa bộ lọc
@@ -180,17 +165,14 @@ export function ProductFilters({
       </div>
 
       {/* Active Filters Display */}
-      {currentType !== "all" && (
+      {currentType !== 'all' && (
         <div className="flex items-center gap-2">
           <span className="text-sm text-neutral-400">Đang lọc:</span>
-          <Badge
-            variant="secondary"
-            className="gap-2 bg-neutral-800 text-neutral-100 border-neutral-700"
-          >
+          <Badge variant="secondary" className="gap-2 bg-white/10 text-neutral-100 border-white/20">
             {currentType}
             <X
               className="h-3 w-3 cursor-pointer hover:text-neutral-300"
-              onClick={() => updateFilters("type", "all")}
+              onClick={() => updateFilters('type', 'all')}
             />
           </Badge>
         </div>

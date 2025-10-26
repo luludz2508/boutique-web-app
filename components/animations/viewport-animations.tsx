@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
-import { motion, type Variants } from "framer-motion"
-import type { ReactNode } from "react"
+import { motion, type Variants } from 'framer-motion';
+import type { ReactNode } from 'react';
 
 // Animation variants
 export const fadeInUp: Variants = {
@@ -11,7 +11,7 @@ export const fadeInUp: Variants = {
     y: 0,
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const fadeInDown: Variants = {
   hidden: { opacity: 0, y: -60 },
@@ -20,7 +20,7 @@ export const fadeInDown: Variants = {
     y: 0,
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const fadeInLeft: Variants = {
   hidden: { opacity: 0, x: -60 },
@@ -29,7 +29,7 @@ export const fadeInLeft: Variants = {
     x: 0,
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const fadeInRight: Variants = {
   hidden: { opacity: 0, x: 60 },
@@ -38,7 +38,7 @@ export const fadeInRight: Variants = {
     x: 0,
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
@@ -46,7 +46,7 @@ export const fadeIn: Variants = {
     opacity: 1,
     transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.8 },
@@ -55,7 +55,7 @@ export const scaleIn: Variants = {
     scale: 1,
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const slideInUp: Variants = {
   hidden: { opacity: 0, y: 100 },
@@ -64,7 +64,7 @@ export const slideInUp: Variants = {
     y: 0,
     transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 export const staggerContainer: Variants = {
   hidden: {},
@@ -74,7 +74,7 @@ export const staggerContainer: Variants = {
       delayChildren: 0.2,
     },
   },
-}
+};
 
 export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -83,21 +83,21 @@ export const staggerItem: Variants = {
     y: 0,
     transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   },
-}
+};
 
 // Animation wrapper components
 interface AnimationWrapperProps {
-  children: ReactNode
-  className?: string
-  delay?: number
+  children: ReactNode;
+  className?: string;
+  delay?: number;
 }
 
-export const FadeInUp = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const FadeInUp = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: { opacity: 0, y: 60 },
       visible: {
@@ -109,14 +109,14 @@ export const FadeInUp = ({ children, className = "", delay = 0 }: AnimationWrapp
   >
     {children}
   </motion.div>
-)
+);
 
-export const FadeInDown = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const FadeInDown = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: { opacity: 0, y: -60 },
       visible: {
@@ -128,14 +128,14 @@ export const FadeInDown = ({ children, className = "", delay = 0 }: AnimationWra
   >
     {children}
   </motion.div>
-)
+);
 
-export const FadeInLeft = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const FadeInLeft = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: { opacity: 0, x: -60 },
       visible: {
@@ -147,14 +147,14 @@ export const FadeInLeft = ({ children, className = "", delay = 0 }: AnimationWra
   >
     {children}
   </motion.div>
-)
+);
 
-export const FadeInRight = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const FadeInRight = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: { opacity: 0, x: 60 },
       visible: {
@@ -166,14 +166,14 @@ export const FadeInRight = ({ children, className = "", delay = 0 }: AnimationWr
   >
     {children}
   </motion.div>
-)
+);
 
-export const FadeIn = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const FadeIn = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: { opacity: 0 },
       visible: {
@@ -184,14 +184,14 @@ export const FadeIn = ({ children, className = "", delay = 0 }: AnimationWrapper
   >
     {children}
   </motion.div>
-)
+);
 
-export const ScaleIn = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const ScaleIn = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: { opacity: 0, scale: 0.8 },
       visible: {
@@ -203,14 +203,14 @@ export const ScaleIn = ({ children, className = "", delay = 0 }: AnimationWrappe
   >
     {children}
   </motion.div>
-)
+);
 
-export const SlideInUp = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const SlideInUp = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-50px" }}
+    viewport={{ once: true, margin: '-50px' }}
     variants={{
       hidden: { opacity: 0, y: 100 },
       visible: {
@@ -222,19 +222,19 @@ export const SlideInUp = ({ children, className = "", delay = 0 }: AnimationWrap
   >
     {children}
   </motion.div>
-)
+);
 
 // Stagger animation wrapper
 interface StaggerWrapperProps {
-  children: ReactNode
-  className?: string
-  staggerDelay?: number
-  childDelay?: number
+  children: ReactNode;
+  className?: string;
+  staggerDelay?: number;
+  childDelay?: number;
 }
 
 export const StaggerContainer = ({
   children,
-  className = "",
+  className = '',
   staggerDelay = 0.1,
   childDelay = 0.2,
 }: StaggerWrapperProps) => (
@@ -242,7 +242,7 @@ export const StaggerContainer = ({
     className={className}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     variants={{
       hidden: {},
       visible: {
@@ -255,9 +255,15 @@ export const StaggerContainer = ({
   >
     {children}
   </motion.div>
-)
+);
 
-export const StaggerItem = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
+export const StaggerItem = ({
+  children,
+  className = '',
+}: {
+  children: ReactNode;
+  className?: string;
+}) => (
   <motion.div
     className={className}
     variants={{
@@ -271,31 +277,31 @@ export const StaggerItem = ({ children, className = "" }: { children: ReactNode;
   >
     {children}
   </motion.div>
-)
+);
 
 // Draw line animation
-export const DrawLine = ({ className = "" }: { className?: string }) => (
+export const DrawLine = ({ className = '' }: { className?: string }) => (
   <motion.div
     className={`h-px bg-neutral-300 ${className}`}
     initial={{ scaleX: 0 }}
     whileInView={{ scaleX: 1 }}
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
     transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
     style={{ originX: 0 }}
   />
-)
+);
 
 // Text reveal animation
-export const TextReveal = ({ children, className = "", delay = 0 }: AnimationWrapperProps) => (
+export const TextReveal = ({ children, className = '', delay = 0 }: AnimationWrapperProps) => (
   <motion.div
-    className={`overflow-hidden ${className}`}
+    className={`overflow-visible ${className}`}
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: '-100px' }}
   >
     <motion.div
       variants={{
-        hidden: { y: "100%" },
+        hidden: { y: '100%' },
         visible: {
           y: 0,
           transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay },
@@ -305,4 +311,4 @@ export const TextReveal = ({ children, className = "", delay = 0 }: AnimationWra
       {children}
     </motion.div>
   </motion.div>
-)
+);

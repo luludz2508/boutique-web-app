@@ -18,6 +18,15 @@ const config: Config = {
         'ivory-mist': '#F7F5EF',
         'charcoal-ash': '#1C1C1C',
 
+        // Cyphr Modern Architectural Palette
+        cyphr: {
+          teal: '#1e4049', // much darker main accent (cool contrast) - KEEPING THIS
+          peach: '#F09C67', // soft warm tone - ORIGINAL
+          sand: '#EBCFC1', // neutral balance background - ORIGINAL
+          orange: '#C84A27', // vivid architectural highlight - ORIGINAL
+          mahogany: '#66271C', // deep grounding tone - ORIGINAL
+        },
+
         // System colors
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

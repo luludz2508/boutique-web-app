@@ -47,6 +47,13 @@ body {
     --input: 0 0% 90%; /* Light input border */
     --ring: 45 65% 60%; /* Imperial Gold ring */
     --radius: 0.5rem;
+
+    /* Cyphr Modern Architectural Palette - CSS Variables */
+    --cyphr-teal: #1e4049; /* much darker main accent (cool contrast) - KEEPING THIS */
+    --cyphr-peach: #f09c67; /* soft warm tone - ORIGINAL */
+    --cyphr-sand: #ebcfc1; /* neutral balance background - ORIGINAL */
+    --cyphr-orange: #c84a27; /* vivid architectural highlight - ORIGINAL */
+    --cyphr-mahogany: #66271c; /* deep grounding tone - ORIGINAL */
   }
 
   .dark {

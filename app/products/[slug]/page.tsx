@@ -52,10 +52,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const maxPrice = product.variants ? Math.max(...product.variants.map((v) => v.price)) : 0;
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-neutral-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-900 to-cyphr-teal">
+      <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8 py-4 sm:py-8 lg:py-12">
         {/* Back Button */}
-        <div className="mb-8">
+        <div className="mb-4 sm:mb-6 lg:mb-8">
           <Button
             asChild
             variant="ghost"
@@ -69,7 +69,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* Breadcrumb */}
-        <div className="mb-8 text-sm text-neutral-400">
+        <div className="mb-4 sm:mb-6 lg:mb-8 text-xs sm:text-sm text-neutral-400">
           <Link href="/" className="hover:text-neutral-200">
             Trang chủ
           </Link>
@@ -81,27 +81,27 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <span className="text-neutral-200">{product.name_vi}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12 lg:mb-16">
           {/* Image Gallery */}
           <ProductImageGallery images={sortedImages} productName={product.name_vi} />
 
           {/* Product Info */}
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-6 lg:space-y-8">
             <div>
-              <h1 className="font-serif text-5xl font-light mb-4 text-neutral-50 leading-tight">
+              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light mb-2 sm:mb-3 lg:mb-4 text-neutral-100 leading-tight">
                 {product.name_vi}
               </h1>
               {product.brand && (
-                <p className="text-neutral-400 text-lg">
+                <p className="text-neutral-400 text-sm sm:text-base lg:text-lg">
                   Thương hiệu: <span className="font-medium text-neutral-200">{product.brand}</span>
                 </p>
               )}
             </div>
 
             {/* Price */}
-            <div className="bg-neutral-800 border border-neutral-700 rounded-lg p-6">
-              <p className="text-sm text-neutral-400 mb-2">Giá bán</p>
-              <p className="text-4xl font-bold text-primary-400">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 sm:p-6 shadow-lg">
+              <p className="text-xs sm:text-sm text-neutral-400 mb-1 sm:mb-2">Giá bán</p>
+              <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent-400">
                 {minPrice === maxPrice
                   ? `${minPrice.toLocaleString('vi-VN')} ₫`
                   : `${minPrice.toLocaleString('vi-VN')} - ${maxPrice.toLocaleString('vi-VN')} ₫`}
@@ -113,42 +113,48 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               {product.product_type && (
                 <Badge
                   variant="secondary"
-                  className="bg-neutral-800 text-neutral-200 border-neutral-700"
+                  className="bg-white/10 text-neutral-200 border-white/20 text-xs sm:text-sm"
                 >
                   {product.product_type}
                 </Badge>
               )}
               {product.tags?.map((tag) => (
-                <Badge key={tag} variant="outline" className="border-neutral-700 text-neutral-300">
+                <Badge
+                  key={tag}
+                  variant="outline"
+                  className="border-white/30 text-neutral-300 text-xs sm:text-sm"
+                >
                   {tag}
                 </Badge>
               ))}
             </div>
 
-            <Separator className="bg-neutral-700" />
+            <Separator className="bg-white/20" />
 
             {/* Excerpt */}
             {product.excerpt_vi && (
               <div>
-                <p className="text-neutral-300 text-lg leading-relaxed">{product.excerpt_vi}</p>
+                <p className="text-neutral-300 text-sm sm:text-base lg:text-lg leading-relaxed">
+                  {product.excerpt_vi}
+                </p>
               </div>
             )}
 
             {/* Variants */}
             {product.variants && product.variants.length > 0 && (
-              <Card className="bg-neutral-800 border-neutral-700">
-                <CardContent className="pt-6">
-                  <h3 className="font-semibold mb-4 text-neutral-100 text-lg">
+              <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-lg">
+                <CardContent className="pt-4 sm:pt-6">
+                  <h3 className="font-semibold mb-3 sm:mb-4 text-neutral-100 text-base sm:text-lg">
                     Phiên bản sản phẩm
                   </h3>
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     {product.variants.map((variant) => (
                       <div
                         key={variant.id}
-                        className="flex justify-between items-center p-4 bg-neutral-900 border border-neutral-700 rounded-lg hover:border-neutral-600 transition-colors"
+                        className="flex justify-between items-center p-3 sm:p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:border-white/20 transition-colors"
                       >
                         <div>
-                          <p className="font-medium text-neutral-100">
+                          <p className="font-medium text-neutral-200 text-sm sm:text-base">
                             {variant.option1_value}
                             {variant.option2_value && ` - ${variant.option2_value}`}
                             {variant.option3_value && ` - ${variant.option3_value}`}
@@ -158,7 +164,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                           )}
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-primary-400">
+                          <p className="font-bold text-accent-400 text-sm sm:text-base">
                             {variant.price.toLocaleString('vi-VN')} ₫
                           </p>
                           <p
@@ -179,21 +185,32 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
 
             {/* Actions */}
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button
                 size="lg"
-                className="flex-1 gap-2 bg-primary-600 hover:bg-primary-700 text-white"
+                disabled
+                className="flex-1 gap-2 bg-neutral-600 hover:bg-neutral-600 text-neutral-400 cursor-not-allowed shadow-lg transition-all duration-300 relative"
               >
                 <ShoppingCart className="h-5 w-5" />
-                Thêm vào giỏ hàng
+                <span>Thêm vào giỏ hàng</span>
+                <span className="absolute -top-2 -right-2 bg-accent-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                  Sắp có
+                </span>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="gap-2 bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700"
+                asChild
+                className="gap-2 bg-accent-100/80 backdrop-blur-sm border-accent-300 text-accent-800 hover:bg-accent-200 hover:border-accent-400 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <MessageCircle className="h-5 w-5" />
-                Liên hệ
+                <Link
+                  href="https://www.facebook.com/tramhuongsonhong.vn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Liên hệ Facebook
+                </Link>
               </Button>
             </div>
           </div>
@@ -201,13 +218,24 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
         {/* Description */}
         {product.description_vi && (
-          <div className="mt-16 px-4">
-            <h2 className="font-serif text-3xl font-light mb-6 text-neutral-50">Mô tả sản phẩm</h2>
-            <Card className="bg-neutral-800 border-neutral-700">
-              <CardContent className="pt-6">
+          <div className="mt-8 sm:mt-12 lg:mt-16 sm:px-2">
+            <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-light mb-4 sm:mb-6 text-neutral-100">
+              Mô tả sản phẩm
+            </h2>
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-lg">
+              <CardContent className="p-4 sm:p-6">
                 <div
-                  className="prose prose-invert prose-neutral max-w-none text-neutral-300"
-                  dangerouslySetInnerHTML={{ __html: product.description_vi }}
+                  className="prose prose-invert prose-neutral max-w-none text-neutral-300 text-sm sm:text-base"
+                  style={{
+                    textAlign: 'center',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      product.description_vi?.replace(
+                        /<img/g,
+                        '<img style="display: block; margin: 0 auto; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); max-width: 100%; height: auto;"',
+                      ) || '',
+                  }}
                 />
               </CardContent>
             </Card>

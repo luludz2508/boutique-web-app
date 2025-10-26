@@ -7,8 +7,9 @@ import {
   StaggerItem,
   SlideInUp,
   ScaleIn,
-} from "@/components/animations/viewport-animations";
-import Image from "next/image";
+} from '@/components/animations/viewport-animations';
+import Image from 'next/image';
+import { ImperialCard, ImperialDivider } from '@/components/ui/imperial-elements';
 
 // Export the content component for the accordion layout
 export function GalleryContent() {
@@ -16,19 +17,19 @@ export function GalleryContent() {
     <div className="space-y-20">
       <div className="pt-12 text-center">
         <TextReveal>
-          <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none">
+          <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none text-neutral-100">
             Hình Ảnh
             <br />
-            <span className="font-normal text-primary-400">Trầm Hương</span>
+            <span className="font-normal text-accent-400">Trầm Hương</span>
           </h1>
         </TextReveal>
         <FadeIn delay={0.5}>
-          <DrawLine className="w-32 mx-auto mb-8 bg-neutral-600" />
+          <ImperialDivider className="mb-8" />
         </FadeIn>
         <FadeInUp delay={0.8}>
           <p className="font-sans text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto">
-            Bộ sưu tập hình ảnh được tuyển chọn về tác phẩm, quy trình sản xuất
-            và không gian nơi nghệ thuật trầm hương được tạo nên.
+            Bộ sưu tập hình ảnh được tuyển chọn về tác phẩm, quy trình sản xuất và không gian nơi
+            nghệ thuật trầm hương được tạo nên.
           </p>
         </FadeInUp>
       </div>
@@ -36,95 +37,105 @@ export function GalleryContent() {
       {/* Customer & Expo Gallery */}
       <div>
         <FadeInUp>
-          <h2 className="font-serif text-4xl font-light mb-12 text-neutral-50">
+          <h2 className="font-serif text-4xl font-light mb-12 text-neutral-100">
             Khách Hàng & Triển Lãm
           </h2>
         </FadeInUp>
-        <StaggerContainer
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          staggerDelay={0.1}
-        >
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
           {/* Customer Images */}
           <StaggerItem>
-            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
-              <Image
-                src="/tramhuong-sonhong/customers-1.jpg"
-                alt="Khách hàng tại showroom"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
+            <ImperialCard className="p-0 bg-transparent" color="light">
+              <div className="relative aspect-[4/3] cursor-pointer transition-transform duration-300 hover:scale-105">
+                <Image
+                  src="/tramhuong-sonhong/customers-1.jpg"
+                  alt="Khách hàng tại showroom"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </ImperialCard>
           </StaggerItem>
 
           <StaggerItem>
-            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
-              <Image
-                src="/tramhuong-sonhong/customers-2.jpg"
-                alt="Khách hàng tham quan showroom"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
+            <ImperialCard className="p-0 bg-transparent" color="light">
+              <div className="relative aspect-[4/3] cursor-pointer transition-transform duration-300 hover:scale-105">
+                <Image
+                  src="/tramhuong-sonhong/customers-2.jpg"
+                  alt="Khách hàng tham quan showroom"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </ImperialCard>
           </StaggerItem>
 
           <StaggerItem>
-            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
-              <Image
-                src="/tramhuong-sonhong/customer-3.jpg"
-                alt="Khách hàng tại triển lãm"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
+            <ImperialCard className="p-0 bg-transparent" color="light">
+              <div className="relative aspect-[4/3] cursor-pointer transition-transform duration-300 hover:scale-105">
+                <Image
+                  src="/tramhuong-sonhong/customer-3.jpg"
+                  alt="Khách hàng tại triển lãm"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </ImperialCard>
           </StaggerItem>
 
           <StaggerItem>
-            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
-              <Image
-                src="/tramhuong-sonhong/customer-4.jpg"
-                alt="Khách hàng tại triển lãm"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
+            <ImperialCard className="p-0 bg-transparent" color="light">
+              <div className="relative aspect-[4/3] cursor-pointer transition-transform duration-300 hover:scale-105">
+                <Image
+                  src="/tramhuong-sonhong/customer-4.jpg"
+                  alt="Khách hàng tại triển lãm"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </ImperialCard>
           </StaggerItem>
 
           {/* Expo Images */}
           <StaggerItem>
-            <div className="relative aspect-[4/3] border border-neutral-700 hover:border-neutral-600 transition-colors cursor-pointer hover:scale-105 duration-300 rounded-lg overflow-hidden">
-              <Image
-                src="/tramhuong-sonhong/caexpo-1.jpg"
-                alt="Triển lãm CAEXPO"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
+            <ImperialCard className="p-0 bg-transparent" color="light">
+              <div className="relative aspect-[4/3] cursor-pointer transition-transform duration-300 hover:scale-105">
+                <Image
+                  src="/tramhuong-sonhong/caexpo-1.jpg"
+                  alt="Triển lãm CAEXPO"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </ImperialCard>
           </StaggerItem>
         </StaggerContainer>
       </div>
 
       <SlideInUp>
-        <div className="bg-primary-600 -mx-12 px-12 py-20 border-t border-primary-500">
+        <ImperialCard
+          variant="outlined"
+          className="p-16 bg-white/10 backdrop-blur-sm border-white/20"
+        >
           <div className="text-center">
-            <h2 className="font-serif text-5xl font-light mb-8 text-neutral-900">
+            <h2 className="font-serif text-5xl font-light mb-8 text-neutral-100">
               Tài Liệu Đặt Hàng
             </h2>
-            <p className="font-sans text-xl text-neutral-800 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Mỗi tác phẩm đặt làm đều được ghi lại từ khâu ý tưởng đến hoàn
-              thiện.
+            <ImperialDivider variant="lotus" className="mb-8" />
+            <p className="font-sans text-xl text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Mỗi tác phẩm đặt làm đều được ghi lại từ khâu ý tưởng đến hoàn thiện.
             </p>
             <ScaleIn delay={0.3}>
-              <button className="bg-neutral-900 text-neutral-50 font-medium px-12 py-4 hover:bg-neutral-800 transition-colors text-lg font-sans">
+              <button className="bg-accent-600 hover:bg-accent-700 text-neutral-50 font-medium px-12 py-4 transition-colors text-lg font-sans">
                 Xem Bộ Sưu Tập Quy Trình
               </button>
             </ScaleIn>
           </div>
-        </div>
+        </ImperialCard>
       </SlideInUp>
     </div>
   );

@@ -9,11 +9,11 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import content, { type NavItem } from '@/config/content';
 
-interface ClientLayoutProps {
+interface ClientLayoutV2Props {
   children: React.ReactNode;
 }
 
-export default function ClientLayout({ children }: ClientLayoutProps) {
+export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const rawPathname = usePathname();
@@ -22,10 +22,28 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   // Locale can be made dynamic later.
   const currentLocale = 'vi';
 
-  const navItems = useMemo<NavItem[]>(() => content[currentLocale].navigation, [currentLocale]);
+  const navItems = useMemo<NavItem[]>(() => {
+    try {
+      const items = content[currentLocale]?.navigation || [];
+      console.log('ClientLayoutV2 - Loaded navItems:', items);
+      return items;
+    } catch (error) {
+      console.error('Error loading navigation items:', error);
+      return [];
+    }
+  }, [currentLocale]);
 
-  const isAccordionPath = navItems.some((item) => item.path === pathname);
-  const currentNav = navItems.find((item) => item.path === pathname) ?? navItems[0];
+  const isAccordionPath = useMemo(() => {
+    const result = navItems.length > 0 && navItems.some((item) => item.path === pathname);
+    console.log('ClientLayoutV2 - isAccordionPath:', result, 'pathname:', pathname);
+    return result;
+  }, [navItems, pathname]);
+
+  const currentNav = useMemo(() => {
+    const nav = navItems.find((item) => item.path === pathname) ?? navItems[0];
+    console.log('ClientLayoutV2 - currentNav:', nav);
+    return nav;
+  }, [navItems, pathname]);
 
   const renderChildren = (key: string) => {
     if (isValidElement(children)) {
@@ -45,9 +63,24 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     setIsMenuOpen(false);
   };
 
+  // Early return for non-accordion paths with fallback
   if (!isAccordionPath) {
-    return <div className="min-h-screen bg-neutral-900 text-neutral-50 w-full">{children}</div>;
+    return <div className="min-h-screen bg-neutral-50 text-neutral-900 w-full">{children}</div>;
   }
+
+  // Safety check for navItems
+  if (!navItems || navItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-neutral-50 w-full flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-serif text-neutral-900 mb-4">Loading...</h1>
+          <p className="text-neutral-600">Please wait while we load the navigation.</p>
+        </div>
+      </div>
+    );
+  }
+
+  console.log('ClientLayoutV2 - Rendering main layout, navItems length:', navItems.length);
 
   return (
     <div className="min-h-screen overflow-x-none bg-neutral-50 font-sans w-full max-w-screen">
@@ -101,19 +134,24 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden fixed top-16 left-0 right-0 z-30 bg-neutral-50 border-b border-neutral-200 shadow-lg"
+            className="md:hidden fixed top-16 left-0 right-0 z-30 shadow-lg"
+            style={{ backgroundColor: '#F7F5EF' }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
           >
-            <ul className="flex flex-col divide-y divide-neutral-200">
+            <ul className="flex flex-col divide-y divide-neutral-300">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <button
                     type="button"
                     onClick={() => handleSectionClick(item.path)}
-                    className={`w-full text-left px-6 py-4 ${item.color ?? ''} ${item.textColor ?? ''}`}
+                    className="w-full text-left px-6 py-4 hover:bg-neutral-200 transition-colors !bg-transparent !text-neutral-900"
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: '#1C1C1C',
+                    }}
                   >
                     <span className="font-serif text-lg tracking-wide uppercase">{item.title}</span>
                   </button>
@@ -125,7 +163,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       </AnimatePresence>
 
       {/* Desktop Accordion Layout */}
-      <div className="hidden md:flex h-full">
+      <div className="hidden md:flex h-screen">
         {navItems.map((section) => {
           const isActive = pathname === section.path;
 
@@ -134,24 +172,24 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
               key={section.id}
               className={`relative ${!isActive ? 'cursor-pointer' : ''} ${section.color ?? ''} ${
                 section.textColor ?? ''
-              } overflow-hidden`}
+              }`}
               style={{
                 backgroundColor: section.color?.includes('bg-neutral-50')
-                  ? '#F7F5EF'
+                  ? '#F7F5EF' // original ivory-mist
                   : section.color?.includes('bg-brown-600')
-                    ? '#5E3B1E'
+                    ? '#1e4049' // cyphr-teal (much darker) - KEEPING THIS
                     : section.color?.includes('bg-accent-400')
-                      ? '#D9B45A'
+                      ? '#D9B45A' // original imperial-gold
                       : section.color?.includes('bg-brown-800')
-                        ? '#3C2F26'
+                        ? '#3C2F26' // original forest-umber
                         : section.color?.includes('bg-neutral-100')
-                          ? '#F7F5EF'
-                          : undefined,
+                          ? '#F7F5EF' // original ivory-mist
+                          : '#F7F5EF', // default to original ivory-mist
                 color: section.textColor?.includes('text-neutral-900')
-                  ? '#1C1C1C'
+                  ? '#1C1C1C' // original charcoal-ash
                   : section.textColor?.includes('text-accent-400')
-                    ? '#D9B45A'
-                    : undefined,
+                    ? '#D9B45A' // original imperial-gold
+                    : '#1C1C1C', // default to original charcoal-ash
               }}
               initial={false}
               animate={{
@@ -222,7 +260,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <div className="md:hidden pt-16 w-full max-w-screen">
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentNav.id}
+            key={currentNav?.id || 'default'}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -230,9 +268,27 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
             className="min-h-screen"
           >
             <div
-              className={`${currentNav.color ?? ''} ${currentNav.textColor ?? ''} p-6 pb-32 min-h-full`}
+              className={`${currentNav?.color ?? 'bg-neutral-50'} ${currentNav?.textColor ?? 'text-neutral-900'} p-6 pb-32 min-h-full`}
+              style={{
+                backgroundColor: currentNav?.color?.includes('bg-neutral-50')
+                  ? '#F7F5EF' // original ivory-mist
+                  : currentNav?.color?.includes('bg-brown-600')
+                    ? '#1e4049' // cyphr-teal (much darker) - KEEPING THIS
+                    : currentNav?.color?.includes('bg-accent-400')
+                      ? '#D9B45A' // original imperial-gold
+                      : currentNav?.color?.includes('bg-brown-800')
+                        ? '#3C2F26' // original forest-umber
+                        : currentNav?.color?.includes('bg-neutral-100')
+                          ? '#F7F5EF' // original ivory-mist
+                          : '#F7F5EF', // default to original ivory-mist
+                color: currentNav?.textColor?.includes('text-neutral-900')
+                  ? '#1C1C1C' // original charcoal-ash
+                  : currentNav?.textColor?.includes('text-accent-400')
+                    ? '#D9B45A' // original imperial-gold
+                    : '#1C1C1C', // default to original charcoal-ash
+              }}
             >
-              {renderChildren(`mobile-${currentNav.path}`)}
+              {renderChildren(`mobile-${currentNav?.path || '/'}`)}
             </div>
           </motion.div>
         </AnimatePresence>
