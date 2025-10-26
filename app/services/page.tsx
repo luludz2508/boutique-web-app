@@ -27,10 +27,10 @@ export function ServicesContent() {
             <span className="font-normal text-accent-400">{pageContent.subtitle}</span>
           </h1>
         </TextReveal>
-        <FadeIn delay={0.5}>
+        <FadeIn delay={0.2}>
           <ImperialDivider className="mb-8" />
         </FadeIn>
-        <FadeInUp delay={0.8}>
+        <FadeInUp delay={0.3}>
           <p className="font-sans text-lg text-neutral-300 leading-relaxed max-w-3xl mx-auto">
             {pageContent.description}
           </p>
@@ -76,7 +76,7 @@ export function ServicesContent() {
                   </h4>
                   <div className="space-y-2">
                     {service.process.map((step, idx) => (
-                      <FadeInLeft key={idx} delay={idx * 0.1}>
+                      <FadeInLeft key={idx} delay={idx * 0.05}>
                         <div className="flex items-start space-x-3">
                           <div className="w-5 h-5 bg-accent-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
@@ -124,8 +124,8 @@ export function ServicesContent() {
                 <StaggerItem key={index}>
                   <div className={`relative ${pkg.highlight ? 'lg:scale-105' : ''}`}>
                     {pkg.highlight && (
-                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <div className="bg-gradient-to-r from-accent-500 to-accent-600 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wider">
+                      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                        <div className="bg-gradient-to-r from-accent-500 to-accent-600 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wider shadow-lg">
                           Phổ Biến
                         </div>
                       </div>

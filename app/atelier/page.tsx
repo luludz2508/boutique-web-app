@@ -30,10 +30,10 @@ export function AtelierContent() {
             <span className="font-normal text-accent-700">{pageContent.subtitle}</span>
           </h1>
         </TextReveal>
-        <FadeIn delay={0.5}>
+        <FadeIn delay={0.2}>
           <ImperialDivider className="mb-8" />
         </FadeIn>
-        <FadeInUp delay={0.8}>
+        <FadeInUp delay={0.3}>
           <p className="font-sans text-lg text-neutral-600 leading-relaxed max-w-2xl mx-auto">
             {pageContent.description}
           </p>
@@ -47,7 +47,7 @@ export function AtelierContent() {
               {pageContent.locationTitle}
             </h2>
           )}
-          <ImperialCard className="p-8 bg-gradient-to-br from-accent-50 to-accent-100">
+          <ImperialCard className="p-8 bg-gradient-to-br from-accent-100 to-accent-200">
             <StaggerContainer className="space-y-8" staggerDelay={0.15}>
               {pageContent.mainAtelierTitle && pageContent.mainAtelierAddress && (
                 <StaggerItem>
@@ -183,8 +183,8 @@ export function AtelierContent() {
             />
           </ScaleIn>
 
-          <FadeInUp delay={0.3}>
-            <ImperialCard className="p-8 bg-gradient-to-br from-accent-50 to-accent-100">
+          <FadeInUp delay={0.1}>
+            <ImperialCard className="p-8 bg-gradient-to-br from-accent-100 to-accent-200">
               <h3 className="font-serif text-2xl font-light mb-6 text-neutral-900">
                 {pageContent.scheduleTitle || 'Đặt Lịch Tham Quan'}
               </h3>
@@ -225,7 +225,7 @@ export function AtelierContent() {
                   href="https://www.facebook.com/tramhuongsonhong.vn"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-accent-200 hover:bg-accent-300 text-accent-800 font-medium py-4 transition-colors font-sans inline-block text-center"
+                  className="w-full bg-accent-800 hover:bg-accent-500 text-accent-100 font-medium py-4 transition-colors font-sans inline-block text-center"
                 >
                   {pageContent.submitButton || 'Gửi Yêu Cầu'}
                 </a>
@@ -249,7 +249,7 @@ export function AtelierContent() {
               {pageContent.consultationDescription ||
                 'Dành cho những người sưu tầm và chuyên gia muốn có sự hướng dẫn cá nhân hóa trong việc xây dựng bộ sưu tập trầm hương của họ.'}
             </p>
-            <ScaleIn delay={0.3}>
+            <ScaleIn delay={0.1}>
               <a
                 href="https://www.facebook.com/tramhuongsonhong.vn"
                 target="_blank"

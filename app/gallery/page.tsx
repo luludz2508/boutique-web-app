@@ -23,10 +23,10 @@ export function GalleryContent() {
             <span className="font-normal text-accent-400">Trầm Hương</span>
           </h1>
         </TextReveal>
-        <FadeIn delay={0.5}>
+        <FadeIn delay={0.2}>
           <ImperialDivider className="mb-8" />
         </FadeIn>
-        <FadeInUp delay={0.8}>
+        <FadeInUp delay={0.3}>
           <p className="font-sans text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto">
             Bộ sưu tập hình ảnh được tuyển chọn về tác phẩm, quy trình sản xuất và không gian nơi
             nghệ thuật trầm hương được tạo nên.
@@ -129,7 +129,7 @@ export function GalleryContent() {
             <p className="font-sans text-xl text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed">
               Mỗi tác phẩm đặt làm đều được ghi lại từ khâu ý tưởng đến hoàn thiện.
             </p>
-            <ScaleIn delay={0.3}>
+            <ScaleIn delay={0.1}>
               <button className="bg-accent-600 hover:bg-accent-700 text-neutral-50 font-medium px-12 py-4 transition-colors text-lg font-sans">
                 Xem Bộ Sưu Tập Quy Trình
               </button>

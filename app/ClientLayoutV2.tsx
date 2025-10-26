@@ -117,7 +117,7 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
         className="hidden md:block fixed top-8 left-8 z-50"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div
           className="bg-neutral-50 border border-neutral-300 px-6 py-3 hover:border-accent-500 transition-colors cursor-pointer flex items-center gap-3"
@@ -242,7 +242,7 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 50 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
+                      transition={{ duration: 0.6, delay: 0.1 }}
                       className="absolute inset-0 overflow-y-auto scrollbar-hide"
                       style={{
                         scrollbarWidth: 'none',

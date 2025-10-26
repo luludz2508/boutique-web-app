@@ -49,10 +49,10 @@ export function CollectionContent() {
             <span className="font-normal text-white/80">{pageContent.subtitle}</span>
           </h1>
         </TextReveal>
-        <FadeIn delay={0.5}>
+        <FadeIn delay={0.2}>
           <DrawLine className="w-32 mx-auto mb-8 bg-white/60" />
         </FadeIn>
-        <FadeInUp delay={0.8}>
+        <FadeInUp delay={0.3}>
           <p className="font-sans text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
             {pageContent.description}
           </p>
@@ -84,30 +84,33 @@ export function CollectionContent() {
           {collectionItems && collectionItems.length > 0 ? (
             collectionItems.map((item, index) => (
               <StaggerItem key={`collection-item-${index}`}>
-                <Link href="/products">
-                  <div className="group bg-white/10 backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-xl hover:shadow-white/10 rounded-lg overflow-hidden cursor-pointer">
-                    <div className="aspect-square relative overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-serif text-xl font-light mb-2 text-white group-hover:text-white/90 transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-white/80 text-sm mb-4 line-clamp-2">{item.description}</p>
-                      <div className="flex items-center justify-between">
+                <div className="group">
+                  {/* Collection Image */}
+                  <div className="aspect-square relative overflow-hidden mb-6">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+
+                  {/* Collection Content - No Background */}
+                  <div className="space-y-4">
+                    <h3 className="font-serif text-xl font-light text-white group-hover:text-white/90 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/80 text-sm leading-relaxed">{item.description}</p>
+                    <Link href="/products" className="block">
+                      <div className="flex items-center justify-between group-hover:opacity-80 transition-opacity">
                         <span className="font-mono text-lg font-semibold text-white">
                           Xem Sản Phẩm
                         </span>
                         <ArrowRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
                       </div>
-                    </div>
+                    </Link>
                   </div>
-                </Link>
+                </div>
               </StaggerItem>
             ))
           ) : (

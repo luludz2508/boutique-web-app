@@ -119,10 +119,10 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
                 <span className="font-normal text-accent-400">{pageContent.subtitle}</span>
               </h1>
             </TextReveal>
-            <FadeIn delay={0.3}>
+            <FadeIn delay={0.1}>
               <ImperialDivider className="mb-6 lg:mb-8" />
             </FadeIn>
-            <FadeInUp delay={0.5}>
+            <FadeInUp delay={0.2}>
               <p className="font-sans text-base lg:text-lg text-neutral-300 leading-relaxed max-w-3xl mx-auto mb-4">
                 {pageContent.description}
               </p>
@@ -135,7 +135,7 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
           </div>
 
           {/* Filters Section */}
-          <FadeInUp delay={0.3}>
+          <FadeInUp delay={0.1}>
             <div className="max-w-6xl mx-auto px-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 lg:p-8 shadow-lg">
                 <ProductFilters productTypes={productTypes} totalProducts={allProducts.length} />

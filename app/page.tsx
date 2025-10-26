@@ -29,15 +29,15 @@ export function HomeContent() {
             <span className="font-normal text-accent-600">{pageContent.subtitle}</span>
           </h1>
         </TextReveal>
-        <FadeIn delay={0.5}>
+        <FadeIn delay={0.2}>
           <DrawLine className="w-32 mx-auto mb-8" />
         </FadeIn>
-        <FadeInUp delay={0.8}>
+        <FadeInUp delay={0.3}>
           <p className="font-sans text-lg text-neutral-600 leading-relaxed max-w-2xl mx-auto text-center mb-10">
             {pageContent.description}
           </p>
         </FadeInUp>
-        <FadeInUp delay={0.8}>
+        <FadeInUp delay={0.3}>
           <div className="flex justify-center">
             <Link
               href="/products"
@@ -152,7 +152,7 @@ export function HomeContent() {
               chính xác của đổi mới hiện đại, và tâm hồn của nghệ nhân chân chính.
             </p>
           </div>
-          <ScaleIn delay={0.3}>
+          <ScaleIn delay={0.1}>
             <div className="mt-12 p-8 bg-accent-50 border-l-4 border-accent-600 shadow-lg">
               <p className="font-serif text-lg text-accent-800 italic leading-relaxed">
                 "Trong từng thớ gỗ, từng đường cong kim loại, chúng tôi tìm thấy câu chuyện chờ được

@@ -15,15 +15,8 @@ export function MapComponent({
 }: MapComponentProps) {
   const [mapError, setMapError] = useState(false);
 
-  // Generate a proper Google Maps embed URL
-  const generateMapUrl = (address: string) => {
-    const encodedAddress = encodeURIComponent(address);
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWWgU6xqarR2Y&q=${encodedAddress}`;
-  };
-
-  // Fallback URL for the specific address - Da Nang location
-  const fallbackUrl =
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.856168698467!2d108.24999!3d16.0544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219c792dfa7a9%3A0x4b0c3e5c8b8b8b8b!2zNjgwIFbDvSBHeeG6pXUgR2nDqmFwLCBQLktoeeG7gWUgTeG7mSwgcXXhuq1uIE5nxrDhu51uIEjhu5kgU8ahbiwgxJDDtG5nIE5hbSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1703123456789';
+  // Google Maps search URL
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 
   const handleMapError = () => {
     setMapError(true);
@@ -31,42 +24,43 @@ export function MapComponent({
 
   if (mapError) {
     return (
-      <div
-        className={`bg-neutral-200 h-96 border border-neutral-300 rounded-lg overflow-hidden flex items-center justify-center ${className}`}
-      >
-        <div className="text-center text-neutral-600">
-          <div className="text-4xl mb-4">📍</div>
-          <h3 className="font-serif text-xl mb-2">Bản Đồ Showroom</h3>
-          <p className="text-sm mb-4">680 Võ Nguyên Giáp, P.Khuê Mỹ</p>
-          <p className="text-sm">quận Ngũ Hành Sơn, Đà Nẵng</p>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-4 px-4 py-2 bg-accent-400 text-neutral-900 rounded hover:bg-accent-500 transition-colors"
+      <div className={`relative ${className}`}>
+        <div className="relative text-right w-full h-0 pb-[66.66666666666666%]">
+          <div
+            className="overflow-hidden bg-gray-200 w-full h-full absolute top-0 left-0 border border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors"
+            onClick={() => window.open(mapsUrl, '_blank')}
           >
-            Mở Google Maps
-          </a>
+            <div className="text-center text-gray-600 p-8">
+              <div className="text-6xl mb-4">📍</div>
+              <h3 className="font-serif text-2xl mb-4">{title}</h3>
+              <p className="text-lg mb-2 font-sans">680 Võ Nguyên Giáp, P.Khuê Mỹ</p>
+              <p className="text-lg mb-6 font-sans">quận Ngũ Hành Sơn, Đà Nẵng</p>
+              <div className="text-sm text-gray-500 font-sans">Nhấp để mở Google Maps</div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      className={`bg-neutral-200 h-96 border border-neutral-300 rounded-lg overflow-hidden ${className}`}
-    >
-      <iframe
-        src={fallbackUrl}
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title={title}
-        onError={handleMapError}
-      />
+    <div className={`relative ${className}`}>
+      <div className="relative text-right w-full h-0 pb-[66.66666666666666%]">
+        <div className="overflow-hidden bg-none w-full h-full absolute top-0 left-0">
+          <iframe
+            className="w-full h-full absolute top-0 left-0"
+            frameBorder="0"
+            scrolling="no"
+            marginHeight={0}
+            marginWidth={0}
+            src="https://maps.google.com/maps?width=600&height=400&hl=en&q=680%20v%C3%B5%20nguy%C3%AAn%20gi%C3%A1p&t=&z=13&ie=UTF8&iwloc=B&output=embed"
+            title={title}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            onError={handleMapError}
+          />
+        </div>
+      </div>
     </div>
   );
 }
