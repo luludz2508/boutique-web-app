@@ -10,19 +10,25 @@ interface BackgroundImageProps {
 }
 
 export function BackgroundImage({ config, className = '', children }: BackgroundImageProps) {
-  if (!config?.image) {
+  if (!config?.image && !config?.gradient) {
     return <div className={className}>{children}</div>;
   }
 
-  const backgroundStyle: React.CSSProperties = {
-    backgroundImage: `url(${config.image})`,
-    backgroundRepeat: config.repeat ? 'repeat' : 'no-repeat',
-    backgroundPosition: config.position || 'center',
-    backgroundSize: config.size || 'cover',
-  };
+  const backgroundStyle: React.CSSProperties = {};
+
+  if (config.image) {
+    backgroundStyle.backgroundImage = `url(${config.image})`;
+    backgroundStyle.backgroundRepeat = config.repeat ? 'repeat' : 'no-repeat';
+    backgroundStyle.backgroundPosition = config.position || 'center';
+    backgroundStyle.backgroundSize = config.size || 'cover';
+  }
+
+  if (config.gradient) {
+    backgroundStyle.background = config.gradient;
+  }
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`absolute inset-0 ${className}`}>
       <div
         className="absolute inset-0"
         style={{
@@ -30,7 +36,7 @@ export function BackgroundImage({ config, className = '', children }: Background
           opacity: config.opacity || 1,
         }}
       />
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 h-full w-full">{children}</div>
     </div>
   );
 }

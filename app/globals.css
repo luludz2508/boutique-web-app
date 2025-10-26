@@ -20,6 +20,23 @@ body {
   position: relative;
 }
 
+/* Services page specific styles */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Smooth transitions for service cards */
+.service-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+}
+
 /* Suppress hydration warnings for browser extension attributes */
 [data-suppress-hydration-warning] {
   /* This helps suppress hydration warnings caused by browser extensions */

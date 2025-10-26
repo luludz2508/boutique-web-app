@@ -65,6 +65,7 @@ export interface BackgroundConfig {
   opacity?: number;
   position?: string;
   size?: string;
+  gradient?: string;
 }
 
 export interface NavItem {
@@ -177,7 +178,11 @@ const content: ContentConfig = {
         title: 'DỊCH VỤ',
         path: '/services',
         color: 'bg-accent-400',
-        textColor: 'text-neutral-900',
+        textColor: 'text-neutral-100',
+        background: {
+          gradient:
+            'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #404040 50%, #2d2d2d 75%, #1a1a1a 100%)',
+        },
       },
       {
         id: 'gallery',

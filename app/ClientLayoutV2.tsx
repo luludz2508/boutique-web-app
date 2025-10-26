@@ -43,6 +43,35 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
     return nav;
   }, [navItems, pathname]);
 
+  // Helper function to get text color from config
+  const getTextColor = (textColor?: string) => {
+    if (!textColor) return '#1C1C1C';
+
+    // Map Tailwind classes to actual colors
+    if (textColor.includes('text-neutral-100')) return '#F5F5F5';
+    if (textColor.includes('text-neutral-900')) return '#1C1C1C';
+    if (textColor.includes('text-accent-400')) return '#D9B45A';
+
+    return '#1C1C1C'; // default
+  };
+
+  // Helper function to get background color from config
+  const getBackgroundColor = (color?: string, background?: any) => {
+    // If gradient is configured, let BackgroundImage handle it
+    if (background?.gradient) return undefined;
+
+    if (!color) return '#F7F5EF';
+
+    // Map Tailwind classes to actual colors
+    if (color.includes('bg-neutral-50')) return '#F7F5EF';
+    if (color.includes('bg-brown-600')) return '#1e4049';
+    if (color.includes('bg-accent-400')) return '#D9B45A';
+    if (color.includes('bg-brown-800')) return '#3C2F26';
+    if (color.includes('bg-neutral-100')) return '#F7F5EF';
+
+    return '#F7F5EF'; // default
+  };
+
   const renderChildren = (key: string) => {
     if (isValidElement(children)) {
       return cloneElement(children, { key });
@@ -173,22 +202,8 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
                 section.textColor ?? ''
               } overflow-hidden`}
               style={{
-                backgroundColor: section.color?.includes('bg-neutral-50')
-                  ? '#F7F5EF' // original ivory-mist
-                  : section.color?.includes('bg-brown-600')
-                    ? '#1e4049' // cyphr-teal (much darker) - KEEPING THIS
-                    : section.color?.includes('bg-accent-400')
-                      ? '#D9B45A' // original imperial-gold
-                      : section.color?.includes('bg-brown-800')
-                        ? '#3C2F26' // original forest-umber
-                        : section.color?.includes('bg-neutral-100')
-                          ? '#F7F5EF' // original ivory-mist
-                          : '#F7F5EF', // default to original ivory-mist
-                color: section.textColor?.includes('text-neutral-900')
-                  ? '#1C1C1C' // original charcoal-ash
-                  : section.textColor?.includes('text-accent-400')
-                    ? '#D9B45A' // original imperial-gold
-                    : '#1C1C1C', // default to original charcoal-ash
+                backgroundColor: getBackgroundColor(section.color, section.background),
+                color: getTextColor(section.textColor),
               }}
               initial={false}
               animate={{
@@ -200,7 +215,7 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
               }}
               onClick={!isActive ? () => handleSectionClick(section.path) : undefined}
             >
-              <BackgroundImage config={section.background} className="absolute inset-0">
+              <BackgroundImage config={section.background}>
                 {/* Collapsed State - Vertical Title */}
                 <AnimatePresence>
                   {!isActive && (
@@ -272,22 +287,8 @@ export default function ClientLayoutV2({ children }: ClientLayoutV2Props) {
               <div
                 className={`${currentNav?.color ?? 'bg-neutral-50'} ${currentNav?.textColor ?? 'text-neutral-900'} p-6 pb-32 min-h-full`}
                 style={{
-                  backgroundColor: currentNav?.color?.includes('bg-neutral-50')
-                    ? '#F7F5EF' // original ivory-mist
-                    : currentNav?.color?.includes('bg-brown-600')
-                      ? '#1e4049' // cyphr-teal (much darker) - KEEPING THIS
-                      : currentNav?.color?.includes('bg-accent-400')
-                        ? '#D9B45A' // original imperial-gold
-                        : currentNav?.color?.includes('bg-brown-800')
-                          ? '#3C2F26' // original forest-umber
-                          : currentNav?.color?.includes('bg-neutral-100')
-                            ? '#F7F5EF' // original ivory-mist
-                            : '#F7F5EF', // default to original ivory-mist
-                  color: currentNav?.textColor?.includes('text-neutral-900')
-                    ? '#1C1C1C' // original charcoal-ash
-                    : currentNav?.textColor?.includes('text-accent-400')
-                      ? '#D9B45A' // original imperial-gold
-                      : '#1C1C1C', // default to original charcoal-ash
+                  backgroundColor: getBackgroundColor(currentNav?.color, currentNav?.background),
+                  color: getTextColor(currentNav?.textColor),
                 }}
               >
                 {renderChildren(`mobile-${currentNav?.path || '/'}`)}
