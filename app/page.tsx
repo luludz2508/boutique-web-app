@@ -57,7 +57,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <div className="max-w-7xl py-20 px-4 lg:px-8 w-full relative z-10">
+        <div className="max-w-7xl py-10 px-4 lg:px-12 w-full relative z-10">
           <div className="grid md:grid-cols-2 gap-20 py-16">
             <FadeInLeft>
               <h2 className="font-serif text-4xl font-light mb-8 text-neutral-900">
@@ -101,7 +101,7 @@ export default function HomePage() {
       {/* Testimonials Section */}
       <section id="testimonials" className="w-full">
         <SlideInUp>
-          <div className="bg-gradient-to-br from-accent-600 to-accent-700 py-20 px-4 lg:px-8">
+          <div className="bg-gradient-to-br from-accent-600 to-accent-700 py-20 px-4 lg:px-12">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="font-serif text-5xl font-light text-neutral-50 mb-4">
@@ -206,14 +206,14 @@ export default function HomePage() {
       </section>
 
       {/* Collections Section */}
-      <section id="collections" className="min-h-screen py-20 px-4 lg:px-8 bg-neutral-900 w-full">
+      <section id="collections" className="min-h-screen py-20 px-4 lg:px-12 bg-neutral-900 w-full">
         <div className="max-w-7xl mx-auto">
           <CollectionContent />
         </div>
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="min-h-screen py-20 px-4 lg:px-8 bg-neutral-900 w-full">
+      <section id="gallery" className="min-h-screen py-20 px-4 lg:px-12 bg-neutral-900 w-full">
         <div className="max-w-7xl mx-auto">
           <GalleryContent />
         </div>

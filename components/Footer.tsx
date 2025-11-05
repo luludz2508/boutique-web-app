@@ -3,7 +3,11 @@
 import { MapComponent } from '@/components/MapComponent';
 import { Clock, Mail, MapPin, Phone, Instagram, Globe } from 'lucide-react';
 import content from '@/config/content';
-import { FadeInUp, StaggerContainer, StaggerItem } from '@/components/animations/viewport-animations';
+import {
+  FadeInUp,
+  StaggerContainer,
+  StaggerItem,
+} from '@/components/animations/viewport-animations';
 
 export function Footer() {
   const currentLocale = 'vi';
@@ -147,10 +151,7 @@ export function Footer() {
               </h2>
               <div className="aspect-square lg:aspect-[4/3] rounded-lg overflow-hidden border border-neutral-700">
                 <MapComponent
-                  address={
-                    atelierContent.mainAtelierAddress ||
-                    '680 Võ Nguyên Giáp, P.Khuê Mỹ, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam'
-                  }
+                  address={'680 Võ Nguyên Giáp, P.Khuê Mỹ, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam'}
                   title="Trầm Hương Sơn Hồng - Showroom Location"
                 />
               </div>
@@ -168,4 +169,3 @@ export function Footer() {
     </footer>
   );
 }
-

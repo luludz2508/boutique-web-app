@@ -9,7 +9,7 @@ interface MapComponentProps {
 }
 
 export function MapComponent({
-  address,
+  address = '680 Võ Nguyên Giáp, P.Khuê Mỹ, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam',
   title = 'Location Map',
   className = '',
 }: MapComponentProps) {
@@ -45,22 +45,15 @@ export function MapComponent({
 
   return (
     <div className={`relative ${className}`}>
-      <div className="relative text-right w-full h-0 pb-[66.66666666666666%]">
-        <div className="overflow-hidden bg-none w-full h-full absolute top-0 left-0">
-          <iframe
-            className="w-full h-full absolute top-0 left-0"
-            frameBorder="0"
-            scrolling="no"
-            marginHeight={0}
-            marginWidth={0}
-            src="https://maps.google.com/maps?width=600&height=400&hl=en&q=680%20v%C3%B5%20nguy%C3%AAn%20gi%C3%A1p&t=&z=13&ie=UTF8&iwloc=B&output=embed"
-            title={title}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            onError={handleMapError}
-          />
-        </div>
-      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.6253221121915!2d108.24981027409261!3d16.033008340408653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421725e17d91fb%3A0xcab5bcfe59e84bb!2zVHLhuqdtIGjGsMahbmcgU8ahbiBI4buTbmc!5e0!3m2!1svi!2s!4v1762370543478!5m2!1svi!2s"
+        width="600"
+        height="450"
+        allowFullScreen={true}
+        loading="lazy"
+        className="border-0"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
     </div>
   );
 }
