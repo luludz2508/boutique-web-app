@@ -167,22 +167,11 @@ const content: ContentConfig = {
         },
       },
       {
-        id: 'collection',
-        title: 'SẢN PHẨM',
-        path: '/collection',
+        id: 'collections',
+        title: 'BỘ SƯU TẬP',
+        path: '/collections',
         color: 'bg-brown-600',
         textColor: 'text-accent-400',
-      },
-      {
-        id: 'services',
-        title: 'DỊCH VỤ',
-        path: '/services',
-        color: 'bg-accent-400',
-        textColor: 'text-neutral-100',
-        background: {
-          gradient:
-            'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #404040 50%, #2d2d2d 75%, #1a1a1a 100%)',
-        },
       },
       {
         id: 'gallery',
@@ -190,13 +179,6 @@ const content: ContentConfig = {
         path: '/gallery',
         color: 'bg-brown-800',
         textColor: 'text-accent-400',
-      },
-      {
-        id: 'atelier',
-        title: 'VỀ CHÚNG TÔI',
-        path: '/atelier',
-        color: 'bg-neutral-100',
-        textColor: 'text-neutral-900',
       },
     ],
     home: {

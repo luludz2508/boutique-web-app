@@ -102,7 +102,7 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
             size="lg"
             className="gap-2 bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20 hover:border-white/30 shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <Link href="/collection">
+            <Link href="/#collection">
               <ArrowLeft className="h-5 w-5" />
               Quay Lại Collection
             </Link>

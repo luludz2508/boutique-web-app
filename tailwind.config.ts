@@ -117,9 +117,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ['var(--font-playfair-display)'],
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-jetbrains-mono)'],
+        serif: ['var(--font-hahmlet)', 'serif'],
+        sans: ['var(--font-source-sans-3)', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',

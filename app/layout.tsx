@@ -1,15 +1,14 @@
 import type React from 'react';
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, Source_Sans_3, JetBrains_Mono } from 'next/font/google';
-import ClientLayout from './ClientLayout';
+import { Hahmlet, Source_Sans_3, JetBrains_Mono } from 'next/font/google';
 import './globals.css'; // Import globals.css at the top of the file
-import ClientLayoutV2 from './ClientLayoutV2';
+import { Navbar } from '@/components/Navbar';
 
 // Define font subsets and weights
-const cormorantGaramond = Cormorant_Garamond({
+const hahmlet = Hahmlet({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-cormorant-garamond',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-hahmlet',
 });
 
 const sourceSans3 = Source_Sans_3({
@@ -46,10 +45,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="vi"
-      className={`${cormorantGaramond.variable} ${sourceSans3.variable} ${jetbrainsMono.variable}`}
+      className={`${hahmlet.variable} ${sourceSans3.variable} ${jetbrainsMono.variable}`}
     >
-      <body suppressHydrationWarning={true}>
-        <ClientLayoutV2>{children}</ClientLayoutV2>
+      <body suppressHydrationWarning={true} className="overflow-x-hidden">
+        <Navbar />
+        {children}
       </body>
     </html>
   );
