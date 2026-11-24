@@ -1,86 +1,50 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BrushStroke, PaperFrame, Seal } from '@/components/ink';
+import { formatPrice, productPriceRange, toSentenceCase } from '@/lib/display';
 import type { ProductWithDetails } from '@/lib/db/products';
 
 interface ProductCardProps {
   product: ProductWithDetails;
 }
 
+/** Card price: "Liên hệ", a single price, or "Từ <min>" when variants differ. */
+export function cardPrice(product: Pick<ProductWithDetails, 'variants'>): string {
+  const range = productPriceRange(product.variants ?? []);
+  if (!range) return formatPrice(null);
+  return range.min === range.max ? formatPrice(range.min) : `Từ ${formatPrice(range.min)}`;
+}
+
 export function ProductCard({ product }: ProductCardProps) {
-  const primaryImage = product.images?.find((img) => img.is_primary) || product.images?.[0];
-  const minPrice =
-    product.variants && product.variants.length > 0
-      ? Math.min(...product.variants.map((v) => v.price))
-      : 0;
+  const image = product.images?.find((img) => img.is_primary) ?? product.images?.[0];
+  const name = toSentenceCase(product.name_vi);
 
   return (
-    <Link href={`/products/${product.slug}`}>
-      <Card className="h-full bg-white/10 backdrop-blur-sm border-white/20 hover:border-accent-400 transition-all cursor-pointer hover:shadow-xl hover:shadow-white/10">
-        {/* Product Image */}
-        <div className="relative aspect-square w-full overflow-hidden rounded-t-lg bg-white/5">
-          {primaryImage ? (
+    <Link href={`/products/${product.slug}`} className="group block text-ink">
+      <PaperFrame hoverLift>
+        <div className="relative aspect-square w-full overflow-hidden bg-paper-2">
+          {image ? (
             <Image
-              src={primaryImage.url}
-              alt={primaryImage.alt_text_vi || product.name_vi}
+              src={image.url}
+              alt={image.alt_text_vi || name}
               fill
-              className="object-cover hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              // scale hides the frame that is baked into many Haravan photos
+              className="scale-[1.12] object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.2,.7,.1,1)] group-hover:scale-[1.17]"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-neutral-300">
-              Không có hình ảnh
+            <div className="flex h-full items-center justify-center">
+              <Seal className="opacity-40" />
             </div>
           )}
         </div>
+      </PaperFrame>
 
-        <CardHeader>
-          <div className="flex items-start justify-between gap-2">
-            <CardTitle className="text-base line-clamp-2 text-neutral-100 font-serif font-light">
-              {product.name_vi}
-            </CardTitle>
-          </div>
-          {product.brand && (
-            <CardDescription className="text-neutral-300">{product.brand}</CardDescription>
-          )}
-        </CardHeader>
-
-        <CardContent>
-          {product.excerpt_vi && (
-            <p className="text-sm text-neutral-200 line-clamp-2">{product.excerpt_vi}</p>
-          )}
-
-          <div className="mt-3 flex flex-wrap gap-1">
-            {product.product_type && (
-              <Badge
-                variant="secondary"
-                className="text-xs bg-white/10 text-neutral-200 border-white/20"
-              >
-                {product.product_type}
-              </Badge>
-            )}
-          </div>
-        </CardContent>
-
-        <CardFooter>
-          <div className="w-full">
-            <p className="text-lg font-bold text-accent-400">
-              {minPrice > 0 ? `${minPrice.toLocaleString('vi-VN')} ₫` : 'Liên hệ'}
-            </p>
-            {product.variants && product.variants.length > 1 && (
-              <p className="text-xs text-neutral-300">{product.variants.length} phiên bản</p>
-            )}
-          </div>
-        </CardFooter>
-      </Card>
+      <h3 className="mt-4 line-clamp-3 font-display text-lg font-medium leading-snug sm:text-xl">{name}</h3>
+      <div className="my-2 h-[7px] w-[46px] transition-[width] duration-700 ease-[cubic-bezier(.2,.7,.1,1)] group-hover:w-[110px]">
+        <BrushStroke variant="ink" className="h-full w-full opacity-75" />
+      </div>
+      <p className="text-sm tracking-wide text-ink-2">{cardPrice(product)}</p>
     </Link>
   );
 }

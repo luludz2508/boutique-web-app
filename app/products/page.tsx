@@ -2,17 +2,8 @@ import { getAllProducts, getAllProductTypes } from '@/lib/db/products';
 import { ProductsGrid } from '@/components/products/products-grid';
 import { ProductFilters } from '@/components/products/product-filters';
 import { ProductPagination } from '@/components/products/product-pagination';
-import {
-  TextReveal,
-  FadeIn,
-  FadeInUp,
-  DrawLine,
-} from '@/components/animations/viewport-animations';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { BrushStroke, Reveal } from '@/components/ink';
 import content from '@/config/content';
-import { ImperialDivider } from '@/components/ui/imperial-elements';
 
 // Note: metadata cannot be exported from pages used in ClientLayout (accordion)
 // Metadata is defined in app/layout.tsx instead
@@ -93,92 +84,36 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
   const pageContent = content.vi.products;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-900 to-cyphr-teal">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-16">
-        {/* Back Button */}
-        <div className="mb-8 lg:mb-12">
-          <Button
-            asChild
-            size="lg"
-            className="gap-2 bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20 hover:border-white/30 shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            <Link href="/#collection">
-              <ArrowLeft className="h-5 w-5" />
-              Quay Lại Collection
-            </Link>
-          </Button>
-        </div>
+    <div className="mx-auto max-w-[1440px] px-5 pb-24 pt-28 text-ink md:px-[6vw] md:pt-36">
+      <header className="mb-12 md:mb-16">
+        <Reveal>
+          <p className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">
+            <span className="h-px w-8 bg-gold" />
+            Bộ sưu tập
+          </p>
+          <h1 className="font-display text-5xl font-light md:text-6xl">Sản phẩm</h1>
+          <BrushStroke variant="ink" className="mb-6 mt-5 w-52 opacity-85" />
+          <p className="max-w-2xl leading-relaxed text-ink-2">{pageContent.description}</p>
+        </Reveal>
+      </header>
 
-        <div className="space-y-12 lg:space-y-20">
-          {/* Header Section */}
-          <div className="text-center px-4">
-            <TextReveal>
-              <h1 className="font-serif text-4xl lg:text-6xl font-light mb-4 lg:mb-6 tracking-tight leading-tight text-neutral-100">
-                {pageContent.title}
-                <br />
-                <span className="font-normal text-accent-400">{pageContent.subtitle}</span>
-              </h1>
-            </TextReveal>
-            <FadeIn delay={0.1}>
-              <ImperialDivider className="mb-6 lg:mb-8" />
-            </FadeIn>
-            <FadeInUp delay={0.2}>
-              <p className="font-sans text-base lg:text-lg text-neutral-300 leading-relaxed max-w-3xl mx-auto mb-4">
-                {pageContent.description}
-              </p>
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-                <span className="font-sans text-sm font-medium text-neutral-200">
-                  Tìm thấy {totalProducts} sản phẩm
-                </span>
-              </div>
-            </FadeInUp>
-          </div>
+      <section className="mb-12 border-y border-ink/10 py-6">
+        <ProductFilters productTypes={productTypes} totalProducts={allProducts.length} />
+        <p className="mt-4 text-sm text-ink-2">
+          {totalProducts} sản phẩm
+          {searchQuery && <> cho &ldquo;{searchQuery}&rdquo;</>}
+          {typeFilter && <> trong &ldquo;{typeFilter}&rdquo;</>}
+        </p>
+      </section>
 
-          {/* Filters Section */}
-          <FadeInUp delay={0.1}>
-            <div className="max-w-6xl mx-auto px-4">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 lg:p-8 shadow-lg">
-                <ProductFilters productTypes={productTypes} totalProducts={allProducts.length} />
-
-                {/* Results Info */}
-                {(typeFilter || searchQuery) && (
-                  <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10">
-                    <div className="text-sm text-neutral-300 text-center">
-                      Đang hiển thị{' '}
-                      <span className="font-semibold text-accent-400">{totalProducts}</span> sản
-                      phẩm
-                      {searchQuery && (
-                        <span>
-                          {' '}
-                          cho "<span className="font-medium">{searchQuery}</span>"
-                        </span>
-                      )}
-                      {typeFilter && (
-                        <span>
-                          {' '}
-                          trong danh mục "<span className="font-medium">{typeFilter}</span>"
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </FadeInUp>
-
-          {/* Products Grid */}
-          <div className="px-4">
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 lg:p-8 shadow-lg">
-              <ProductsGrid products={paginatedProducts} />
-              <ProductPagination
-                currentPage={page}
-                totalPages={totalPages}
-                totalItems={totalProducts}
-                itemsPerPage={ITEMS_PER_PAGE}
-              />
-            </div>
-          </div>
-        </div>
+      <ProductsGrid products={paginatedProducts} />
+      <div className="mt-12">
+        <ProductPagination
+          currentPage={page}
+          totalPages={totalPages}
+          totalItems={totalProducts}
+          itemsPerPage={ITEMS_PER_PAGE}
+        />
       </div>
     </div>
   );

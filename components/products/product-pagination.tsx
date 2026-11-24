@@ -70,10 +70,10 @@ export function ProductPagination({
   return (
     <div className="flex flex-col items-center gap-4 py-8">
       {/* Items Info */}
-      <p className="text-sm text-neutral-400 text-center px-4">
-        Hiển thị <span className="font-medium text-neutral-200">{startItem}</span> đến{' '}
-        <span className="font-medium text-neutral-200">{endItem}</span> trong tổng số{' '}
-        <span className="font-medium text-neutral-200">{totalItems}</span> sản phẩm
+      <p className="px-4 text-center text-sm text-ink-2">
+        Hiển thị <span className="font-medium text-ink">{startItem}</span> đến{' '}
+        <span className="font-medium text-ink">{endItem}</span> trong tổng số{' '}
+        <span className="font-medium text-ink">{totalItems}</span> sản phẩm
       </p>
 
       {/* Pagination Controls */}
@@ -84,7 +84,7 @@ export function ProductPagination({
           size="icon"
           onClick={() => goToPage(1)}
           disabled={currentPage === 1}
-          className="bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700 disabled:opacity-50 hidden sm:flex"
+          className="rounded-none border-ink/20 bg-transparent text-ink hover:bg-paper-2 disabled:opacity-30 hidden sm:flex"
         >
           <ChevronsLeft className="h-4 w-4" />
         </Button>
@@ -95,7 +95,7 @@ export function ProductPagination({
           size="icon"
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700 disabled:opacity-50"
+          className="rounded-none border-ink/20 bg-transparent text-ink hover:bg-paper-2 disabled:opacity-30"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
@@ -104,7 +104,7 @@ export function ProductPagination({
         <div className="flex items-center gap-1">
           {getPageNumbers().map((page, index) =>
             page === '...' ? (
-              <span key={`ellipsis-${index}`} className="px-1 sm:px-2 text-neutral-400 text-sm">
+              <span key={`ellipsis-${index}`} className="px-1 text-sm text-ink-2 sm:px-2">
                 ...
               </span>
             ) : (
@@ -115,8 +115,8 @@ export function ProductPagination({
                 onClick={() => goToPage(page as number)}
                 className={`min-w-[32px] h-8 ${
                   currentPage === page
-                    ? 'bg-primary-600 hover:bg-primary-700 text-white border-primary-600'
-                    : 'bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700'
+                    ? 'rounded-none border-transparent bg-[url(/ink/seal-blank.webp)] bg-contain bg-center bg-no-repeat font-display text-base text-paper hover:opacity-90'
+                    : 'rounded-none border-transparent bg-transparent font-display text-base text-ink hover:bg-paper-2'
                 }`}
               >
                 {page}
@@ -131,7 +131,7 @@ export function ProductPagination({
           size="icon"
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700 disabled:opacity-50"
+          className="rounded-none border-ink/20 bg-transparent text-ink hover:bg-paper-2 disabled:opacity-30"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
@@ -142,7 +142,7 @@ export function ProductPagination({
           size="icon"
           onClick={() => goToPage(totalPages)}
           disabled={currentPage === totalPages}
-          className="bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700 disabled:opacity-50 hidden sm:flex"
+          className="rounded-none border-ink/20 bg-transparent text-ink hover:bg-paper-2 disabled:opacity-30 hidden sm:flex"
         >
           <ChevronsRight className="h-4 w-4" />
         </Button>

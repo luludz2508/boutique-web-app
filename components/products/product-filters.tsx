@@ -59,16 +59,16 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
       {/* Search Bar */}
       <form onSubmit={handleSearch} className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
+          <Search className="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-2" />
           <Input
             type="text"
             placeholder="Tìm kiếm sản phẩm..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 placeholder:text-neutral-400 focus:border-accent-400"
+            className="rounded-none border-0 border-b border-ink/30 bg-transparent pl-7 text-ink shadow-none placeholder:text-ink-2/70 focus-visible:border-gold focus-visible:ring-0"
           />
         </div>
-        <Button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white">
+        <Button type="submit" className="rounded-none bg-ink px-6 text-xs uppercase tracking-[.18em] text-paper hover:bg-black">
           Tìm kiếm
         </Button>
       </form>
@@ -77,15 +77,15 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
       <div className="flex flex-wrap items-center gap-3">
         {/* Product Type Filter */}
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-neutral-300">Loại:</span>
+          <span className="text-xs uppercase tracking-[.18em] text-ink-2">Loại:</span>
           <Select value={currentType} onValueChange={(value) => updateFilters('type', value)}>
-            <SelectTrigger className="w-[200px] bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20">
+            <SelectTrigger className="w-[200px] rounded-none border-0 border-b border-ink/30 bg-transparent text-ink shadow-none focus:ring-0">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white/10 backdrop-blur-sm border-white/20">
+            <SelectContent className="rounded-none border-ink/15 bg-paper text-ink">
               <SelectItem
                 value="all"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Tất cả ({totalProducts})
               </SelectItem>
@@ -93,7 +93,7 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
                 <SelectItem
                   key={type}
                   value={type}
-                  className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                  className="text-ink focus:bg-paper-2 focus:text-ink"
                 >
                   {type}
                 </SelectItem>
@@ -104,45 +104,45 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
 
         {/* Sort Filter */}
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-neutral-300">Sắp xếp:</span>
+          <span className="text-xs uppercase tracking-[.18em] text-ink-2">Sắp xếp:</span>
           <Select value={currentSort} onValueChange={(value) => updateFilters('sort', value)}>
-            <SelectTrigger className="w-[180px] bg-white/10 backdrop-blur-sm border-white/20 text-neutral-100 hover:bg-white/20">
+            <SelectTrigger className="w-[180px] rounded-none border-0 border-b border-ink/30 bg-transparent text-ink shadow-none focus:ring-0">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white/10 backdrop-blur-sm border-white/20">
+            <SelectContent className="rounded-none border-ink/15 bg-paper text-ink">
               <SelectItem
                 value="newest"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Mới nhất
               </SelectItem>
               <SelectItem
                 value="oldest"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Cũ nhất
               </SelectItem>
               <SelectItem
                 value="price-asc"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Giá tăng dần
               </SelectItem>
               <SelectItem
                 value="price-desc"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Giá giảm dần
               </SelectItem>
               <SelectItem
                 value="name-asc"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Tên A-Z
               </SelectItem>
               <SelectItem
                 value="name-desc"
-                className="text-neutral-100 focus:bg-white/20 focus:text-neutral-100"
+                className="text-ink focus:bg-paper-2 focus:text-ink"
               >
                 Tên Z-A
               </SelectItem>
@@ -156,7 +156,7 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="gap-2 text-neutral-300 hover:text-neutral-100 hover:bg-white/10"
+            className="gap-2 rounded-none text-ink-2 hover:bg-paper-2 hover:text-ink"
           >
             <X className="h-4 w-4" />
             Xóa bộ lọc
@@ -167,11 +167,11 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
       {/* Active Filters Display */}
       {currentType !== 'all' && (
         <div className="flex items-center gap-2">
-          <span className="text-sm text-neutral-400">Đang lọc:</span>
-          <Badge variant="secondary" className="gap-2 bg-white/10 text-neutral-100 border-white/20">
+          <span className="text-sm text-ink-2">Đang lọc:</span>
+          <Badge variant="secondary" className="gap-2 rounded-none border border-gold/50 bg-transparent font-normal text-ink">
             {currentType}
             <X
-              className="h-3 w-3 cursor-pointer hover:text-neutral-300"
+              className="h-3 w-3 cursor-pointer hover:text-seal"
               onClick={() => updateFilters('type', 'all')}
             />
           </Badge>

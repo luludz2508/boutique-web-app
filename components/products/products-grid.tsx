@@ -1,5 +1,6 @@
-import { ProductCard } from "./product-card";
-import type { ProductWithDetails } from "@/lib/db/products";
+import { Reveal } from '@/components/ink';
+import type { ProductWithDetails } from '@/lib/db/products';
+import { ProductCard } from './product-card';
 
 interface ProductsGridProps {
   products: ProductWithDetails[];
@@ -8,20 +9,17 @@ interface ProductsGridProps {
 export function ProductsGrid({ products }: ProductsGridProps) {
   if (products.length === 0) {
     return (
-      <div className="text-center py-16">
-        <p className="text-muted-foreground text-lg">
-          Không tìm thấy sản phẩm nào
-        </p>
-      </div>
+      <p className="py-16 text-center font-display text-2xl font-light text-ink-2">Không tìm thấy sản phẩm nào</p>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+    <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 lg:grid-cols-4">
+      {products.map((product, i) => (
+        <Reveal key={product.id} delayMs={(i % 4) * 60}>
+          <ProductCard product={product} />
+        </Reveal>
       ))}
     </div>
   );
 }
-
