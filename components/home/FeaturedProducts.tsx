@@ -36,7 +36,7 @@ export function FeaturedProducts({ products }: { products: ProductWithDetails[] 
       <div className="mt-14 text-center">
         <Link
           href="/products"
-          className="ink-sweep relative isolate inline-flex overflow-hidden border border-ink/50 px-8 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink"
+          className="ink-bloom inline-flex border border-ink/50 px-8 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink"
         >
           Xem tất cả sản phẩm
         </Link>

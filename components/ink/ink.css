@@ -159,7 +159,8 @@
   }
   .ink-paper,
   .ink-paper::after,
-  .ink-sweep::after { transition: none !important; }
+  .ink-bloom,
+  .ink-bloom::before { transition: none !important; }
   .ink-seal-lg.ink-stamp { transform: rotate(-4deg) !important; }
 }
 
@@ -194,17 +195,30 @@
 }
 .ink-hero-fade { opacity: 0; animation: ink-fade 1.2s var(--ink-ease) forwards; }
 @keyframes ink-fade { to { opacity: 1; } }
-/* outline button: a gold brush stroke sweeps through on hover */
-.ink-sweep::after {
+/* outline button: a faint ink wash spreads from the centre, like a drop soaking into paper */
+.ink-bloom {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: border-color 0.6s var(--ink-ease);
+}
+.ink-bloom::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -60% -20%;
   z-index: -1;
-  background: url('/ink/brush-gold.webp') center / 120% 140% no-repeat;
-  transform: translateX(-105%);
-  transition: transform 0.7s var(--ink-ease);
+  /* two offset soft blobs so the edge is uneven rather than a perfect circle */
+  background:
+    radial-gradient(closest-side at 42% 52%, rgba(28, 27, 25, 0.1), rgba(28, 27, 25, 0.05) 55%, transparent),
+    radial-gradient(closest-side at 60% 46%, rgba(28, 27, 25, 0.06), transparent 80%);
+  opacity: 0;
+  transform: scale(0.25);
+  transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
 }
-.ink-sweep:hover::after { transform: none; }
+.ink-bloom:hover,
+.ink-bloom:focus-visible { border-color: #1c1b19; }
+.ink-bloom:hover::before,
+.ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
 
 /* ---------- Marquee ---------- */
 .ink-marquee-track { display: inline-block; animation: ink-marquee 46s linear infinite; }

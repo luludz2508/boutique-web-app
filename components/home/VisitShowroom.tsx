@@ -37,7 +37,7 @@ export function VisitShowroom() {
           {tel && (
             <a
               href={`tel:${tel}`}
-              className="inline-flex items-center gap-2 whitespace-nowrap border border-ink/50 px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink hover:bg-paper-2"
+              className="ink-bloom inline-flex items-center gap-2 whitespace-nowrap border border-ink/50 px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink"
             >
               <Phone className="h-4 w-4" />
               Gọi điện
@@ -47,7 +47,7 @@ export function VisitShowroom() {
             href={maps}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 whitespace-nowrap border border-ink/50 px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink hover:bg-paper-2"
+            className="ink-bloom inline-flex items-center gap-2 whitespace-nowrap border border-ink/50 px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink"
           >
             <Navigation className="h-4 w-4" />
             Chỉ đường

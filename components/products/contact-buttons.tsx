@@ -41,7 +41,7 @@ export function ContactButtons({ productLabel }: { productLabel: string }) {
         {tel && (
           <a
             href={`tel:${tel}`}
-            className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap border border-ink/50 px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-ink transition-colors hover:bg-paper-2 sm:flex-none"
+            className="ink-bloom inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap border border-ink/50 px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-ink sm:flex-none"
           >
             <Phone className="h-4 w-4" />
             Gọi điện
@@ -52,7 +52,7 @@ export function ContactButtons({ productLabel }: { productLabel: string }) {
             href={a.facebookUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap border border-ink/50 px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-ink transition-colors hover:bg-paper-2 sm:flex-none"
+            className="ink-bloom inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap border border-ink/50 px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-ink sm:flex-none"
           >
             <Facebook className="h-4 w-4" />
             Facebook

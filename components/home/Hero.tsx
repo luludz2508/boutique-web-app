@@ -106,7 +106,7 @@ export function Hero() {
           </Link>
           <Link
             href="#story"
-            className="ink-sweep relative isolate inline-flex items-center overflow-hidden border border-ink/50 px-7 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink"
+            className="ink-bloom inline-flex items-center border border-ink/50 px-7 py-4 text-xs font-medium uppercase tracking-[.18em] text-ink"
           >
             Câu chuyện
           </Link>
