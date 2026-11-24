@@ -160,8 +160,18 @@ export function Footer() {
         </StaggerContainer>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-neutral-700 text-center">
-          <p className="text-neutral-400 font-sans text-sm">
+        <div className="mt-12 pt-8 border-t border-neutral-700 text-center space-y-2">
+          {atelierContent.businessRegistration && (
+            <p className="text-neutral-400 font-sans text-xs leading-relaxed">
+              {atelierContent.businessRegistration}
+            </p>
+          )}
+          {atelierContent.headOfficeAddress && (
+            <p className="text-neutral-400 font-sans text-xs leading-relaxed">
+              Trụ sở: {atelierContent.headOfficeAddress}
+            </p>
+          )}
+          <p className="text-neutral-400 font-sans text-sm pt-2">
             © {new Date().getFullYear()} Trầm Hương Sơn Hồng. All rights reserved.
           </p>
         </div>

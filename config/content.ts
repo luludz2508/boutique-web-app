@@ -103,6 +103,9 @@ export interface ServicesPageContent {
 }
 
 export interface AtelierPageContent {
+  /** Legal line shown at the bottom of the footer, e.g. business registration number. */
+  businessRegistration?: string;
+  headOfficeAddress?: string;
   title: string;
   subtitle: string;
   description: string;
@@ -365,6 +368,9 @@ const content: ContentConfig = {
     },
 
     atelier: {
+      businessRegistration:
+        'GPKD số 0315621000 do Sở KH và ĐT TP. Hồ Chí Minh cấp ngày 10/04/2019',
+      headOfficeAddress: '285 Kha Vạn Cân, P. Hiệp Bình Chánh, Q. Thủ Đức, TP. Hồ Chí Minh',
       title: 'Ghé Thăm',
       subtitle: 'Showroom Của Chúng Tôi',
       description:
