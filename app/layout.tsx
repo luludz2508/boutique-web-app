@@ -2,7 +2,9 @@ import type React from 'react';
 import type { Metadata } from 'next';
 import { Hahmlet, Source_Sans_3, JetBrains_Mono, Cormorant_Garamond, Be_Vietnam_Pro } from 'next/font/google';
 import './globals.css'; // Import globals.css at the top of the file
+import '@/components/ink/ink.css';
 import { Navbar } from '@/components/Navbar';
+import { InkDefs } from '@/components/ink';
 
 // Ink-wash theme fonts (headings / body)
 const cormorant = Cormorant_Garamond({
@@ -62,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${hahmlet.variable} ${sourceSans3.variable} ${jetbrainsMono.variable} ${cormorant.variable} ${beVietnam.variable}`}
     >
       <body suppressHydrationWarning={true} className="overflow-x-hidden font-body text-ink">
+        <InkDefs />
         <Navbar />
         {children}
       </body>
