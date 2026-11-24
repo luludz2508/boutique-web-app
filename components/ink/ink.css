@@ -216,7 +216,7 @@
   transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
 }
 .ink-bloom:hover,
-.ink-bloom:focus-visible { border-color: #8a6a24; }
+.ink-bloom:focus-visible { border-color: transparent; }
 .ink-bloom:hover::before,
 .ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
 
