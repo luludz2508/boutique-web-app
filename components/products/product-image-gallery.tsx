@@ -1,149 +1,109 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import type { ProductImage } from "@/lib/db/products";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { PaperFrame, Seal } from '@/components/ink';
+import { cn } from '@/lib/utils';
+import type { ProductImage } from '@/lib/db/products';
 
 interface ProductImageGalleryProps {
   images: ProductImage[];
   productName: string;
 }
 
-export function ProductImageGallery({
-  images,
-  productName,
-}: ProductImageGalleryProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+export function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
+  const [index, setIndex] = useState(0);
+  const count = images?.length ?? 0;
 
-  if (!images || images.length === 0) {
+  const go = (delta: number) => setIndex((i) => (i + delta + count) % count);
+
+  // Arrow-key navigation (hooks must run before any early return)
+  useEffect(() => {
+    if (count < 2) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + count) % count);
+      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % count);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [count]);
+
+  if (count === 0) {
     return (
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-neutral-800 border border-neutral-700">
-        <div className="flex items-center justify-center h-full text-neutral-500">
-          Không có hình ảnh
+      <PaperFrame>
+        <div className="flex aspect-square w-full items-center justify-center bg-paper-2">
+          <Seal className="opacity-40" />
         </div>
-      </div>
+      </PaperFrame>
     );
   }
 
-  const currentImage = images[currentImageIndex];
-
-  const goToPrevious = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        setCurrentImageIndex((prev) =>
-          prev === 0 ? images.length - 1 : prev - 1
-        );
-      } else if (e.key === "ArrowRight") {
-        setCurrentImageIndex((prev) =>
-          prev === images.length - 1 ? 0 : prev + 1
-        );
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [images.length]);
-
-  const handleThumbnailKeyPress = (e: React.KeyboardEvent, index: number) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      setCurrentImageIndex(index);
-    }
-  };
+  const current = images[index];
 
   return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-neutral-800 border border-neutral-700 group">
-        <Image
-          src={currentImage.url}
-          alt={currentImage.alt_text_vi || productName}
-          fill
-          className="object-cover"
-          priority
-          sizes="(max-width: 1024px) 100vw, 50vw"
-        />
+    <div className="space-y-5">
+      <div className="group relative">
+        <PaperFrame>
+          <div className="relative aspect-square w-full overflow-hidden bg-paper-2">
+            <Image
+              src={current.url}
+              alt={current.alt_text_vi || productName}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="scale-[1.06] object-cover"
+            />
+          </div>
+        </PaperFrame>
 
-        {/* Navigation Arrows - Only show if more than 1 image */}
-        {images.length > 1 && (
+        {count > 1 && (
           <>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-neutral-900/80 hover:bg-neutral-900 text-neutral-100 opacity-0 group-hover:opacity-100 transition-opacity"
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Ảnh trước"
+              className="absolute left-3 top-1/2 z-10 -translate-y-1/2 bg-paper/90 p-2 text-ink opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100"
             >
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-neutral-900/80 hover:bg-neutral-900 text-neutral-100 opacity-0 group-hover:opacity-100 transition-opacity"
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Ảnh sau"
+              className="absolute right-3 top-1/2 z-10 -translate-y-1/2 bg-paper/90 p-2 text-ink opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100"
             >
-              <ChevronRight className="h-6 w-6" />
-            </Button>
-
-            {/* Image Counter */}
-            <div className="absolute bottom-4 right-4 bg-neutral-900/80 text-neutral-100 px-3 py-1 rounded-full text-sm">
-              {currentImageIndex + 1} / {images.length}
-            </div>
+              <ChevronRight className="h-5 w-5" />
+            </button>
+            <span className="absolute bottom-4 right-4 z-10 bg-paper/90 px-2.5 py-0.5 font-display text-sm text-ink">
+              {index + 1} / {count}
+            </span>
           </>
         )}
       </div>
 
-      {/* Thumbnail Gallery */}
-      {images.length > 1 && (
-        <div className="grid grid-cols-4 md:grid-cols-5 gap-3">
-          {images.map((image, index) => (
+      {count > 1 && (
+        <div className="grid grid-cols-5 gap-2.5 sm:grid-cols-6">
+          {images.map((image, i) => (
             <button
               key={image.id}
-              onClick={() => setCurrentImageIndex(index)}
-              onKeyDown={(e) => handleThumbnailKeyPress(e, index)}
-              aria-label={`View image ${index + 1}`}
-              className={`relative aspect-square overflow-hidden rounded-lg bg-neutral-800 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                currentImageIndex === index
-                  ? "border-2 border-primary-500 ring-2 ring-primary-500/50"
-                  : "border border-neutral-700 hover:border-neutral-600"
-              }`}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Xem ảnh ${i + 1}`}
+              aria-current={i === index}
+              className={cn(
+                'relative aspect-square overflow-hidden bg-paper-2 outline outline-1 outline-offset-2 transition-[outline-color]',
+                i === index ? 'outline-gold' : 'outline-transparent hover:outline-ink/20',
+              )}
             >
               <Image
                 src={image.url}
-                alt={image.alt_text_vi || productName}
+                alt=""
                 fill
-                className="object-cover"
-                sizes="(max-width: 768px) 25vw, 12vw"
+                sizes="(max-width: 768px) 20vw, 8vw"
+                className="scale-[1.12] object-cover"
               />
             </button>
-          ))}
-        </div>
-      )}
-
-      {/* Dots Indicator (alternative to thumbnails for mobile) */}
-      {images.length > 1 && images.length <= 5 && (
-        <div className="flex justify-center gap-2 md:hidden">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              className={`h-2 rounded-full transition-all ${
-                currentImageIndex === index
-                  ? "w-8 bg-primary-500"
-                  : "w-2 bg-neutral-600 hover:bg-neutral-500"
-              }`}
-              aria-label={`Go to image ${index + 1}`}
-            />
           ))}
         </div>
       )}

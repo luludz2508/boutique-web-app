@@ -31,3 +31,9 @@ test('productPriceRange ignores zero prices', () => {
   expect(productPriceRange([v(0), v(300000), v(500000)])).toEqual({ min: 300000, max: 500000 });
   expect(productPriceRange([v(0)])).toBeNull();
 });
+
+test('toSentenceCase keeps known proper nouns capitalised', () => {
+  expect(toSentenceCase('VÒNG TRẦM HƯƠNG TỐC ĐƠN TỰ NHIÊN SƠN HỒNG')).toBe('Vòng trầm hương tốc đơn tự nhiên Sơn Hồng');
+  expect(toSentenceCase('TƯỢNG TRẦM HƯƠNG QUAN ÂM')).toBe('Tượng trầm hương Quan Âm');
+  expect(toSentenceCase('TRẦM KHÁNH HÒA')).toBe('Trầm Khánh Hòa');
+});

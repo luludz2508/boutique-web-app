@@ -3,11 +3,32 @@
  */
 import type { ProductVariant } from '@/lib/db/products';
 
-/** "VÒNG TRẦM HƯƠNG" → "Vòng trầm hương" (data from Haravan is all caps). */
+/** Names that must stay capitalised after lower-casing product names. */
+const PROPER_NOUNS = [
+  'Sơn Hồng',
+  'Khánh Hòa',
+  'Khánh Hoà',
+  'Quan Âm',
+  'Di Lặc',
+  'Phật',
+  'Đà Nẵng',
+  'Việt Nam',
+  'Quảng Nam',
+  'Phú Quốc',
+];
+
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** "VÒNG TRẦM HƯƠNG SƠN HỒNG" → "Vòng trầm hương Sơn Hồng" (data from Haravan is all caps). */
 export function toSentenceCase(s: string): string {
-  const lower = s.trim().toLocaleLowerCase('vi');
-  if (!lower) return '';
-  return lower.charAt(0).toLocaleUpperCase('vi') + lower.slice(1);
+  let out = s.trim().toLocaleLowerCase('vi');
+  if (!out) return '';
+  for (const name of PROPER_NOUNS) {
+    // whole words only; \p{L} so Vietnamese letters count as word characters
+    const re = new RegExp(`(?<![\\p{L}])${escapeRe(name.toLocaleLowerCase('vi'))}(?![\\p{L}])`, 'gu');
+    out = out.replace(re, name);
+  }
+  return out.charAt(0).toLocaleUpperCase('vi') + out.slice(1);
 }
 
 const vnd = new Intl.NumberFormat('vi-VN');
