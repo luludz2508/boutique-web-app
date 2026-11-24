@@ -177,3 +177,44 @@
 .ink-prose table { display: block; max-width: 100%; overflow-x: auto; width: auto !important; }
 .ink-prose td, .ink-prose th { width: auto !important; min-width: 6rem; }
 .ink-prose iframe, .ink-prose video { max-width: 100%; }
+
+/* ---------- Home hero ---------- */
+.ink-hero-drift { animation: ink-drift 26s ease-in-out infinite alternate; }
+@keyframes ink-drift { to { translate: -4% 0; } }
+.ink-hero-sway { transform-origin: 85% 0; animation: ink-sway 9s ease-in-out infinite alternate; }
+@keyframes ink-sway { from { rotate: -1.2deg; } to { rotate: 1.4deg; } }
+.ink-hero-smoke { opacity: 0; animation: ink-smoke 8s ease-in-out infinite; }
+@keyframes ink-smoke {
+  0% { opacity: 0; transform: translateY(40px) scaleY(0.9); }
+  30% { opacity: 0.85; }
+  100% { opacity: 0; transform: translateY(-80px) scaleY(1.1); }
+}
+.ink-hero-fade { opacity: 0; animation: ink-fade 1.2s var(--ink-ease) forwards; }
+@keyframes ink-fade { to { opacity: 1; } }
+/* outline button: a gold brush stroke sweeps through on hover */
+.ink-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('/ink/brush-gold.webp') center / 120% 140% no-repeat;
+  transform: translateX(-105%);
+  transition: transform 0.7s var(--ink-ease);
+}
+.ink-sweep:hover::after { transform: none; }
+
+/* ---------- Marquee ---------- */
+.ink-marquee-track { display: inline-block; animation: ink-marquee 46s linear infinite; }
+.ink-marquee:hover .ink-marquee-track { animation-play-state: paused; }
+@keyframes ink-marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Moments strip ---------- */
+.ink-moments { scroll-snap-type: x mandatory; scrollbar-width: none; }
+.ink-moments::-webkit-scrollbar { display: none; }
+.ink-moments > * { scroll-snap-align: start; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-hero-drift, .ink-hero-sway, .ink-hero-smoke, .ink-marquee-track { animation: none !important; }
+  .ink-hero-smoke { opacity: 0.6; }
+  .ink-hero-fade { animation: none !important; opacity: 1 !important; }
+}
