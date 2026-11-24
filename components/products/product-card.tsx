@@ -30,7 +30,7 @@ export function ProductCard({ product }: ProductCardProps) {
               fill
               sizes="(max-width: 1024px) 50vw, 25vw"
               // scale hides the frame that is baked into many Haravan photos
-              className="scale-[1.12] object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.2,.7,.1,1)] group-hover:scale-[1.17]"
+              className="scale-[1.12] object-cover transition-transform [transition-duration:1200ms] [transition-timing-function:cubic-bezier(.2,.7,.1,1)] group-hover:scale-[1.17]"
             />
           ) : (
             <div className="flex h-full items-center justify-center">
@@ -41,7 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </PaperFrame>
 
       <h3 className="mt-4 line-clamp-3 font-display text-lg font-medium leading-snug sm:text-xl">{name}</h3>
-      <div className="my-2 h-[7px] w-[46px] transition-[width] duration-700 ease-[cubic-bezier(.2,.7,.1,1)] group-hover:w-[110px]">
+      <div className="my-2 h-[7px] w-[46px] transition-[width] duration-700 [transition-timing-function:cubic-bezier(.2,.7,.1,1)] group-hover:w-[110px]">
         <BrushStroke variant="ink" className="h-full w-full opacity-75" />
       </div>
       <p className="text-sm tracking-wide text-ink-2">{cardPrice(product)}</p>

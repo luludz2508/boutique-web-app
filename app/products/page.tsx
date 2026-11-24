@@ -5,9 +5,6 @@ import { ProductPagination } from '@/components/products/product-pagination';
 import { BrushStroke, Reveal } from '@/components/ink';
 import content from '@/config/content';
 
-// Note: metadata cannot be exported from pages used in ClientLayout (accordion)
-// Metadata is defined in app/layout.tsx instead
-
 // Force dynamic rendering to always get fresh data
 export const dynamic = 'force-dynamic';
 
@@ -22,8 +19,7 @@ interface ProductsPageProps {
   }>;
 }
 
-// Export the content component for the accordion layout
-export async function ProductsContent({ searchParams }: ProductsPageProps) {
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   // Await searchParams in Next.js 15+
   const params = await searchParams;
 
@@ -119,5 +115,3 @@ export async function ProductsContent({ searchParams }: ProductsPageProps) {
   );
 }
 
-// Default export for route access
-export default ProductsContent;
