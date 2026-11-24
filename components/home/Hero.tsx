@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { BrushStroke, FretCorner, InkCursor, Seal } from '@/components/ink';
+import { BrushStroke, InkCursor } from '@/components/ink';
 
 const LAYERS = [
   { src: '/ink/hero-mountains-far.webp', speed: 0.12, className: 'bottom-[24%] -left-[20%] -right-[40%] sm:left-[22%] sm:right-0 sm:bottom-[26%] ink-feather-x' },
@@ -66,13 +66,6 @@ export function Hero() {
         className="ink-art ink-hero-sway absolute -right-[3%] -top-[2%] z-[3] w-[46vw] max-w-[460px] sm:w-[34vw]"
         style={{ maskImage: 'linear-gradient(200deg,#000 55%,transparent 85%)', WebkitMaskImage: 'linear-gradient(200deg,#000 55%,transparent 85%)' }}
       />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/ink/smoke.webp"
-        alt=""
-        aria-hidden
-        className="ink-art ink-feather-radial ink-hero-smoke absolute bottom-[20%] left-[52%] z-[3] w-[150px]"
-      />
 
       <InkCursor className="z-[5]" />
 
@@ -82,26 +75,23 @@ export function Hero() {
           Trầm hương tự nhiên · Từ 1985
         </p>
 
-        <div className="relative">
-          <h1 className="mt-5 font-display text-[clamp(52px,8vw,108px)] font-light leading-[1.02] text-ink">
-            {WORDS.map((w) => (
-              <span key={w.text}>
-                <span className="ink-word" style={{ animationDelay: `${w.delay}ms` }}>
-                  {w.text}
-                </span>
-                {w.br ? <br /> : ' '}
+        <h1 className="relative isolate mt-5 font-display text-[clamp(52px,8vw,108px)] font-light leading-[1.02] text-ink">
+          {WORDS.map((w) => (
+            <span key={w.text}>
+              <span className="ink-word" style={{ animationDelay: `${w.delay}ms` }}>
+                {w.text}
               </span>
-            ))}
-          </h1>
-          {/* gold stroke sits under the ink-black "núi rừng", never next to gold text */}
+              {w.br ? <br /> : ' '}
+            </span>
+          ))}
+          {/* gold stroke under the baseline of the second line, behind the ink-black words */}
           <BrushStroke
             variant="gold"
             animate
             delayMs={1100}
-            className="absolute -left-[3%] top-[56%] -z-10 h-[50%] w-[80%] max-w-[440px]"
+            className="absolute -left-[0.08em] bottom-[-0.06em] -z-10 h-[0.32em] w-[4.3em]"
           />
-          <Seal size="lg" stamp delayMs={2400} className="absolute -right-4 -top-6 !w-24 sm:-right-36 sm:top-2 sm:!w-[120px]" />
-        </div>
+        </h1>
 
         <p className="ink-hero-fade mt-7 max-w-[380px] leading-[1.8] text-ink-2" style={{ animationDelay: '1700ms' }}>
           Gia đình Sơn Hồng gìn giữ và chế tác trầm hương Việt Nam qua bốn thập kỷ.
@@ -112,8 +102,6 @@ export function Hero() {
             href="/products"
             className="relative inline-flex items-center bg-ink px-7 py-4 text-xs font-medium uppercase tracking-[.18em] text-paper transition-colors hover:bg-black"
           >
-            <FretCorner className="absolute -left-1 -top-1 h-3 w-3" />
-            <FretCorner className="absolute -bottom-1 -right-1 h-3 w-3 rotate-180" />
             Xem sản phẩm
           </Link>
           <Link

@@ -1,5 +1,5 @@
 import { MapPin, MessageCircle, Navigation, Phone } from 'lucide-react';
-import { FretCorner, InkArt, Reveal } from '@/components/ink';
+import { Reveal } from '@/components/ink';
 import content from '@/config/content';
 
 export function VisitShowroom() {
@@ -9,10 +9,9 @@ export function VisitShowroom() {
 
   return (
     <section className="relative overflow-hidden px-5 pb-28 pt-8 text-center md:pb-36">
-      <InkArt src="/ink/mist.webp" feather="x" className="absolute inset-x-0 top-1/3 -z-10 w-full opacity-60" />
       <Reveal className="mx-auto max-w-2xl">
         <p className="mb-4 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">Ghé showroom</p>
-        <h2 className="font-display text-[clamp(36px,4.4vw,56px)] font-light leading-[1.1] text-ink">
+        <h2 className="font-display text-[clamp(36px,4.4vw,56px)] font-light leading-[1.1] text-ink [text-wrap:balance]">
           Thưởng trầm cùng gia đình Sơn Hồng
         </h2>
         {a.mainAtelierAddress && (
@@ -31,8 +30,6 @@ export function VisitShowroom() {
               rel="noopener noreferrer"
               className="relative inline-flex items-center gap-2 whitespace-nowrap bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-paper hover:bg-black"
             >
-              <FretCorner className="absolute -left-1 -top-1 h-3 w-3" />
-              <FretCorner className="absolute -bottom-1 -right-1 h-3 w-3 rotate-180" />
               <MessageCircle className="h-4 w-4" />
               Nhắn Zalo
             </a>

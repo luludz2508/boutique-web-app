@@ -16,7 +16,7 @@ export function ProductsGrid({ products }: ProductsGridProps) {
   return (
     <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 lg:grid-cols-4">
       {products.map((product, i) => (
-        <Reveal key={product.id} delayMs={(i % 4) * 60}>
+        <Reveal key={product.id} delayMs={(i % 4) * 60} className="h-full">
           <ProductCard product={product} />
         </Reveal>
       ))}

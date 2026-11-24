@@ -28,7 +28,7 @@ export function FeaturedProducts({ products }: { products: ProductWithDetails[] 
       </Reveal>
       <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 lg:grid-cols-4">
         {products.map((p, i) => (
-          <Reveal key={p.id} delayMs={(i % 4) * 80}>
+          <Reveal key={p.id} delayMs={(i % 4) * 80} className="h-full">
             <ProductCard product={p} />
           </Reveal>
         ))}

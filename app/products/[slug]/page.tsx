@@ -4,7 +4,7 @@ import { getAllProducts, getProductBySlug, getProductsByType } from '@/lib/db/pr
 import { ProductImageGallery } from '@/components/products/product-image-gallery';
 import { ProductCard } from '@/components/products/product-card';
 import { VariantPicker } from '@/components/products/variant-picker';
-import { BrushStroke, Reveal } from '@/components/ink';
+import { Reveal } from '@/components/ink';
 import { toSentenceCase } from '@/lib/display';
 
 export async function generateStaticParams() {
@@ -78,7 +78,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </p>
             )}
             <h1 className="font-display text-4xl font-light leading-tight md:text-5xl">{name}</h1>
-            <BrushStroke variant="ink" className="mt-5 w-40 opacity-80" />
           </div>
 
           {product.excerpt_vi && <p className="leading-relaxed text-ink-2">{product.excerpt_vi}</p>}
@@ -99,11 +98,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
       {related.length > 0 && (
         <section className="mt-24">
-          <h2 className="font-display text-3xl font-light">Có thể bạn cũng thích</h2>
-          <BrushStroke variant="ink" className="mb-10 mt-4 w-40 opacity-80" />
+          <h2 className="mb-10 font-display text-3xl font-light">Có thể bạn cũng thích</h2>
           <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 lg:grid-cols-4">
             {related.map((p, i) => (
-              <Reveal key={p.id} delayMs={i * 60}>
+              <Reveal key={p.id} delayMs={i * 60} className="h-full">
                 <ProductCard product={p} />
               </Reveal>
             ))}

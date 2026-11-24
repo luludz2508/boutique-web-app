@@ -1,5 +1,5 @@
 import VideoPlayer from '@/components/VideoPlayer';
-import { InkArt, PaperFrame, Reveal } from '@/components/ink';
+import { PaperFrame, Reveal } from '@/components/ink';
 import { SectionHeading } from './SectionHeading';
 
 export function Story() {
@@ -30,21 +30,16 @@ export function Story() {
           </blockquote>
         </Reveal>
 
-        {/* Reveal animates transform/filter, which isolates its children — so the blend lives on it */}
-        <Reveal delayMs={200} className="ink-art justify-self-center">
-          <InkArt src="/ink/moon-hills.webp" feather="radial" className="w-full max-w-[520px] !mix-blend-normal" />
+        <Reveal delayMs={200} className="mx-auto w-full max-w-[340px] lg:justify-self-end">
+          <PaperFrame>
+            <div className="relative aspect-[9/16] w-full bg-paper-2">
+              {/* the old remote copy lived in a Supabase project that no longer resolves; serve the local file */}
+              <VideoPlayer src="/tramhuong-sonhong/master-video-1.mp4" preload="metadata" />
+            </div>
+          </PaperFrame>
+          <p className="mt-4 text-center text-sm text-ink-2">Nghệ nhân Sơn Hồng chế tác trầm</p>
         </Reveal>
       </div>
-
-      <Reveal className="mx-auto mt-16 max-w-[320px]">
-        <PaperFrame>
-          <div className="relative aspect-[9/16] w-full bg-paper-2">
-            {/* the old remote copy lived in a Supabase project that no longer resolves; serve the local file */}
-            <VideoPlayer src="/tramhuong-sonhong/master-video-1.mp4" preload="metadata" />
-          </div>
-        </PaperFrame>
-        <p className="mt-4 text-center text-sm text-ink-2">Nghệ nhân Sơn Hồng chế tác trầm</p>
-      </Reveal>
     </section>
   );
 }

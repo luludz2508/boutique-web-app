@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BrushStroke, PaperFrame } from '@/components/ink';
+import { PaperFrame } from '@/components/ink';
 import { ProductPhoto } from './product-photo';
 import { formatPrice, productPriceRange, toSentenceCase } from '@/lib/display';
 import type { ProductWithDetails } from '@/lib/db/products';
@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const name = toSentenceCase(product.name_vi);
 
   return (
-    <Link href={`/products/${product.slug}`} className="group block text-ink">
+    <Link href={`/products/${product.slug}`} className="group flex h-full flex-col text-ink">
       <PaperFrame hoverLift>
         <div className="relative aspect-square w-full overflow-hidden bg-paper-2">
           <ProductPhoto
@@ -33,11 +33,8 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       </PaperFrame>
 
-      <h3 className="mt-4 line-clamp-3 font-display text-lg font-medium leading-snug sm:text-xl">{name}</h3>
-      <div className="my-2 h-[7px] w-[46px] transition-[width] duration-700 [transition-timing-function:cubic-bezier(.2,.7,.1,1)] group-hover:w-[110px] motion-reduce:transition-none">
-        <BrushStroke variant="ink" className="h-full w-full opacity-75" />
-      </div>
-      <p className="text-sm tracking-wide text-ink-2">{cardPrice(product)}</p>
+      <h3 className="mb-2 mt-4 line-clamp-2 font-display text-lg font-medium leading-snug sm:text-xl">{name}</h3>
+      <p className="mt-auto text-sm tracking-wide text-ink-2">{cardPrice(product)}</p>
     </Link>
   );
 }

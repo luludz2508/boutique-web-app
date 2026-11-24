@@ -2,7 +2,7 @@ import { getAllProducts, getAllProductTypes } from '@/lib/db/products';
 import { ProductsGrid } from '@/components/products/products-grid';
 import { ProductFilters } from '@/components/products/product-filters';
 import { ProductPagination } from '@/components/products/product-pagination';
-import { BrushStroke, Reveal } from '@/components/ink';
+import { Reveal } from '@/components/ink';
 import content from '@/config/content';
 
 // Force dynamic rendering to always get fresh data
@@ -87,8 +87,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <span className="h-px w-8 bg-gold" />
             Bộ sưu tập
           </p>
-          <h1 className="font-display text-5xl font-light md:text-6xl">Sản phẩm</h1>
-          <BrushStroke variant="ink" className="mb-6 mt-5 w-52 opacity-85" />
+          <h1 className="mb-6 font-display text-5xl font-light md:text-6xl">Sản phẩm</h1>
           <p className="max-w-2xl leading-relaxed text-ink-2">{pageContent.description}</p>
         </Reveal>
       </header>
