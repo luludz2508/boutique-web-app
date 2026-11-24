@@ -17,7 +17,8 @@
     "db:split": "node scripts/split-large-migration.js",
     "db:guide": "node scripts/import-via-sql-editor.js",
     "test": "vitest run",
-    "backup:images": "tsx scripts/backup-images/index.ts"
+    "backup:images": "tsx scripts/backup-images/index.ts",
+    "crawl:posts": "tsx scripts/crawl-posts/index.ts"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -84,8 +85,10 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/turndown": "5.0.5",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
+    "cheerio": "1.0.0",
     "eslint": "^9.38.0",
     "eslint-config-next": "^16.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -96,6 +99,7 @@
     "postcss": "^8.5",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.17",
+    "turndown": "7.2.0",
     "typescript": "^5",
     "typescript-eslint": "^8.46.2",
     "vitest": "3.2.4"
