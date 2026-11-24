@@ -38,10 +38,8 @@ export function Story() {
       <Reveal className="mx-auto mt-16 max-w-[320px]">
         <PaperFrame>
           <div className="relative aspect-[9/16] w-full bg-paper-2">
-            <VideoPlayer
-              src="https://pidgjpxcfuuiorylnjik.supabase.co/storage/v1/object/public/public_assets/master-video-1.mp4"
-              fallbackSrc="/tramhuong-sonhong/master-video-1.mp4"
-            />
+            {/* the old remote copy lived in a Supabase project that no longer resolves; serve the local file */}
+            <VideoPlayer src="/tramhuong-sonhong/master-video-1.mp4" />
           </div>
         </PaperFrame>
         <p className="mt-4 text-center text-sm text-ink-2">Nghệ nhân Sơn Hồng chế tác trầm</p>
