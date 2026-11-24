@@ -4,6 +4,7 @@ import { Hahmlet, Source_Sans_3, JetBrains_Mono, Cormorant_Garamond, Be_Vietnam_
 import './globals.css'; // Import globals.css at the top of the file
 import '@/components/ink/ink.css';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { InkDefs } from '@/components/ink';
 
 // Ink-wash theme fonts (headings / body)
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <InkDefs />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

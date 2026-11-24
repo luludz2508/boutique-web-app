@@ -11,7 +11,6 @@ import Image from 'next/image';
 import VideoPlayer from '@/components/VideoPlayer';
 import { CollectionContent } from './collection/page';
 import { GalleryContent } from './gallery/page';
-import { Footer } from '@/components/Footer';
 import { BackgroundImage } from '@/components/ui/background-image';
 import content from '@/config/content';
 
@@ -219,8 +218,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

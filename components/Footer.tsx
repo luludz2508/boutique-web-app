@@ -1,179 +1,118 @@
-'use client';
-
+import Link from 'next/link';
+import { Clock, Globe, Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import { MapComponent } from '@/components/MapComponent';
-import { Clock, Mail, MapPin, Phone, Instagram, Globe } from 'lucide-react';
+import { DrumFace, Seal } from '@/components/ink';
 import content from '@/config/content';
-import {
-  FadeInUp,
-  StaggerContainer,
-  StaggerItem,
-} from '@/components/animations/viewport-animations';
+
+const EXPLORE = [
+  { href: '/products', label: 'Sản phẩm' },
+  { href: '/collection', label: 'Bộ sưu tập' },
+  { href: '/gallery', label: 'Hình ảnh' },
+  { href: '/atelier', label: 'Xưởng & showroom' },
+  { href: '/services', label: 'Dịch vụ' },
+];
 
 export function Footer() {
-  const currentLocale = 'vi';
-  const atelierContent = content[currentLocale].atelier;
+  const a = content.vi.atelier;
+  const tel = a.contactNumber?.replace(/\s/g, '');
 
   return (
-    <footer className="bg-neutral-900 text-neutral-50 w-full">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-16">
-        <StaggerContainer className="grid md:grid-cols-2 gap-12 lg:gap-16" staggerDelay={0.1}>
-          {/* Contact Information */}
-          <FadeInUp>
-            <div>
-              <h2 className="font-serif text-3xl font-light mb-8 text-neutral-50">
-                {atelierContent.locationTitle || 'Liên Hệ'}
-              </h2>
-              <StaggerContainer className="space-y-6" staggerDelay={0.1}>
-                {atelierContent.mainAtelierTitle && atelierContent.mainAtelierAddress && (
-                  <StaggerItem>
-                    <div className="flex items-start space-x-4">
-                      <MapPin className="w-5 h-5 text-accent-400 mt-1 flex-shrink-0" />
-                      <div>
-                        <h3 className="font-sans font-medium text-neutral-100 mb-1">
-                          {atelierContent.mainAtelierTitle}
-                        </h3>
-                        <p className="text-neutral-300 font-sans leading-relaxed text-sm">
-                          {atelierContent.mainAtelierAddress}
-                        </p>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                )}
+    <footer id="contact" className="relative overflow-hidden bg-ink text-[#d9d2c3]">
+      <DrumFace className="pointer-events-none absolute -right-40 -top-40 w-[560px] opacity-[.06]" />
 
-                {atelierContent.visitingHoursTitle &&
-                  atelierContent.visitingHours &&
-                  atelierContent.visitingHours.length > 0 && (
-                    <StaggerItem>
-                      <div className="flex items-start space-x-4">
-                        <Clock className="w-5 h-5 text-accent-400 mt-1 flex-shrink-0" />
-                        <div>
-                          <h3 className="font-sans font-medium text-neutral-100 mb-2">
-                            {atelierContent.visitingHoursTitle}
-                          </h3>
-                          <div className="text-neutral-300 space-y-1 font-sans text-sm">
-                            {atelierContent.visitingHours.map((hour, index) => (
-                              <p key={index}>{hour}</p>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </StaggerItem>
-                  )}
+      <div className="relative mx-auto max-w-[1440px] px-5 pb-10 pt-20 md:px-[7vw]">
+        <div className="flex items-center gap-4">
+          <Seal size="lg" className="!w-20" />
+          <p className="font-display text-3xl font-light text-paper">Trầm Hương Sơn Hồng</p>
+        </div>
 
-                {atelierContent.contactTitle && atelierContent.contactNumber && (
-                  <StaggerItem>
-                    <div className="flex items-start space-x-4">
-                      <Phone className="w-5 h-5 text-accent-400 mt-1 flex-shrink-0" />
-                      <div>
-                        <h3 className="font-sans font-medium text-neutral-100 mb-1">
-                          {atelierContent.contactTitle}
-                        </h3>
-                        <a
-                          href={`tel:${atelierContent.contactNumber.replace(/\s/g, '')}`}
-                          className="text-accent-400 hover:text-accent-300 font-sans text-sm transition-colors"
-                        >
-                          {atelierContent.contactNumber}
-                        </a>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                )}
+        <div className="mt-14 grid gap-12 md:grid-cols-[1.2fr_.8fr_1.4fr]">
+          <div>
+            <h2 className="mb-6 text-[11px] uppercase tracking-[.32em] text-gold-2">Liên hệ</h2>
+            <ul className="space-y-5 text-sm leading-relaxed">
+              {a.mainAtelierAddress && (
+                <li className="flex gap-3">
+                  <MapPin className="mt-0.5 h-4 w-4 flex-none text-gold-2" />
+                  <span>{a.mainAtelierAddress}</span>
+                </li>
+              )}
+              {a.visitingHours?.length ? (
+                <li className="flex gap-3">
+                  <Clock className="mt-0.5 h-4 w-4 flex-none text-gold-2" />
+                  <span>
+                    {a.visitingHours.map((h) => (
+                      <span key={h} className="block">
+                        {h}
+                      </span>
+                    ))}
+                  </span>
+                </li>
+              ) : null}
+              {a.contactNumber && (
+                <li className="flex gap-3">
+                  <Phone className="mt-0.5 h-4 w-4 flex-none text-gold-2" />
+                  <a href={`tel:${tel}`} className="hover:text-paper">
+                    {a.contactNumber}
+                  </a>
+                </li>
+              )}
+              {a.emailAddress && (
+                <li className="flex gap-3">
+                  <Mail className="mt-0.5 h-4 w-4 flex-none text-gold-2" />
+                  <a href={`mailto:${a.emailAddress}`} className="break-all hover:text-paper">
+                    {a.emailAddress}
+                  </a>
+                </li>
+              )}
+              {a.instagramHandle && (
+                <li className="flex gap-3">
+                  <Instagram className="mt-0.5 h-4 w-4 flex-none text-gold-2" />
+                  <a
+                    href={`https://instagram.com/${a.instagramHandle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-paper"
+                  >
+                    @{a.instagramHandle}
+                  </a>
+                </li>
+              )}
+              {a.websiteUrl && (
+                <li className="flex gap-3">
+                  <Globe className="mt-0.5 h-4 w-4 flex-none text-gold-2" />
+                  <a href={`https://${a.websiteUrl}`} target="_blank" rel="noopener noreferrer" className="hover:text-paper">
+                    {a.websiteUrl}
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
 
-                {atelierContent.emailTitle && atelierContent.emailAddress && (
-                  <StaggerItem>
-                    <div className="flex items-start space-x-4">
-                      <Mail className="w-5 h-5 text-accent-400 mt-1 flex-shrink-0" />
-                      <div>
-                        <h3 className="font-sans font-medium text-neutral-100 mb-1">
-                          {atelierContent.emailTitle}
-                        </h3>
-                        <a
-                          href={`mailto:${atelierContent.emailAddress}`}
-                          className="text-accent-400 hover:text-accent-300 font-sans text-sm transition-colors"
-                        >
-                          {atelierContent.emailAddress}
-                        </a>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                )}
+          <div>
+            <h2 className="mb-6 text-[11px] uppercase tracking-[.32em] text-gold-2">Khám phá</h2>
+            <ul className="space-y-3 text-sm">
+              {EXPLORE.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="hover:text-paper">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-                {atelierContent.instagramTitle && atelierContent.instagramHandle && (
-                  <StaggerItem>
-                    <div className="flex items-start space-x-4">
-                      <Instagram className="w-5 h-5 text-accent-400 mt-1 flex-shrink-0" />
-                      <div>
-                        <h3 className="font-sans font-medium text-neutral-100 mb-1">
-                          {atelierContent.instagramTitle}
-                        </h3>
-                        <a
-                          href={`https://instagram.com/${atelierContent.instagramHandle}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-accent-400 hover:text-accent-300 font-sans text-sm transition-colors"
-                        >
-                          @{atelierContent.instagramHandle}
-                        </a>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                )}
-
-                {atelierContent.websiteTitle && atelierContent.websiteUrl && (
-                  <StaggerItem>
-                    <div className="flex items-start space-x-4">
-                      <Globe className="w-5 h-5 text-accent-400 mt-1 flex-shrink-0" />
-                      <div>
-                        <h3 className="font-sans font-medium text-neutral-100 mb-1">
-                          {atelierContent.websiteTitle}
-                        </h3>
-                        <a
-                          href={`https://${atelierContent.websiteUrl}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-accent-400 hover:text-accent-300 font-sans text-sm transition-colors"
-                        >
-                          {atelierContent.websiteUrl}
-                        </a>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                )}
-              </StaggerContainer>
+          <div>
+            <h2 className="mb-6 text-[11px] uppercase tracking-[.32em] text-gold-2">{a.mapTitle || 'Bản đồ showroom'}</h2>
+            <div className="aspect-[4/3] overflow-hidden border border-white/10">
+              <MapComponent address={a.mainAtelierAddress ?? ''} title="Trầm Hương Sơn Hồng – Showroom" />
             </div>
-          </FadeInUp>
+          </div>
+        </div>
 
-          {/* Map */}
-          <FadeInUp delay={0.2}>
-            <div>
-              <h2 className="font-serif text-3xl font-light mb-8 text-neutral-50">
-                {atelierContent.mapTitle || 'Bản Đồ Showroom'}
-              </h2>
-              <div className="aspect-square lg:aspect-[4/3] rounded-lg overflow-hidden border border-neutral-700">
-                <MapComponent
-                  address={'680 Võ Nguyên Giáp, P.Khuê Mỹ, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam'}
-                  title="Trầm Hương Sơn Hồng - Showroom Location"
-                />
-              </div>
-            </div>
-          </FadeInUp>
-        </StaggerContainer>
-
-        {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-neutral-700 text-center space-y-2">
-          {atelierContent.businessRegistration && (
-            <p className="text-neutral-400 font-sans text-xs leading-relaxed">
-              {atelierContent.businessRegistration}
-            </p>
-          )}
-          {atelierContent.headOfficeAddress && (
-            <p className="text-neutral-400 font-sans text-xs leading-relaxed">
-              Trụ sở: {atelierContent.headOfficeAddress}
-            </p>
-          )}
-          <p className="text-neutral-400 font-sans text-sm pt-2">
-            © {new Date().getFullYear()} Trầm Hương Sơn Hồng. All rights reserved.
-          </p>
+        <div className="mt-16 space-y-1.5 border-t border-white/10 pt-6 text-center text-xs leading-relaxed text-[#d9d2c3]/60">
+          {a.businessRegistration && <p>{a.businessRegistration}</p>}
+          {a.headOfficeAddress && <p>Trụ sở: {a.headOfficeAddress}</p>}
+          <p className="pt-2">© {new Date().getFullYear()} Trầm Hương Sơn Hồng.</p>
         </div>
       </div>
     </footer>
