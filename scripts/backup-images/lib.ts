@@ -89,6 +89,34 @@ export function zeroPriceCsv(rows: ZeroPriceRow[]): string {
   return `${lines.join('\n')}\n`;
 }
 
+/** The slice of the Supabase client swapImageUrl needs (keeps it testable). */
+export type UrlUpdater = {
+  from(table: 'product_images'): {
+    update(patch: { url: string }): {
+      eq(col: string, val: string): {
+        eq(col: string, val: string): {
+          select(cols: 'id'): PromiseLike<{ data: { id: string }[] | null; error: { message: string } | null }>;
+        };
+      };
+    };
+  };
+};
+
+/**
+ * Compare-and-set: change the image URL only if the row still holds `from`.
+ * Returns 'changed' when someone edited the row since, so newer data is never clobbered.
+ */
+export async function swapImageUrl(
+  db: UrlUpdater,
+  id: string,
+  from: string,
+  to: string,
+): Promise<'updated' | 'changed'> {
+  const { data, error } = await db.from('product_images').update({ url: to }).eq('id', id).eq('url', from).select('id');
+  if (error) throw new Error(error.message);
+  return data && data.length > 0 ? 'updated' : 'changed';
+}
+
 /** Timestamped so a later run never overwrites an earlier run's manifest. */
 export function manifestName(now: Date): string {
   const stamp = now.toISOString().slice(0, 19).replace(/:/g, '-');

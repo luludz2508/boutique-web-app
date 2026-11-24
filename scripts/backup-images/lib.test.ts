@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { isHstaticUrl, manifestName, parseArgs, planBackup, storagePathFor, zeroPriceCsv } from './lib';
+import { isHstaticUrl, manifestName, parseArgs, planBackup, storagePathFor, swapImageUrl, zeroPriceCsv } from './lib';
 
 const BASE = 'https://x.supabase.co/storage/v1/object/public/product-images';
 
@@ -47,4 +47,41 @@ test('parseArgs', () => {
 
 test('manifestName is unique per run so re-runs never overwrite an earlier manifest', () => {
   expect(manifestName(new Date('2026-11-24T11:20:05.123Z'))).toBe('images-manifest-2026-11-24T11-20-05Z.json');
+});
+
+// Minimal in-memory stand-in for the Supabase query builder: applies eq() filters for real.
+function fakeDb(rows: { id: string; url: string }[]) {
+  return {
+    rows,
+    from: () => ({
+      update: (patch: { url: string }) => {
+        const filters: [string, string][] = [];
+        const builder = {
+          eq(col: string, val: string) {
+            filters.push([col, val]);
+            return builder;
+          },
+          async select() {
+            const hit = rows.filter((r) => filters.every(([c, v]) => (r as Record<string, string>)[c] === v));
+            hit.forEach((r) => Object.assign(r, patch));
+            return { data: hit.map((r) => ({ id: r.id })), error: null };
+          },
+        };
+        return builder;
+      },
+    }),
+  };
+}
+
+test('swapImageUrl updates only when the row still has the expected URL', async () => {
+  const db = fakeDb([
+    { id: 'a', url: 'old-a' },
+    { id: 'b', url: 'edited-later' },
+  ]);
+  expect(await swapImageUrl(db, 'a', 'old-a', 'new-a')).toBe('updated');
+  expect(await swapImageUrl(db, 'b', 'old-b', 'new-b')).toBe('changed');
+  expect(db.rows).toEqual([
+    { id: 'a', url: 'new-a' },
+    { id: 'b', url: 'edited-later' },
+  ]);
 });

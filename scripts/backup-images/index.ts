@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createClient } from '@supabase/supabase-js';
-import { type ImageRow, type ManifestEntry, isHstaticUrl, manifestName, parseArgs, planBackup, zeroPriceCsv } from './lib';
+import { type ImageRow, type ManifestEntry, isHstaticUrl, manifestName, parseArgs, planBackup, swapImageUrl, zeroPriceCsv } from './lib';
 
 const BUCKET = 'product-images';
 const CONCURRENCY = 5;
@@ -115,13 +115,18 @@ async function zeroPriceReport(write: boolean): Promise<number> {
 async function rollback(manifestPath: string) {
   const manifest: ManifestEntry[] = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   let restored = 0;
+  const skippedChangedSince: string[] = [];
   const failed: string[] = [];
   await mapLimit(manifest, CONCURRENCY, async (m) => {
-    const { error } = await supabase.from('product_images').update({ url: m.old_url }).eq('id', m.image_id);
-    if (error) failed.push(`${m.image_id}: ${error.message}`);
-    else restored++;
+    try {
+      const result = await swapImageUrl(supabase, m.image_id, m.new_url, m.old_url);
+      if (result === 'updated') restored++;
+      else skippedChangedSince.push(m.image_id);
+    } catch (err) {
+      failed.push(`${m.image_id}: ${(err as Error).message}`);
+    }
   });
-  console.log({ restored, failed });
+  console.log({ restored, skippedChangedSince, failed });
 }
 
 async function existingPaths(): Promise<Set<string>> {
@@ -214,9 +219,13 @@ async function main() {
       notRelinked.push(m.old_url);
       return;
     }
-    const { error } = await supabase.from('product_images').update({ url: m.new_url }).eq('id', m.image_id);
-    if (error) notRelinked.push(`${m.old_url} (${error.message})`);
-    else relinked++;
+    try {
+      const result = await swapImageUrl(supabase, m.image_id, m.old_url, m.new_url);
+      if (result === 'updated') relinked++;
+      else notRelinked.push(`${m.old_url} (row changed during run)`);
+    } catch (err) {
+      notRelinked.push(`${m.old_url} (${(err as Error).message})`);
+    }
   });
 
   console.log({
