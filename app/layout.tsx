@@ -1,10 +1,24 @@
 import type React from 'react';
 import type { Metadata } from 'next';
-import { Hahmlet, Source_Sans_3, JetBrains_Mono } from 'next/font/google';
+import { Hahmlet, Source_Sans_3, JetBrains_Mono, Cormorant_Garamond, Be_Vietnam_Pro } from 'next/font/google';
 import './globals.css'; // Import globals.css at the top of the file
 import { Navbar } from '@/components/Navbar';
 
-// Define font subsets and weights
+// Ink-wash theme fonts (headings / body)
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+});
+
+const beVietnam = Be_Vietnam_Pro({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['300', '400', '500'],
+  variable: '--font-body',
+});
+
+// Legacy fonts, still used by the older pages (/atelier, /services, ...)
 const hahmlet = Hahmlet({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -45,9 +59,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="vi"
-      className={`${hahmlet.variable} ${sourceSans3.variable} ${jetbrainsMono.variable}`}
+      className={`${hahmlet.variable} ${sourceSans3.variable} ${jetbrainsMono.variable} ${cormorant.variable} ${beVietnam.variable}`}
     >
-      <body suppressHydrationWarning={true} className="overflow-x-hidden">
+      <body suppressHydrationWarning={true} className="overflow-x-hidden font-body text-ink">
         <Navbar />
         {children}
       </body>

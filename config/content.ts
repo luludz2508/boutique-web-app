@@ -116,6 +116,8 @@ export interface AtelierPageContent {
   visitingHours?: string[];
   contactTitle?: string;
   contactNumber?: string;
+  zaloUrl?: string;
+  facebookUrl?: string;
   contactRecommendation?: string;
   emailTitle?: string;
   emailAddress?: string;
@@ -386,6 +388,8 @@ const content: ContentConfig = {
       ],
       contactTitle: 'Điện Thoại',
       contactNumber: '093 703 34 68',
+      zaloUrl: 'https://zalo.me/0937033468',
+      facebookUrl: 'https://www.facebook.com/tramhuongsonhong.vn',
       contactRecommendation:
         'Chúng tôi luôn sẵn sàng tư vấn và hỗ trợ quý khách. Vui lòng liên hệ trước khi đến để được phục vụ tốt nhất.',
       emailTitle: 'Email',

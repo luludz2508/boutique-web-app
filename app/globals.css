@@ -46,33 +46,27 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White background */
-    --foreground: 0 0% 11%; /* Charcoal Ash for text */
-    --card: 0 0% 100%; /* White cards */
-    --card-foreground: 0 0% 11%; /* Charcoal Ash for card text */
-    --popover: 0 0% 100%; /* White popovers */
-    --popover-foreground: 0 0% 11%; /* Charcoal Ash for popover text */
-    --primary: 45 65% 60%; /* Imperial Gold */
-    --primary-foreground: 0 0% 11%; /* Charcoal Ash */
-    --secondary: 0 0% 96%; /* Light gray */
-    --secondary-foreground: 0 0% 11%; /* Charcoal Ash */
-    --muted: 0 0% 96%; /* Light gray */
-    --muted-foreground: 0 0% 45%; /* Medium gray */
-    --accent: 45 65% 60%; /* Imperial Gold */
-    --accent-foreground: 0 0% 11%; /* Charcoal Ash */
-    --destructive: 0 84.2% 60.2%; /* Red for destructive actions */
-    --destructive-foreground: 0 0% 98%; /* White text on red */
-    --border: 0 0% 90%; /* Light border */
-    --input: 0 0% 90%; /* Light input border */
-    --ring: 45 65% 60%; /* Imperial Gold ring */
-    --radius: 0.5rem;
-
-    /* Cyphr Modern Architectural Palette - CSS Variables */
-    --cyphr-teal: #1e4049; /* much darker main accent (cool contrast) - KEEPING THIS */
-    --cyphr-peach: #f09c67; /* soft warm tone - ORIGINAL */
-    --cyphr-sand: #ebcfc1; /* neutral balance background - ORIGINAL */
-    --cyphr-orange: #c84a27; /* vivid architectural highlight - ORIGINAL */
-    --cyphr-mahogany: #66271c; /* deep grounding tone - ORIGINAL */
+    /* Ink-wash theme: paper #F4EFE4, ink #1C1B19, gold #B8913A */
+    --background: 40 41% 93%; /* paper */
+    --foreground: 40 6% 10%; /* ink */
+    --card: 40 41% 93%;
+    --card-foreground: 40 6% 10%;
+    --popover: 40 45% 95%;
+    --popover-foreground: 40 6% 10%;
+    --primary: 40 6% 10%; /* ink */
+    --primary-foreground: 40 41% 93%;
+    --secondary: 41 34% 88%; /* paper-2 */
+    --secondary-foreground: 40 6% 10%;
+    --muted: 41 34% 88%;
+    --muted-foreground: 39 8% 33%; /* ink-2 */
+    --accent: 41 52% 47%; /* gold */
+    --accent-foreground: 40 6% 10%;
+    --destructive: 4 60% 39%; /* seal */
+    --destructive-foreground: 40 41% 93%;
+    --border: 40 20% 80%;
+    --input: 40 20% 75%;
+    --ring: 41 52% 47%;
+    --radius: 0.125rem;
   }
 
   .dark {
@@ -104,5 +98,7 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    background: #f4efe4 url('/ink/paper-tile.webp') repeat;
+    background-size: 512px;
   }
 }

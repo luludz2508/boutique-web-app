@@ -47,6 +47,7 @@ export interface ProductVariant {
   weight: number | null;
   inventory_quantity: number;
   inventory_policy: "deny" | "continue";
+  track_inventory: boolean;
 }
 
 export interface ProductImage {

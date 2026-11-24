@@ -11,6 +11,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Ink-wash (thủy mặc) theme tokens — used by the redesigned pages
+        paper: { DEFAULT: '#F4EFE4', 2: '#ECE4D3' },
+        ink: { DEFAULT: '#1C1B19', 2: '#5A554C' },
+        gold: { DEFAULT: '#B8913A', 2: '#E2C57C' },
+        seal: '#A8281F',
+
         // Brand Colors - Exact matches from brand guidelines
         'imperial-gold': '#D9B45A',
         'agarwood-brown': '#5E3B1E',
@@ -120,6 +126,8 @@ const config: Config = {
         serif: ['var(--font-hahmlet)', 'serif'],
         sans: ['var(--font-source-sans-3)', 'sans-serif'],
         mono: ['var(--font-jetbrains-mono)', 'monospace'],
+        display: ['var(--font-display)', 'Cormorant Garamond', 'serif'],
+        body: ['var(--font-body)', 'Be Vietnam Pro', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
