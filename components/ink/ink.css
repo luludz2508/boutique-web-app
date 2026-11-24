@@ -199,7 +199,7 @@
 .ink-bloom {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  /* no overflow clip: the wash fades out past the edges instead of stopping at a box */
   transition: border-color 0.6s var(--ink-ease);
 }
 .ink-bloom::before {
@@ -207,6 +207,7 @@
   position: absolute;
   inset: -60% -20%;
   z-index: -1;
+  pointer-events: none;
   /* dark-gold wash, two offset soft blobs so the edge is uneven rather than a perfect circle */
   background:
     radial-gradient(closest-side at 42% 52%, rgba(184, 145, 58, 0.42), rgba(184, 145, 58, 0.22) 55%, transparent),
