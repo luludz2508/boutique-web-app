@@ -62,8 +62,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="vi"
+      suppressHydrationWarning
       className={`${hahmlet.variable} ${sourceSans3.variable} ${jetbrainsMono.variable} ${cormorant.variable} ${beVietnam.variable}`}
     >
+      <head>
+        {/* lets CSS hide scroll-reveal content only when JS will reveal it */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body suppressHydrationWarning={true} className="overflow-x-hidden font-body text-ink">
         <InkDefs />
         <Navbar />

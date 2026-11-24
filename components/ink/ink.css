@@ -70,13 +70,14 @@
 }
 
 /* ---------- Reveal on scroll ---------- */
-.ink-reveal {
+/* hidden state only applies once JS is known to run (html.js), so content never stays invisible */
+.js .ink-reveal {
   opacity: 0;
   transform: translateY(28px);
   filter: blur(6px);
   transition: opacity 1.1s var(--ink-ease), transform 1.1s var(--ink-ease), filter 1.1s var(--ink-ease);
 }
-.ink-reveal.is-visible { opacity: 1; transform: none; filter: none; }
+.js .ink-reveal.is-visible { opacity: 1; transform: none; filter: none; }
 
 /* ---------- Words bleeding in like ink ---------- */
 .ink-word {
@@ -157,7 +158,9 @@
     clip-path: none !important;
   }
   .ink-paper,
-  .ink-paper::after { transition: none !important; }
+  .ink-paper::after,
+  .ink-sweep::after { transition: none !important; }
+  .ink-seal-lg.ink-stamp { transform: rotate(-4deg) !important; }
 }
 
 /* ---------- Long-form text from Haravan (product descriptions, posts) ---------- */

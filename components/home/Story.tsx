@@ -30,8 +30,9 @@ export function Story() {
           </blockquote>
         </Reveal>
 
-        <Reveal delayMs={200} className="justify-self-center">
-          <InkArt src="/ink/moon-hills.webp" feather="radial" className="w-full max-w-[520px]" />
+        {/* Reveal animates transform/filter, which isolates its children — so the blend lives on it */}
+        <Reveal delayMs={200} className="ink-art justify-self-center">
+          <InkArt src="/ink/moon-hills.webp" feather="radial" className="w-full max-w-[520px] !mix-blend-normal" />
         </Reveal>
       </div>
 
@@ -39,7 +40,7 @@ export function Story() {
         <PaperFrame>
           <div className="relative aspect-[9/16] w-full bg-paper-2">
             {/* the old remote copy lived in a Supabase project that no longer resolves; serve the local file */}
-            <VideoPlayer src="/tramhuong-sonhong/master-video-1.mp4" />
+            <VideoPlayer src="/tramhuong-sonhong/master-video-1.mp4" preload="metadata" />
           </div>
         </PaperFrame>
         <p className="mt-4 text-center text-sm text-ink-2">Nghệ nhân Sơn Hồng chế tác trầm</p>

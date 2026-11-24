@@ -45,12 +45,16 @@ export function isSoldOut(v: Pick<ProductVariant, 'inventory_quantity' | 'track_
   return Boolean(v.track_inventory) && Number(v.inventory_quantity) <= 0;
 }
 
-/** First variant in stock, else the first variant, else null. */
-export function pickDefaultVariant<T extends Pick<ProductVariant, 'inventory_quantity' | 'track_inventory'>>(
-  variants: T[],
-): T | null {
+/**
+ * In-stock variant with a real price, else any in-stock variant, else the first, else null.
+ * Preferring a priced one keeps the detail page in line with the card's "Từ …" price.
+ */
+export function pickDefaultVariant<
+  T extends Pick<ProductVariant, 'inventory_quantity' | 'track_inventory'> & { price?: number | null },
+>(variants: T[]): T | null {
   if (variants.length === 0) return null;
-  return variants.find((v) => !isSoldOut(v)) ?? variants[0];
+  const inStock = variants.filter((v) => !isSoldOut(v));
+  return inStock.find((v) => Number(v.price) > 0) ?? inStock[0] ?? variants[0];
 }
 
 /** Min/max of the real (non-zero) prices, or null when every price is 0/empty. */

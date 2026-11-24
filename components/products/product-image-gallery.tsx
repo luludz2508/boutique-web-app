@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { ProductPhoto } from './product-photo';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { PaperFrame, Seal } from '@/components/ink';
 import { cn } from '@/lib/utils';
@@ -46,10 +46,10 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
       <div className="group relative">
         <PaperFrame>
           <div className="relative aspect-square w-full overflow-hidden bg-paper-2">
-            <Image
+            <ProductPhoto
+              key={current.id}
               src={current.url}
               alt={current.alt_text_vi || productName}
-              fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="scale-[1.06] object-cover"
@@ -63,7 +63,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               type="button"
               onClick={() => go(-1)}
               aria-label="Ảnh trước"
-              className="absolute left-3 top-1/2 z-10 -translate-y-1/2 bg-paper/90 p-2 text-ink opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100"
+              className="absolute left-3 top-1/2 z-10 -translate-y-1/2 bg-paper/90 p-2 text-ink opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -71,7 +71,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               type="button"
               onClick={() => go(1)}
               aria-label="Ảnh sau"
-              className="absolute right-3 top-1/2 z-10 -translate-y-1/2 bg-paper/90 p-2 text-ink opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100"
+              className="absolute right-3 top-1/2 z-10 -translate-y-1/2 bg-paper/90 p-2 text-ink opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -96,10 +96,9 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
                 i === index ? 'outline-gold' : 'outline-transparent hover:outline-ink/20',
               )}
             >
-              <Image
+              <ProductPhoto
                 src={image.url}
                 alt=""
-                fill
                 sizes="(max-width: 768px) 20vw, 8vw"
                 className="scale-[1.12] object-cover"
               />

@@ -45,7 +45,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-transform duration-500',
+          'fixed inset-x-0 top-0 z-50 transition-transform duration-500 motion-reduce:transition-none',
           hidden && !open && '-translate-y-full',
         )}
         style={{ background: 'linear-gradient(rgba(244,239,228,.94) 62%, rgba(244,239,228,0))' }}

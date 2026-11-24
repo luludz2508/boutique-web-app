@@ -37,3 +37,9 @@ test('toSentenceCase keeps known proper nouns capitalised', () => {
   expect(toSentenceCase('TƯỢNG TRẦM HƯƠNG QUAN ÂM')).toBe('Tượng trầm hương Quan Âm');
   expect(toSentenceCase('TRẦM KHÁNH HÒA')).toBe('Trầm Khánh Hòa');
 });
+
+test('pickDefaultVariant prefers an in-stock variant that has a price', () => {
+  const v = (id: string, q: number, price: number) => ({ id, inventory_quantity: q, track_inventory: true, price }) as any;
+  expect(pickDefaultVariant([v('a', 2, 0), v('b', 2, 300000)])?.id).toBe('b');
+  expect(pickDefaultVariant([v('a', 2, 0), v('b', 0, 300000)])?.id).toBe('a');
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface VideoPlayerProps {
   src: string;
@@ -27,6 +27,16 @@ export default function VideoPlayer({
 }: VideoPlayerProps) {
   const [hasError, setHasError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Respect "reduce motion": stop autoplay and give the visitor controls instead.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReduceMotion(true);
+      videoRef.current?.pause();
+    }
+  }, []);
 
   const handleError = () => {
     console.log("Video failed to load, trying fallback");
@@ -67,7 +77,8 @@ export default function VideoPlayer({
 
   return (
     <video
-      autoPlay={autoPlay}
+      ref={videoRef}
+      autoPlay={autoPlay && !reduceMotion}
       loop={loop}
       muted={muted}
       playsInline={playsInline}
@@ -75,7 +86,7 @@ export default function VideoPlayer({
       className={className}
       webkit-playsinline="true"
       x-webkit-airplay="allow"
-      controls={controls}
+      controls={controls || reduceMotion}
       onError={handleError}
     >
       <source src={useFallback ? fallbackSrc : src} type="video/mp4" />

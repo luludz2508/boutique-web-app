@@ -51,7 +51,7 @@ export function MapComponent({
         height="450"
         allowFullScreen={true}
         loading="lazy"
-        className="border-0"
+        className="h-full w-full border-0"
         referrerPolicy="no-referrer-when-downgrade"
       />
     </div>
