@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createClient } from '@supabase/supabase-js';
-import { type ImageRow, type ManifestEntry, isHstaticUrl, parseArgs, planBackup, zeroPriceCsv } from './lib';
+import { type ImageRow, type ManifestEntry, isHstaticUrl, manifestName, parseArgs, planBackup, zeroPriceCsv } from './lib';
 
 const BUCKET = 'product-images';
 const CONCURRENCY = 5;
@@ -191,14 +191,19 @@ async function main() {
     if (++done % 50 === 0) console.log(`  ${done}/${plan.uploads.length} files`);
   });
 
-  // Manifest first, then relink.
-  const manifestName = `images-manifest-${today}.json`;
+  if (plan.manifest.length === 0) {
+    console.log({ rows: rows.length, uploaded, alreadyMoved: plan.skippedNonHstatic, failed: [...failed], note: 'Nothing to relink; no manifest written.' });
+    return;
+  }
+
+  // Manifest first, then relink. Never overwrite an earlier manifest.
+  const name = manifestName(new Date());
   const manifestJson = JSON.stringify(plan.manifest, null, 2);
   fs.mkdirSync('backups', { recursive: true });
-  fs.writeFileSync(path.join('backups', manifestName), manifestJson);
+  fs.writeFileSync(path.join('backups', name), manifestJson, { flag: 'wx' });
   const { error: mErr } = await supabase.storage
     .from(BUCKET)
-    .upload(`backups/${manifestName}`, manifestJson, { contentType: 'application/json', upsert: true });
+    .upload(`backups/${name}`, manifestJson, { contentType: 'application/json', upsert: false });
   if (mErr) throw new Error(`Saving manifest to bucket: ${mErr.message} (local copy kept, no URLs changed)`);
 
   let relinked = 0;
@@ -220,7 +225,7 @@ async function main() {
     skippedExisting: plan.manifest.length ? new Set(plan.manifest.map((m) => m.new_url)).size - plan.uploads.length : 0,
     relinked,
     alreadyMoved: plan.skippedNonHstatic,
-    manifest: `backups/${manifestName}`,
+    manifest: `backups/${name}`,
     failed: [...failed],
     notRelinked,
   });

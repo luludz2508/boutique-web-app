@@ -19,6 +19,11 @@ const nextConfig = {
         hostname: 'file.hstatic.net',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'hgpthqkuinupxhzkbtxn.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
     ],
   },
   async headers() {

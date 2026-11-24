@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { isHstaticUrl, parseArgs, planBackup, storagePathFor, zeroPriceCsv } from './lib';
+import { isHstaticUrl, manifestName, parseArgs, planBackup, storagePathFor, zeroPriceCsv } from './lib';
 
 const BASE = 'https://x.supabase.co/storage/v1/object/public/product-images';
 
@@ -43,4 +43,8 @@ test('parseArgs', () => {
   expect(parseArgs([])).toEqual({ dryRun: false });
   expect(parseArgs(['--dry-run'])).toEqual({ dryRun: true });
   expect(parseArgs(['--rollback', 'backups/m.json'])).toEqual({ dryRun: false, rollback: 'backups/m.json' });
+});
+
+test('manifestName is unique per run so re-runs never overwrite an earlier manifest', () => {
+  expect(manifestName(new Date('2026-11-24T11:20:05.123Z'))).toBe('images-manifest-2026-11-24T11-20-05Z.json');
 });

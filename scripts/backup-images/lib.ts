@@ -89,6 +89,12 @@ export function zeroPriceCsv(rows: ZeroPriceRow[]): string {
   return `${lines.join('\n')}\n`;
 }
 
+/** Timestamped so a later run never overwrites an earlier run's manifest. */
+export function manifestName(now: Date): string {
+  const stamp = now.toISOString().slice(0, 19).replace(/:/g, '-');
+  return `images-manifest-${stamp}Z.json`;
+}
+
 export function parseArgs(argv: string[]): { dryRun: boolean; rollback?: string } {
   const result: { dryRun: boolean; rollback?: string } = { dryRun: argv.includes('--dry-run') };
   const i = argv.indexOf('--rollback');
