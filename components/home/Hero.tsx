@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { BrushStroke, InkCursor } from '@/components/ink';
 
 const LAYERS = [
-  { src: '/ink/hero-mountains-far.webp', speed: 0.12, className: 'bottom-[24%] -left-[20%] -right-[40%] sm:left-[22%] sm:right-0 sm:bottom-[26%] ink-feather-x' },
-  { src: '/ink/mist.webp', speed: 0.22, className: 'bottom-[12%] -left-[10%] -right-[10%] opacity-75 ink-hero-drift ink-feather-x' },
-  { src: '/ink/hero-mountains-near.webp', speed: 0.38, className: 'bottom-[-2%] -inset-x-[30%] sm:inset-x-0 sm:bottom-[-26%]' },
+  { src: '/ink/hero-mountains-far.webp', speed: 0.12, className: 'bottom-[3%] -left-[20%] -right-[40%] sm:left-[22%] sm:right-0 sm:bottom-[7%] ink-feather-x' },
+  { src: '/ink/mist.webp', speed: 0.22, className: 'bottom-[4%] -left-[10%] -right-[10%] opacity-75 ink-hero-drift ink-feather-x' },
+  { src: '/ink/hero-mountains-near.webp', speed: 0.38, className: 'bottom-0 -inset-x-[30%] sm:inset-x-0 sm:bottom-[-15%]' },
 ];
 
 const WORDS: { text: string; delay: number; br?: boolean }[] = [

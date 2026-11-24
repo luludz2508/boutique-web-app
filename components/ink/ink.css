@@ -195,7 +195,7 @@
 }
 .ink-hero-fade { opacity: 0; animation: ink-fade 1.2s var(--ink-ease) forwards; }
 @keyframes ink-fade { to { opacity: 1; } }
-/* outline button: a faint ink wash spreads from the centre, like a drop soaking into paper */
+/* outline button: a dark-gold ink wash spreads from the centre, like a drop soaking into paper */
 .ink-bloom {
   position: relative;
   isolation: isolate;
@@ -207,16 +207,16 @@
   position: absolute;
   inset: -60% -20%;
   z-index: -1;
-  /* two offset soft blobs so the edge is uneven rather than a perfect circle */
+  /* dark-gold wash, two offset soft blobs so the edge is uneven rather than a perfect circle */
   background:
-    radial-gradient(closest-side at 42% 52%, rgba(28, 27, 25, 0.1), rgba(28, 27, 25, 0.05) 55%, transparent),
-    radial-gradient(closest-side at 60% 46%, rgba(28, 27, 25, 0.06), transparent 80%);
+    radial-gradient(closest-side at 42% 52%, rgba(184, 145, 58, 0.42), rgba(184, 145, 58, 0.22) 55%, transparent),
+    radial-gradient(closest-side at 62% 45%, rgba(138, 106, 36, 0.28), transparent 80%);
   opacity: 0;
   transform: scale(0.25);
   transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
 }
 .ink-bloom:hover,
-.ink-bloom:focus-visible { border-color: #1c1b19; }
+.ink-bloom:focus-visible { border-color: #8a6a24; }
 .ink-bloom:hover::before,
 .ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
 
