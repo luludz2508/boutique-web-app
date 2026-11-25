@@ -27,21 +27,11 @@
 
 /* ---------- Seal ---------- */
 .ink-seal-sm {
-  display: inline-grid;
-  place-items: center;
+  display: block;
   flex: none;
   width: 44px;
   height: 44px;
-  background: url('/ink/seal-blank.webp') center / contain no-repeat;
   transform: rotate(-3deg);
-}
-.ink-seal-sm > span {
-  font: 600 11px/1.02 var(--font-body), sans-serif;
-  letter-spacing: 0.04em;
-  color: #f6efe2;
-  text-align: center;
-  -webkit-mask: url('/ink/seal-texture.webp') center / 180%;
-  mask: url('/ink/seal-texture.webp') center / 180%;
 }
 .ink-seal-lg {
   display: block;

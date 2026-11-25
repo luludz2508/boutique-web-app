@@ -10,6 +10,15 @@ export function VisitShowroom() {
   return (
     <section className="relative overflow-hidden px-5 pb-28 pt-8 text-center md:pb-36">
       <Reveal className="mx-auto max-w-2xl">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/ink/calligraphy-son-hong.webp"
+          alt="Sơn Hồng"
+          width={360}
+          height={681}
+          loading="lazy"
+          className="mx-auto mb-10 w-36 sm:w-44"
+        />
         <p className="mb-4 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">Ghé showroom</p>
         <h2 className="font-display text-[clamp(36px,4.4vw,56px)] font-light leading-[1.1] text-ink [text-wrap:balance]">
           Thưởng trầm cùng gia đình Sơn Hồng

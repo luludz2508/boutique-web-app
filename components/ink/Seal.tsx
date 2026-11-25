@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 type SealProps = {
-  /** sm (< 100px): blank chop + text; lg: the full generated seal artwork */
+  /** sm: 44px chop for the navbar and placeholders; lg: 120px by default, resize with className */
   size?: 'sm' | 'lg';
   /** play the "stamped down" animation */
   stamp?: boolean;
@@ -9,31 +9,17 @@ type SealProps = {
   className?: string;
 };
 
+/** The Sơn Hồng red seal (transparent artwork, no blend mode needed). */
 export function Seal({ size = 'sm', stamp = false, delayMs = 0, className }: SealProps) {
-  const style = stamp ? { animationDelay: `${delayMs}ms` } : undefined;
-  if (size === 'lg') {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src="/ink/seal-full.webp"
-        alt="Ấn Sơn Hồng"
-        className={cn('ink-seal-lg', stamp && 'ink-stamp', className)}
-        style={style}
-      />
-    );
-  }
   return (
-    <span
-      role="img"
-      aria-label="Ấn Sơn Hồng"
-      className={cn('ink-seal-sm', stamp && 'ink-stamp', className)}
-      style={style}
-    >
-      <span aria-hidden>
-        SƠN
-        <br />
-        HỒNG
-      </span>
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/ink/seal-son-hong.webp"
+      alt="Ấn Sơn Hồng"
+      width={size === 'lg' ? 120 : 44}
+      height={size === 'lg' ? 120 : 44}
+      className={cn(size === 'lg' ? 'ink-seal-lg' : 'ink-seal-sm', stamp && 'ink-stamp', className)}
+      style={stamp ? { animationDelay: `${delayMs}ms` } : undefined}
+    />
   );
 }
