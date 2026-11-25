@@ -70,58 +70,62 @@ export function ProductSearch() {
   );
 }
 
-/** Category words to tap (scrolls sideways on phones) + a small sort menu. */
-export function CategoryBar({ categories, total }: { categories: CategoryOption[]; total: number }) {
+/** Small sort menu that sits beside the search, styled like it (underline, no box). */
+export function SortMenu() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const href = useHref();
-  const current = searchParams.get('type');
   const sort = searchParams.get('sort') ?? 'newest';
+
+  return (
+    <label className="relative inline-flex shrink-0 items-center gap-2 whitespace-nowrap border-b border-ink/30 py-2.5 text-sm text-ink-2 focus-within:border-gold">
+      <span className="hidden sm:inline">Sắp xếp</span>
+      <select
+        value={sort}
+        aria-label="Sắp xếp"
+        onChange={(e) => router.push(href('sort', e.target.value === 'newest' ? null : e.target.value), { scroll: false })}
+        className="cursor-pointer appearance-none bg-transparent pr-5 text-ink outline-none"
+      >
+        {SORTS.map((s) => (
+          <option key={s.value} value={s.value}>
+            {s.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-0 h-3.5 w-3.5" />
+    </label>
+  );
+}
+
+/** Category words to tap; scrolls sideways when they don't fit. */
+export function CategoryBar({ categories, total }: { categories: CategoryOption[]; total: number }) {
+  const searchParams = useSearchParams();
+  const href = useHref();
+  const current = searchParams.get('type');
 
   const items = [{ value: null as string | null, label: 'Tất cả', count: total }, ...categories];
 
   return (
-    <div className="flex flex-col gap-4 border-b border-ink/10 md:flex-row md:items-end md:justify-between md:gap-10">
-      <nav aria-label="Danh mục" className="-mx-5 min-w-0 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:flex-1 md:px-0">
-        <ul className="flex gap-7 whitespace-nowrap">
-          {items.map((c) => {
-            const active = (c.value ?? null) === current;
-            return (
-              <li key={c.label}>
-                <Link
-                  href={href('type', c.value)}
-                  scroll={false}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'relative inline-block pb-3.5 text-sm transition-colors',
-                    active ? 'text-ink' : 'text-ink-2 hover:text-ink',
-                  )}
-                >
-                  {c.label}
-                  <span className="ml-1.5 text-xs text-ink-2/70">{c.count}</span>
-                  {active && <span className="absolute inset-x-0 -bottom-px h-[2px] bg-gold" />}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-
-      <label className="relative mb-3 inline-flex shrink-0 items-center gap-2 self-start whitespace-nowrap text-sm text-ink-2 md:self-auto">
-        <span>Sắp xếp</span>
-        <select
-          value={sort}
-          onChange={(e) => router.push(href('sort', e.target.value === 'newest' ? null : e.target.value), { scroll: false })}
-          className="cursor-pointer appearance-none bg-transparent pr-5 text-ink outline-none"
-        >
-          {SORTS.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="pointer-events-none absolute right-0 h-3.5 w-3.5" />
-      </label>
-    </div>
+    <nav aria-label="Danh mục" className="-mx-5 overflow-x-auto border-b border-ink/10 px-5 [scrollbar-width:none] md:mx-0 md:px-0">
+      <ul className="flex gap-7 whitespace-nowrap">
+        {items.map((c) => {
+          const active = (c.value ?? null) === current;
+          return (
+            <li key={c.label}>
+              <Link
+                href={href('type', c.value)}
+                scroll={false}
+                aria-current={active ? 'page' : undefined}
+                className={cn('relative inline-block pb-3.5 text-sm transition-colors', active ? 'text-ink' : 'text-ink-2 hover:text-ink')}
+              >
+                {c.label}
+                <span className="ml-1.5 text-xs text-ink-2/70">{c.count}</span>
+                {active && <span className="absolute inset-x-0 -bottom-px h-[2px] bg-gold" />}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

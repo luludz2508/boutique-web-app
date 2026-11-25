@@ -1,6 +1,6 @@
 import { getAllProducts } from '@/lib/db/products';
 import { ProductsGrid } from '@/components/products/products-grid';
-import { CategoryBar, ProductSearch } from '@/components/products/product-filters';
+import { CategoryBar, ProductSearch, SortMenu } from '@/components/products/product-filters';
 import { Reveal } from '@/components/ink';
 import { toCategories } from '@/lib/display';
 import { PAGE_SIZE, queryProducts, toCard } from '@/lib/catalog';
@@ -41,7 +41,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           </p>
           <h1 className="font-display text-4xl font-light md:text-5xl">Sản phẩm</h1>
         </Reveal>
-        <ProductSearch />
+        <div className="flex w-full items-end gap-6 md:w-auto">
+          <div className="min-w-0 flex-1 md:w-80 md:flex-none">
+            <ProductSearch />
+          </div>
+          <SortMenu />
+        </div>
       </header>
 
       <CategoryBar categories={categories} total={total} />
