@@ -6,3 +6,4 @@ export { Reveal } from './Reveal';
 export { InkCursor } from './InkCursor';
 export { PaperFrame } from './PaperFrame';
 export { PageHeader } from './PageHeader';
+export { InkPointer } from './InkPointer';
