@@ -18,7 +18,7 @@ export function Footer() {
 
   return (
     <footer id="contact" className="relative overflow-hidden bg-ink text-[#d9d2c3]">
-      <DrumFace className="pointer-events-none absolute -right-40 -top-40 w-[560px] opacity-[.06]" />
+      <DrumFace className="pointer-events-none absolute -right-36 -top-36 w-[440px] opacity-[.16] sm:-right-32 sm:-top-32 sm:w-[600px]" />
 
       <div className="relative mx-auto max-w-[1440px] px-5 pb-10 pt-20 md:px-[7vw]">
         <div className="flex items-center gap-4">

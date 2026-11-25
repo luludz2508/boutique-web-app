@@ -24,31 +24,12 @@ export function FretBand({ className, flip = false }: { className?: string; flip
   );
 }
 
-const RAYS = Array.from({ length: 14 }, (_, i) => i * (360 / 14));
-const WAVES = Array.from({ length: 8 }, (_, i) => i * 45);
 
-/** Simplified Đông Sơn bronze-drum face. Only use large and very faint (e.g. footer background). */
-export function DrumFace({ className, color = '#B8913A' }: { className?: string; color?: string }) {
+/** Đông Sơn bronze-drum face (gold artwork on transparent). Use large and faint, e.g. the footer background. */
+export function DrumFace({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 200 200" aria-hidden className={cn('block', className)}>
-      <g fill="none" stroke={color} strokeWidth="1.2">
-        {[96, 86, 64, 58, 34, 28].map((r) => (
-          <circle key={r} cx="100" cy="100" r={r} />
-        ))}
-        <path d="M100 4v10M100 186v10M4 100h10M186 100h10" />
-        {WAVES.map((deg) => (
-          <path key={deg} d="M100 14q6 6 0 12q-6 6 0 12" transform={`rotate(${deg} 100 100)`} />
-        ))}
-      </g>
-      <g fill={color}>
-        {RAYS.map((deg) => (
-          <path key={deg} d="M100 72L104 92L100 100L96 92Z" transform={`rotate(${deg} 100 100)`} />
-        ))}
-        {[0, 90, 180, 270].map((deg) => (
-          <circle key={deg} cx="100" cy="61" r="1.6" transform={`rotate(${deg} 100 100)`} />
-        ))}
-      </g>
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/ink/drum-face.webp" alt="" aria-hidden width={600} height={598} loading="lazy" className={cn('block', className)} />
   );
 }
 
