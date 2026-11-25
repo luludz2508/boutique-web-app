@@ -43,3 +43,12 @@ test('pickDefaultVariant prefers an in-stock variant that has a price', () => {
   expect(pickDefaultVariant([v('a', 2, 0), v('b', 2, 300000)])?.id).toBe('b');
   expect(pickDefaultVariant([v('a', 2, 0), v('b', 0, 300000)])?.id).toBe('a');
 });
+
+test('toCategories counts types, sentence-cases labels, biggest first and Khác last', async () => {
+  const { toCategories } = await import('./display');
+  expect(toCategories(['NHANG', 'VÒNG TAY', 'Khác', 'VÒNG TAY', null, 'Khác', 'Khác'])).toEqual([
+    { value: 'VÒNG TAY', label: 'Vòng tay', count: 2 },
+    { value: 'NHANG', label: 'Nhang', count: 1 },
+    { value: 'Khác', label: 'Khác', count: 3 },
+  ]);
+});

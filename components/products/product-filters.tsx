@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronDown, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type CategoryOption = { value: string; label: string; count: number };
+import type { CategoryOption } from '@/lib/display';
 
 const SORTS = [
   { value: 'newest', label: 'Mới nhất' },

@@ -6,6 +6,8 @@ import '@/components/ink/ink.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { InkDefs } from '@/components/ink';
+import { getProductTypeList } from '@/lib/db/products';
+import { toCategories } from '@/lib/display';
 
 // Ink-wash theme fonts (headings / body)
 const cormorant = Cormorant_Garamond({
@@ -58,7 +60,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // product categories for the navbar's Sản phẩm menu
+  const categories = toCategories(await getProductTypeList());
   return (
     <html
       lang="vi"
@@ -71,7 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning={true} className="overflow-x-hidden font-body text-ink">
         <InkDefs />
-        <Navbar />
+        <Navbar categories={categories} />
         {children}
         <Footer />
       </body>

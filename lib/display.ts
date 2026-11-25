@@ -63,3 +63,14 @@ export function productPriceRange(variants: Pick<ProductVariant, 'price'>[]): { 
   if (prices.length === 0) return null;
   return { min: Math.min(...prices), max: Math.max(...prices) };
 }
+
+export type CategoryOption = { value: string; label: string; count: number };
+
+/** Product types → menu/filter entries with counts; biggest first, the catch-all "Khác" last. */
+export function toCategories(types: (string | null | undefined)[]): CategoryOption[] {
+  const counts = new Map<string, number>();
+  for (const t of types) if (t) counts.set(t, (counts.get(t) ?? 0) + 1);
+  return [...counts]
+    .map(([value, count]) => ({ value, label: toSentenceCase(value), count }))
+    .sort((a, b) => Number(a.value === 'Khác') - Number(b.value === 'Khác') || b.count - a.count);
+}

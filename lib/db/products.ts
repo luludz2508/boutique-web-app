@@ -264,3 +264,13 @@ export async function getAllProductTypes() {
   const types = [...new Set(data.map((p) => p.product_type))].filter(Boolean);
   return types as string[];
 }
+
+/** Product types of published products (one entry per product, for counting). */
+export async function getProductTypeList(): Promise<(string | null)[]> {
+  const { data, error } = await supabase.from("products").select("product_type").eq("status", "published");
+  if (error) {
+    console.error("Error fetching product types:", error);
+    return [];
+  }
+  return data.map((p) => p.product_type as string | null);
+}

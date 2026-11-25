@@ -1,128 +1,61 @@
-import {
-  FadeInUp,
-  FadeIn,
-  SlideInUp,
-  StaggerContainer,
-  StaggerItem,
-  DrawLine,
-  TextReveal,
-} from '@/components/animations/viewport-animations';
-import content from '@/config/content';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { ContactCta } from '@/components/ContactCta';
+import { PageHeader, PaperFrame, Reveal } from '@/components/ink';
+import { ProductPhoto } from '@/components/products/product-photo';
+import { getAllProducts } from '@/lib/db/products';
+import { toCategories } from '@/lib/display';
 
-// Export the content component for the accordion layout
-export function CollectionContent() {
-  const currentLocale = 'vi';
-  const pageContent = content[currentLocale].collection;
+export const revalidate = 600;
 
-  // Collection items data
-  const collectionItems = [
-    {
-      title: 'Trầm Hương Cao Cấp',
-      description: 'Những tác phẩm trầm hương được chọn lọc kỹ lưỡng từ nguồn nguyên liệu tốt nhất',
-      image: '/tramhuong-sonhong/gallery-1.jpg',
-    },
-    {
-      title: 'Nghệ Thuật Truyền Thống',
-      description:
-        'Kỹ thuật chế tác được truyền từ đời này sang đời khác, giữ gìn tinh hoa văn hóa',
-      image: '/tramhuong-sonhong/gallery-2.jpg',
-    },
-    {
-      title: 'Tinh Túy Đất Trời',
-      description:
-        'Mỗi sản phẩm đều mang trong mình hương thơm tự nhiên và giá trị tinh thần sâu sắc',
-      image: '/tramhuong-sonhong/gallery-3.jpg',
-    },
-  ];
+export const metadata = {
+  title: 'Bộ sưu tập | Trầm Hương Sơn Hồng',
+  description: 'Các dòng sản phẩm trầm hương của Sơn Hồng: vòng tay, nhang, thác khói, phụ kiện xông trầm và tác phẩm điêu khắc.',
+};
+
+export default async function CollectionPage() {
+  const products = await getAllProducts();
+  const categories = toCategories(products.map((p) => p.product_type));
+
+  // one cover photo per category: its newest product that has a picture
+  const cover = (type: string) => {
+    const p = products.find((x) => x.product_type === type && x.images?.length);
+    return p?.images?.find((i) => i.is_primary)?.url ?? p?.images?.[0]?.url;
+  };
 
   return (
-    <div className="space-y-20">
-      <div className="pt-12 text-center">
-        <TextReveal>
-          <h1 className="font-serif text-6xl font-light mb-8 tracking-tight leading-none text-white">
-            {pageContent.title}
-            <br />
-            <span className="font-normal text-white/80">{pageContent.subtitle}</span>
-          </h1>
-        </TextReveal>
-        <FadeIn delay={0.2}>
-          <DrawLine className="w-32 mx-auto mb-8 bg-white/60" />
-        </FadeIn>
-        <FadeInUp delay={0.3}>
-          <p className="font-sans text-lg text-white/90 leading-relaxed max-w-2xl mx-auto">
-            {pageContent.description}
-          </p>
-        </FadeInUp>
+    <div className="mx-auto max-w-[1440px] px-5 pb-24 pt-32 text-ink md:px-[6vw] md:pt-40">
+      <PageHeader eyebrow="Bộ sưu tập" title="Các dòng trầm của Sơn Hồng">
+        Từ chuỗi vòng đeo hằng ngày đến tác phẩm điêu khắc trưng bày, mỗi dòng đều chọn từ trầm tự nhiên Việt Nam.
+      </PageHeader>
 
-        {/* Products Button - Prominent */}
-        <div className="flex gap-4 justify-center mt-10">
-          <Button
-            asChild
-            size="lg"
-            className="bg-white/20 hover:bg-white/30 text-white border border-white/30 hover:border-white/50 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm"
-          >
-            <Link href="/products" className="flex items-center gap-3">
-              <span>Xem Tất Cả Sản Phẩm</span>
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Collection Showcase */}
-      <div className="mt-20">
-        <FadeInUp>
-          <h2 className="font-serif text-4xl font-light mb-12 text-center text-white">
-            Bộ Sưu Tập
-          </h2>
-        </FadeInUp>
-        <StaggerContainer className="grid md:grid-cols-3 gap-8">
-          {collectionItems && collectionItems.length > 0 ? (
-            collectionItems.map((item, index) => (
-              <StaggerItem key={`collection-item-${index}`}>
-                <div className="group">
-                  {/* Collection Image */}
-                  <div className="aspect-square relative overflow-hidden mb-6">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-
-                  {/* Collection Content - No Background */}
-                  <div className="space-y-4">
-                    <h3 className="font-serif text-xl font-light text-white group-hover:text-white/90 transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-white/80 text-sm leading-relaxed">{item.description}</p>
-                    <Link href="/products" className="block">
-                      <div className="flex items-center justify-between group-hover:opacity-80 transition-opacity">
-                        <span className="font-mono text-lg font-semibold text-white">
-                          Xem Sản Phẩm
-                        </span>
-                        <ArrowRight className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
-                      </div>
-                    </Link>
-                  </div>
+      <div className="grid grid-cols-2 gap-x-5 gap-y-12 sm:gap-x-8 lg:grid-cols-3">
+        {categories.map((c, i) => (
+          <Reveal key={c.value} delayMs={(i % 3) * 80} className="h-full">
+            <Link href={`/products?type=${encodeURIComponent(c.value)}`} className="group flex h-full flex-col">
+              <PaperFrame hoverLift>
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-paper-2">
+                  <ProductPhoto
+                    src={cover(c.value)}
+                    alt=""
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                    className="scale-[1.12] object-cover transition-transform [transition-duration:1200ms] group-hover:scale-[1.17] motion-reduce:transition-none"
+                  />
                 </div>
-              </StaggerItem>
-            ))
-          ) : (
-            <div className="col-span-full text-center text-white/60">
-              <p>Không có sản phẩm nào để hiển thị.</p>
-            </div>
-          )}
-        </StaggerContainer>
+              </PaperFrame>
+              <div className="mt-5 flex items-baseline justify-between gap-4">
+                <h2 className="font-display text-2xl font-light leading-tight sm:text-3xl">
+                  {c.value === 'Khác' ? 'Tác phẩm & quà tặng' : c.label}
+                </h2>
+                <span className="whitespace-nowrap text-xs tracking-wide text-ink-2">{c.count} sản phẩm</span>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
       </div>
+
+      <ContactCta title="Cần một món quà riêng?">
+        Gia đình Sơn Hồng nhận chế tác theo yêu cầu và tư vấn chọn trầm theo dịp tặng.
+      </ContactCta>
     </div>
   );
 }
-
-// Default export for route access
-export default CollectionContent;

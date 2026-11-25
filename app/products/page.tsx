@@ -1,9 +1,9 @@
 import { getAllProducts } from '@/lib/db/products';
 import { ProductsGrid } from '@/components/products/products-grid';
-import { CategoryBar, ProductSearch, type CategoryOption } from '@/components/products/product-filters';
+import { CategoryBar, ProductSearch } from '@/components/products/product-filters';
 import { ProductPagination } from '@/components/products/product-pagination';
 import { Reveal } from '@/components/ink';
-import { toSentenceCase } from '@/lib/display';
+import { toCategories } from '@/lib/display';
 
 // Force dynamic rendering to always get fresh data
 export const dynamic = 'force-dynamic';
@@ -31,12 +31,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   // Fetch all products
   let allProducts = await getAllProducts();
 
-  // Categories with counts, biggest first; the catch-all "Khác" goes last
-  const counts = new Map<string, number>();
-  for (const p of allProducts) if (p.product_type) counts.set(p.product_type, (counts.get(p.product_type) ?? 0) + 1);
-  const categories: CategoryOption[] = [...counts]
-    .map(([value, count]) => ({ value, label: toSentenceCase(value), count }))
-    .sort((a, b) => Number(a.value === 'Khác') - Number(b.value === 'Khác') || b.count - a.count);
+  const categories = toCategories(allProducts.map((p) => p.product_type));
   const total = allProducts.length;
 
   // Apply filters
