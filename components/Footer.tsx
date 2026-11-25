@@ -104,7 +104,7 @@ export function Footer() {
           <div>
             <h2 className="mb-6 text-[11px] uppercase tracking-[.32em] text-gold-2">{a.mapTitle || 'Bản đồ showroom'}</h2>
             <div className="aspect-[4/3] overflow-hidden border border-white/10">
-              <MapComponent address={a.mainAtelierAddress ?? ''} title="Trầm Hương Sơn Hồng – Showroom" />
+              <MapComponent address={a.mainAtelierAddress ?? ''} title="Trầm Hương Sơn Hồng – Showroom" className="h-full" />
             </div>
           </div>
         </div>
