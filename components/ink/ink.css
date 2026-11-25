@@ -151,6 +151,7 @@
   .ink-paper::after,
   .ink-bloom,
   .ink-bloom::before,
+  .ink-bloom::after,
   .ink-bloom-dark,
   .ink-bloom-dark::before,
   .ink-bloom-dark::after { transition: none !important; }
@@ -188,20 +189,33 @@
 }
 .ink-hero-fade { opacity: 0; animation: ink-fade 1.2s var(--ink-ease) forwards; }
 @keyframes ink-fade { to { opacity: 1; } }
-/* outline button: a dark-gold ink wash spreads from the centre, like a drop soaking into paper */
+/* outline button: a sheet of paper with a hand-drawn ink edge; on hover a dark-gold wash
+   spreads from the centre, like a drop soaking into the paper */
 .ink-bloom {
   position: relative;
   isolation: isolate;
-  /* no overflow clip: the wash fades out past the edges instead of stopping at a box */
-  transition: border-color 0.6s var(--ink-ease);
+  /* the Tailwind border keeps its width for layout; the visible edge is drawn below */
+  border-color: transparent !important;
 }
-.ink-bloom::before {
+.ink-bloom::before,
+.ink-bloom::after {
   content: '';
   position: absolute;
-  inset: -60% -20%;
   z-index: -1;
   pointer-events: none;
-  /* dark-gold wash, two offset soft blobs so the edge is uneven rather than a perfect circle */
+}
+/* paper + rough ink edge (filtered on its own so the wash above stays soft) */
+.ink-bloom::before {
+  inset: -1px;
+  background: #faf6ee url('/ink/paper-tile.webp') center / 300px;
+  border: 1.5px solid rgba(28, 27, 25, 0.55);
+  filter: url(#ink-deckle-fine);
+  transition: border-color 0.6s var(--ink-ease);
+}
+/* no overflow clip: the wash fades out past the edges instead of stopping at a box */
+.ink-bloom::after {
+  inset: -60% -20%;
+  /* two offset soft blobs so the edge is uneven rather than a perfect circle */
   background:
     radial-gradient(closest-side at 42% 52%, rgba(184, 145, 58, 0.42), rgba(184, 145, 58, 0.22) 55%, transparent),
     radial-gradient(closest-side at 62% 45%, rgba(138, 106, 36, 0.28), transparent 80%);
@@ -209,13 +223,13 @@
   transform: scale(0.25);
   transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
 }
-.ink-bloom:hover,
-.ink-bloom:focus-visible { border-color: transparent; }
 .ink-bloom:hover::before,
-.ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
+.ink-bloom:focus-visible::before { border-color: transparent; }
+.ink-bloom:hover::after,
+.ink-bloom:focus-visible::after { opacity: 1; transform: scale(1); }
 
-/* solid black button: the ink is painted on (rough paper-fibre edge); on hover it drains away
-   and leaves a hand-drawn ink outline, like the outline buttons */
+/* solid black button: ink painted on paper with a rough fibre edge; on hover the ink drains
+   away and leaves the paper with a hand-drawn ink outline, so it never blends into the art behind */
 .ink-bloom-dark {
   position: relative;
   isolation: isolate;
@@ -231,21 +245,20 @@
   pointer-events: none;
   filter: url(#ink-deckle-fine);
 }
+/* underneath: paper + ink edge */
 .ink-bloom-dark::before {
+  background: #faf6ee url('/ink/paper-tile.webp') center / 300px;
+  border: 1.5px solid #1c1b19;
+}
+/* on top: the ink that drains */
+.ink-bloom-dark::after {
   background: #1c1b19;
   transition: opacity 0.55s var(--ink-ease), transform 0.7s var(--ink-ease);
 }
-.ink-bloom-dark::after {
-  border: 1.5px solid #1c1b19;
-  opacity: 0;
-  transition: opacity 0.4s var(--ink-ease);
-}
 .ink-bloom-dark:hover,
 .ink-bloom-dark:focus-visible { color: #1c1b19 !important; }
-.ink-bloom-dark:hover::before,
-.ink-bloom-dark:focus-visible::before { opacity: 0; transform: scale(0.94); }
 .ink-bloom-dark:hover::after,
-.ink-bloom-dark:focus-visible::after { opacity: 1; }
+.ink-bloom-dark:focus-visible::after { opacity: 0; transform: scale(0.94); }
 
 /* ---------- Marquee ---------- */
 .ink-marquee-track { display: inline-block; animation: ink-marquee 46s linear infinite; }
