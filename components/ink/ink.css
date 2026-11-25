@@ -216,9 +216,9 @@
   background:
     /* two offset drops so the stain is lopsided, not a perfect circle */
     radial-gradient(circle var(--ink-r) at var(--ink-x, 50%) var(--ink-y, 50%),
-      rgba(138, 106, 36, 0.62), rgba(184, 145, 58, 0.4) 55%, rgba(184, 145, 58, 0) 100%),
+      rgba(184, 145, 58, 0.36), rgba(201, 164, 90, 0.22) 55%, rgba(201, 164, 90, 0) 100%),
     radial-gradient(circle calc(var(--ink-r) * 0.7) at calc(var(--ink-x, 50%) + 18%) calc(var(--ink-y, 50%) - 22%),
-      rgba(184, 145, 58, 0.3), rgba(184, 145, 58, 0) 100%),
+      rgba(212, 175, 95, 0.18), rgba(212, 175, 95, 0) 100%),
     #faf6ee url('/ink/paper-tile.webp') center / 300px;
   border: 1.5px solid rgba(28, 27, 25, 0.55);
   filter: url(#ink-deckle-fine);
@@ -228,7 +228,7 @@
 .ink-bloom:focus-visible::before {
   /* big enough to reach most of the sheet, small enough that the far side stays paper */
   --ink-r: 170px;
-  border-color: rgba(138, 106, 36, 0.75);
+  border-color: rgba(138, 106, 36, 0.6);
 }
 
 /* solid black button: ink painted on paper with a rough fibre edge; on hover the ink drains
