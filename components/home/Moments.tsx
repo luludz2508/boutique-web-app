@@ -23,7 +23,7 @@ export function Moments() {
         </Reveal>
       </div>
       <div
-        className="ink-moments flex gap-6 overflow-x-auto px-5 pb-6 pt-2 md:gap-8 md:px-[7vw]"
+        className="ink-moments flex gap-6 overflow-x-auto scroll-px-5 px-5 pb-6 pt-5 md:gap-8 md:scroll-px-[7vw] md:px-[7vw]"
         tabIndex={0}
         aria-label="Ảnh khoảnh khắc Sơn Hồng, cuộn ngang để xem thêm"
       >
