@@ -100,7 +100,7 @@ export function Hero() {
         <div className="ink-hero-fade mt-9 flex flex-wrap gap-4" style={{ animationDelay: '2100ms' }}>
           <Link
             href="/products"
-            className="relative inline-flex items-center bg-ink px-7 py-4 text-xs font-medium uppercase tracking-[.18em] text-paper transition-colors hover:bg-black"
+            className="ink-bloom-dark inline-flex items-center bg-ink px-7 py-4 text-xs font-medium uppercase tracking-[.18em] text-paper transition-colors hover:bg-black"
           >
             Xem sản phẩm
           </Link>

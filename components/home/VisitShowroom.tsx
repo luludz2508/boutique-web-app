@@ -37,7 +37,7 @@ export function VisitShowroom() {
               href={a.zaloUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-flex items-center gap-2 whitespace-nowrap bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-paper hover:bg-black"
+              className="ink-bloom-dark inline-flex items-center gap-2 whitespace-nowrap bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[.18em] text-paper hover:bg-black"
             >
               <MessageCircle className="h-4 w-4" />
               Nhắn Zalo

@@ -150,7 +150,8 @@
   .ink-paper,
   .ink-paper::after,
   .ink-bloom,
-  .ink-bloom::before { transition: none !important; }
+  .ink-bloom::before,
+  .ink-bloom-dark::before { transition: none !important; }
   .ink-seal-lg.ink-stamp { transform: rotate(-4deg) !important; }
 }
 
@@ -210,6 +211,28 @@
 .ink-bloom:focus-visible { border-color: transparent; }
 .ink-bloom:hover::before,
 .ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
+
+/* solid black button: ink bleeds out past its edges into the paper */
+.ink-bloom-dark {
+  position: relative;
+  isolation: isolate;
+}
+.ink-bloom-dark::before {
+  content: '';
+  position: absolute;
+  inset: -80% -35%;
+  z-index: -1;
+  pointer-events: none;
+  /* farthest-side keeps the wash strong at the button edge, then lets it fade into the paper */
+  background:
+    radial-gradient(farthest-side at 47% 52%, rgba(28, 27, 25, 0.85) 35%, rgba(28, 27, 25, 0.5) 60%, rgba(28, 27, 25, 0.18) 82%, transparent),
+    radial-gradient(farthest-side at 60% 44%, rgba(28, 27, 25, 0.25), transparent 75%);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
+}
+.ink-bloom-dark:hover::before,
+.ink-bloom-dark:focus-visible::before { opacity: 1; transform: scale(1); }
 
 /* ---------- Marquee ---------- */
 .ink-marquee-track { display: inline-block; animation: ink-marquee 46s linear infinite; }

@@ -68,7 +68,7 @@ export function ProductFilters({ productTypes, totalProducts }: ProductFiltersPr
             className="rounded-none border-0 border-b border-ink/30 bg-transparent pl-7 text-ink shadow-none placeholder:text-ink-2/70 focus-visible:border-gold focus-visible:ring-0"
           />
         </div>
-        <Button type="submit" className="rounded-none bg-ink px-6 text-xs uppercase tracking-[.18em] text-paper hover:bg-black">
+        <Button type="submit" className="ink-bloom-dark rounded-none bg-ink px-6 text-xs uppercase tracking-[.18em] text-paper hover:bg-black">
           Tìm kiếm
         </Button>
       </form>
