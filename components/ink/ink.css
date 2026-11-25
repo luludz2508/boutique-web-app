@@ -175,6 +175,10 @@
 .ink-prose table { display: block; max-width: 100%; overflow-x: auto; width: auto !important; }
 .ink-prose td, .ink-prose th { width: auto !important; min-width: 6rem; }
 .ink-prose iframe, .ink-prose video { max-width: 100%; }
+/* inside the detail page's side column: quieter headings */
+.ink-prose-sm { font-size: 0.95rem; }
+.ink-prose-sm h1, .ink-prose-sm h2, .ink-prose-sm h3 { font-size: 1.35rem; margin-top: 1.4em; }
+.ink-prose-sm > :first-child { margin-top: 0; }
 
 /* ---------- Home hero ---------- */
 .ink-hero-drift { animation: ink-drift 26s ease-in-out infinite alternate; }

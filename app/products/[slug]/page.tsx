@@ -6,6 +6,7 @@ import { ProductCard } from '@/components/products/product-card';
 import { VariantPicker } from '@/components/products/variant-picker';
 import { Reveal } from '@/components/ink';
 import { toSentenceCase } from '@/lib/display';
+import { splitDescription, splitProductName } from '@/lib/description';
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -48,6 +49,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     : [];
 
   const name = toSentenceCase(product.name_vi);
+  const { title, detail } = splitProductName(product.name_vi);
+  const { specs, body } = splitDescription(product.description_vi);
+  const type = product.product_type && product.product_type !== 'Khác' ? toSentenceCase(product.product_type) : null;
   const related = product.product_type
     ? (await getProductsByType(product.product_type)).filter((p) => p.id !== product.id).slice(0, 4)
     : [];
@@ -63,42 +67,57 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           Sản phẩm
         </Link>
         <span className="mx-2 text-gold">/</span>
-        <span className="text-ink">{name}</span>
+        <span className="text-ink">{title}</span>
       </nav>
 
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <ProductImageGallery images={sortedImages} productName={name} />
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
+        {/* photos stay in view while the long right column scrolls */}
+        <div className="lg:sticky lg:top-24 lg:self-start">
+          <ProductImageGallery images={sortedImages} productName={name} />
+        </div>
 
-        <div className="space-y-8">
-          <div>
-            {product.product_type && (
-              <p className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">
-                <span className="h-px w-8 bg-gold" />
-                {product.product_type}
-              </p>
-            )}
-            <h1 className="font-display text-4xl font-light leading-tight md:text-5xl">{name}</h1>
+        <div>
+          {type && (
+            <p className="mb-4 flex items-center gap-3 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">
+              <span className="h-px w-8 bg-gold" />
+              {type}
+            </p>
+          )}
+          <h1 className="font-display text-4xl font-light leading-tight md:text-5xl">{title}</h1>
+          {detail && <p className="mt-3 text-sm tracking-wide text-ink-2">{detail}</p>}
+
+          {product.excerpt_vi && <p className="mt-6 leading-relaxed text-ink-2">{product.excerpt_vi}</p>}
+
+          <div className="mt-8">
+            <VariantPicker variants={product.variants ?? []} productName={name} />
           </div>
 
-          {product.excerpt_vi && <p className="leading-relaxed text-ink-2">{product.excerpt_vi}</p>}
+          {specs.length > 0 && (
+            <section className="mt-12">
+              <h2 className="mb-4 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">Thông tin sản phẩm</h2>
+              <dl className="border-t border-ink/10 text-sm">
+                {specs.map((s) => (
+                  <div key={s.label} className="grid grid-cols-[9rem_1fr] gap-4 border-b border-ink/10 py-3 sm:grid-cols-[11rem_1fr]">
+                    <dt className="text-ink-2">{s.label}</dt>
+                    <dd className="whitespace-pre-line text-ink">{s.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
 
-          <VariantPicker variants={product.variants ?? []} productName={name} />
+          {body && (
+            <section className="mt-12">
+              <h2 className="mb-4 text-[11px] uppercase tracking-[.32em] text-[#8a6a24]">Mô tả</h2>
+              <div className="ink-prose ink-prose-sm text-ink-2" dangerouslySetInnerHTML={{ __html: body }} />
+            </section>
+          )}
         </div>
       </div>
 
-      {product.description_vi && (
-        <section className="mx-auto mt-20 max-w-[68ch]">
-          <h2 className="mb-6 font-display text-3xl font-light">Mô tả sản phẩm</h2>
-          <div
-            className="ink-prose text-ink-2"
-            dangerouslySetInnerHTML={{ __html: product.description_vi }}
-          />
-        </section>
-      )}
-
       {related.length > 0 && (
-        <section className="mt-24">
-          <h2 className="mb-10 font-display text-3xl font-light">Có thể bạn cũng thích</h2>
+        <section className="mt-24 border-t border-ink/10 pt-16">
+          <h2 className="mb-10 font-display text-3xl font-light">Sản phẩm cùng loại</h2>
           <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 lg:grid-cols-4">
             {related.map((p, i) => (
               <Reveal key={p.id} delayMs={i * 60} className="h-full">

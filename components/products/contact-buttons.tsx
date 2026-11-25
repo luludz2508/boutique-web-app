@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Copy, Check, Facebook, MessageCircle, Phone } from 'lucide-react';
-import { FretCorner } from '@/components/ink';
 import content from '@/config/content';
 
 /** Zalo / call / Facebook, plus a line the customer can copy into their message. */
@@ -32,8 +31,6 @@ export function ContactButtons({ productLabel }: { productLabel: string }) {
             rel="noopener noreferrer"
             className="ink-bloom-dark inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap bg-ink px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-paper sm:flex-none"
           >
-            <FretCorner className="absolute -left-1 -top-1 h-3 w-3" />
-            <FretCorner className="absolute -bottom-1 -right-1 h-3 w-3 rotate-180" />
             <MessageCircle className="h-4 w-4" />
             Nhắn Zalo
           </a>
@@ -64,7 +61,7 @@ export function ContactButtons({ productLabel }: { productLabel: string }) {
         <button
           type="button"
           onClick={copy}
-          className="inline-flex items-center gap-1 text-xs text-[#8a6a24] underline-offset-4 hover:underline"
+          className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-xs text-[#8a6a24] underline-offset-4 hover:underline"
           aria-live="polite"
         >
           {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}

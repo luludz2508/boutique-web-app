@@ -3,15 +3,20 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, MessageCircle, Phone, X } from 'lucide-react';
 import { Seal } from '@/components/ink';
 import { cn } from '@/lib/utils';
+import content from '@/config/content';
 
 const LINKS = [
-  { href: '/#story', label: 'Câu chuyện' },
   { href: '/products', label: 'Sản phẩm' },
+  { href: '/#story', label: 'Câu chuyện' },
+  { href: '/#showroom', label: 'Showroom' },
   { href: '#contact', label: 'Liên hệ' },
 ] as const;
+
+const { contactNumber, zaloUrl } = content.vi.atelier;
+const tel = contactNumber?.replace(/\s/g, '');
 
 export function Navbar() {
   const pathname = usePathname() ?? '/';
@@ -45,26 +50,26 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-transform duration-500 motion-reduce:transition-none',
+          'fixed inset-x-0 top-0 z-50 border-b border-ink/10 transition-transform duration-500 motion-reduce:transition-none',
           hidden && !open && '-translate-y-full',
         )}
-        style={{ background: 'linear-gradient(rgba(244,239,228,.94) 62%, rgba(244,239,228,0))' }}
+        style={{ background: "#f4efe4 url('/ink/paper-tile.webp') center / 512px" }}
       >
-        <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 md:px-[5vw]">
+        <nav className="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 py-3 md:px-[5vw]">
           <Link href="/" className="flex items-center gap-3" aria-label="Trầm Hương Sơn Hồng – Trang chủ">
             <Seal />
-            <span className="whitespace-nowrap font-display text-[12px] tracking-[.14em] text-ink sm:text-[15px] sm:tracking-[.22em]">
+            <span className="whitespace-nowrap font-display text-[13px] tracking-[.14em] text-ink sm:text-[17px] sm:tracking-[.2em]">
               TRẦM HƯƠNG SƠN HỒNG
             </span>
           </Link>
 
-          <ul className="hidden items-center gap-8 md:flex">
+          <ul className="ml-auto hidden items-center gap-9 lg:flex">
             {LINKS.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
                   aria-current={isActive(l.href) ? 'page' : undefined}
-                  className="ink-underline py-1.5 text-xs uppercase tracking-[.2em] text-ink"
+                  className="ink-underline py-1.5 text-[13px] uppercase tracking-[.2em] text-ink"
                 >
                   {l.label}
                 </Link>
@@ -72,9 +77,26 @@ export function Navbar() {
             ))}
           </ul>
 
+          {zaloUrl && (
+            <a
+              href={zaloUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ink-bloom-dark hidden items-center gap-2 whitespace-nowrap bg-ink px-5 py-3 text-xs font-medium uppercase tracking-[.16em] text-paper lg:inline-flex"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Zalo {contactNumber}
+            </a>
+          )}
+
+          {tel && (
+            <a href={`tel:${tel}`} className="ml-auto p-2 text-ink lg:hidden" aria-label={`Gọi ${contactNumber}`}>
+              <Phone className="h-5 w-5" />
+            </a>
+          )}
           <button
             type="button"
-            className="p-2 text-ink md:hidden"
+            className="-ml-4 p-2 text-ink lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -88,7 +110,7 @@ export function Navbar() {
       {open && (
         <div
           id="mobile-menu"
-          className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 md:hidden"
+          className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-9 lg:hidden"
           style={{ background: "#f4efe4 url('/ink/paper-tile.webp') repeat", backgroundSize: 512 }}
         >
           {LINKS.map((l) => (
@@ -101,7 +123,28 @@ export function Navbar() {
               {l.label}
             </Link>
           ))}
-          <Seal size="lg" className="mt-6 !w-24 opacity-90" />
+          <div className="mt-4 flex gap-3">
+            {zaloUrl && (
+              <a
+                href={zaloUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ink-bloom-dark inline-flex items-center gap-2 bg-ink px-5 py-4 text-xs font-medium uppercase tracking-[.16em] text-paper"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Nhắn Zalo
+              </a>
+            )}
+            {tel && (
+              <a
+                href={`tel:${tel}`}
+                className="ink-bloom inline-flex items-center gap-2 border border-ink/50 px-5 py-4 text-xs font-medium uppercase tracking-[.16em] text-ink"
+              >
+                <Phone className="h-4 w-4" />
+                {contactNumber}
+              </a>
+            )}
+          </div>
         </div>
       )}
     </>

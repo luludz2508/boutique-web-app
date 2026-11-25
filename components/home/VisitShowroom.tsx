@@ -8,7 +8,7 @@ export function VisitShowroom() {
   const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.mainAtelierAddress ?? '')}`;
 
   return (
-    <section className="relative overflow-hidden px-5 pb-28 pt-8 text-center md:pb-36">
+    <section id="showroom" className="relative scroll-mt-24 overflow-hidden px-5 pb-28 pt-8 text-center md:pb-36">
       <Reveal className="mx-auto max-w-2xl">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
