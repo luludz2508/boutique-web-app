@@ -152,7 +152,8 @@
   .ink-bloom,
   .ink-bloom::before,
   .ink-bloom-dark,
-  .ink-bloom-dark::before { transition: none !important; }
+  .ink-bloom-dark::before,
+  .ink-bloom-dark::after { transition: none !important; }
   .ink-seal-lg.ink-stamp { transform: rotate(-4deg) !important; }
 }
 
@@ -213,28 +214,38 @@
 .ink-bloom:hover::before,
 .ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
 
-/* solid black button: black lacquer with gold — a dark-gold glow wells up from the centre,
-   kept inside the button like the sheen on sơn mài */
+/* solid black button: the ink is painted on (rough paper-fibre edge); on hover it drains away
+   and leaves a hand-drawn ink outline, like the outline buttons */
 .ink-bloom-dark {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  background-color: transparent !important;
+  transition: color 0.5s var(--ink-ease);
 }
-.ink-bloom-dark::before {
+.ink-bloom-dark::before,
+.ink-bloom-dark::after {
   content: '';
   position: absolute;
-  inset: -40% -10%;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(closest-side at 46% 55%, rgba(184, 145, 58, 0.55), rgba(138, 106, 36, 0.28) 55%, transparent),
-    radial-gradient(closest-side at 64% 40%, rgba(212, 175, 95, 0.22), transparent 80%);
-  opacity: 0;
-  transform: scale(0.3);
-  transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
+  filter: url(#ink-deckle-fine);
 }
+.ink-bloom-dark::before {
+  background: #1c1b19;
+  transition: opacity 0.55s var(--ink-ease), transform 0.7s var(--ink-ease);
+}
+.ink-bloom-dark::after {
+  border: 1.5px solid #1c1b19;
+  opacity: 0;
+  transition: opacity 0.4s var(--ink-ease);
+}
+.ink-bloom-dark:hover,
+.ink-bloom-dark:focus-visible { color: #1c1b19 !important; }
 .ink-bloom-dark:hover::before,
-.ink-bloom-dark:focus-visible::before { opacity: 1; transform: scale(1); }
+.ink-bloom-dark:focus-visible::before { opacity: 0; transform: scale(0.94); }
+.ink-bloom-dark:hover::after,
+.ink-bloom-dark:focus-visible::after { opacity: 1; }
 
 /* ---------- Marquee ---------- */
 .ink-marquee-track { display: inline-block; animation: ink-marquee 46s linear infinite; }

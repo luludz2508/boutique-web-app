@@ -41,6 +41,11 @@ export function InkDefs() {
         <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="4" />
         <feDisplacementMap in="SourceGraphic" scale="4" />
       </filter>
+      {/* finer fibres for small things like buttons; tall region so a 48px button's edge isn't clipped */}
+      <filter id="ink-deckle-fine" x="-10%" y="-40%" width="120%" height="180%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="3" seed="7" />
+        <feDisplacementMap in="SourceGraphic" scale="3.5" />
+      </filter>
     </svg>
   );
 }
