@@ -30,7 +30,7 @@ export function ContactButtons({ productLabel }: { productLabel: string }) {
             href={a.zaloUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="ink-bloom-dark inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap bg-ink px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-paper transition-colors hover:bg-black sm:flex-none"
+            className="ink-bloom-dark inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap bg-ink px-4 py-4 text-xs sm:px-6 font-medium uppercase tracking-[.18em] text-paper sm:flex-none"
           >
             <FretCorner className="absolute -left-1 -top-1 h-3 w-3" />
             <FretCorner className="absolute -bottom-1 -right-1 h-3 w-3 rotate-180" />

@@ -151,6 +151,7 @@
   .ink-paper::after,
   .ink-bloom,
   .ink-bloom::before,
+  .ink-bloom-dark,
   .ink-bloom-dark::before { transition: none !important; }
   .ink-seal-lg.ink-stamp { transform: rotate(-4deg) !important; }
 }
@@ -212,23 +213,24 @@
 .ink-bloom:hover::before,
 .ink-bloom:focus-visible::before { opacity: 1; transform: scale(1); }
 
-/* solid black button: ink bleeds out past its edges into the paper */
+/* solid black button: black lacquer with gold — a dark-gold glow wells up from the centre,
+   kept inside the button like the sheen on sơn mài */
 .ink-bloom-dark {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
 .ink-bloom-dark::before {
   content: '';
   position: absolute;
-  inset: -80% -35%;
+  inset: -40% -10%;
   z-index: -1;
   pointer-events: none;
-  /* farthest-side keeps the wash strong at the button edge, then lets it fade into the paper */
   background:
-    radial-gradient(farthest-side at 47% 52%, rgba(28, 27, 25, 0.85) 35%, rgba(28, 27, 25, 0.5) 60%, rgba(28, 27, 25, 0.18) 82%, transparent),
-    radial-gradient(farthest-side at 60% 44%, rgba(28, 27, 25, 0.25), transparent 75%);
+    radial-gradient(closest-side at 46% 55%, rgba(184, 145, 58, 0.55), rgba(138, 106, 36, 0.28) 55%, transparent),
+    radial-gradient(closest-side at 64% 40%, rgba(212, 175, 95, 0.22), transparent 80%);
   opacity: 0;
-  transform: scale(0.4);
+  transform: scale(0.3);
   transition: opacity 0.5s var(--ink-ease), transform 0.9s var(--ink-ease);
 }
 .ink-bloom-dark:hover::before,

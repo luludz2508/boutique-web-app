@@ -16,7 +16,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       <button
         type="button"
         onClick={reset}
-        className="ink-bloom-dark bg-ink px-8 py-3 text-xs uppercase tracking-[.18em] text-paper hover:bg-black"
+        className="ink-bloom-dark bg-ink px-8 py-3 text-xs uppercase tracking-[.18em] text-paper"
       >
         Thử lại
       </button>
