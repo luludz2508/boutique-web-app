@@ -1,18 +1,15 @@
 import { getAllProducts } from '@/lib/db/products';
 import { ProductsGrid } from '@/components/products/products-grid';
 import { CategoryBar, ProductSearch } from '@/components/products/product-filters';
-import { ProductPagination } from '@/components/products/product-pagination';
 import { Reveal } from '@/components/ink';
 import { toCategories } from '@/lib/display';
+import { PAGE_SIZE, queryProducts, toCard } from '@/lib/catalog';
 
 // Force dynamic rendering to always get fresh data
 export const dynamic = 'force-dynamic';
 
-const ITEMS_PER_PAGE = 12;
-
 interface ProductsPageProps {
   searchParams: Promise<{
-    page?: string;
     type?: string;
     search?: string;
     sort?: string;
@@ -20,63 +17,19 @@ interface ProductsPageProps {
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  // Await searchParams in Next.js 15+
-  const params = await searchParams;
+  const { type, search, sort } = await searchParams;
 
-  const page = parseInt(params.page || '1');
-  const typeFilter = params.type;
-  const searchQuery = params.search;
-  const sortBy = params.sort || 'newest';
+  const all = await getAllProducts();
+  const categories = toCategories(all.map((p) => p.product_type));
+  const total = all.length;
 
-  // Fetch all products
-  let allProducts = await getAllProducts();
+  const matches = queryProducts(all, { type, search, sort });
+  const firstPage = matches.slice(0, PAGE_SIZE).map(toCard);
 
-  const categories = toCategories(allProducts.map((p) => p.product_type));
-  const total = allProducts.length;
-
-  // Apply filters
-  if (typeFilter) {
-    allProducts = allProducts.filter((p) => p.product_type === typeFilter);
-  }
-
-  if (searchQuery) {
-    const query = searchQuery.toLowerCase();
-    allProducts = allProducts.filter(
-      (p) =>
-        p.name_vi.toLowerCase().includes(query) ||
-        p.description_vi?.toLowerCase().includes(query) ||
-        p.tags?.some((tag) => tag.toLowerCase().includes(query)),
-    );
-  }
-
-  // Apply sorting
-  allProducts.sort((a, b) => {
-    const getMinPrice = (product: typeof a) =>
-      product.variants?.length > 0 ? Math.min(...product.variants.map((v) => v.price)) : 0;
-
-    switch (sortBy) {
-      case 'oldest':
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      case 'price-asc':
-        return getMinPrice(a) - getMinPrice(b);
-      case 'price-desc':
-        return getMinPrice(b) - getMinPrice(a);
-      case 'name-asc':
-        return a.name_vi.localeCompare(b.name_vi, 'vi');
-      case 'name-desc':
-        return b.name_vi.localeCompare(a.name_vi, 'vi');
-      case 'newest':
-      default:
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    }
-  });
-
-  // Calculate pagination
-  const totalProducts = allProducts.length;
-  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
-  const startIndex = (page - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const paginatedProducts = allProducts.slice(startIndex, endIndex);
+  // the grid fetches later pages with the same filters
+  const query = new URLSearchParams(
+    Object.entries({ type, search, sort }).filter((e): e is [string, string] => Boolean(e[1])),
+  ).toString();
 
   return (
     <div className="mx-auto max-w-[1440px] px-5 pb-24 pt-28 text-ink md:px-[6vw] md:pt-32">
@@ -93,22 +46,15 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
       <CategoryBar categories={categories} total={total} />
 
-      {searchQuery ? (
+      {search ? (
         <p className="mt-6 text-sm text-ink-2">
-          {totalProducts} kết quả cho &ldquo;{searchQuery}&rdquo;
+          {matches.length} kết quả cho &ldquo;{search}&rdquo;
         </p>
       ) : null}
 
       <div className="mt-10">
-        <ProductsGrid products={paginatedProducts} />
-      </div>
-      <div className="mt-12">
-        <ProductPagination
-          currentPage={page}
-          totalPages={totalPages}
-          totalItems={totalProducts}
-          itemsPerPage={ITEMS_PER_PAGE}
-        />
+        {/* key: a new filter starts a fresh list */}
+        <ProductsGrid key={query} initial={firstPage} total={matches.length} query={query} />
       </div>
     </div>
   );

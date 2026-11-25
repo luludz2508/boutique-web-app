@@ -3,14 +3,14 @@ import { PaperFrame } from '@/components/ink';
 import { ProductPhoto } from './product-photo';
 import { formatPrice, productPriceRange } from '@/lib/display';
 import { splitProductName } from '@/lib/description';
-import type { ProductWithDetails } from '@/lib/db/products';
+import type { CardProduct } from '@/lib/catalog';
 
 interface ProductCardProps {
-  product: ProductWithDetails;
+  product: CardProduct;
 }
 
 /** Card price: "Liên hệ", a single price, or "Từ <min>" when variants differ. */
-export function cardPrice(product: Pick<ProductWithDetails, 'variants'>): string {
+export function cardPrice(product: Pick<CardProduct, 'variants'>): string {
   const range = productPriceRange(product.variants ?? []);
   if (!range) return formatPrice(null);
   return range.min === range.max ? formatPrice(range.min) : `Từ ${formatPrice(range.min)}`;
