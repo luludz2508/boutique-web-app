@@ -5,6 +5,7 @@ import './globals.css'; // Import globals.css at the top of the file
 import '@/components/ink/ink.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { HideOnAdmin } from '@/components/HideOnAdmin';
 import { InkDefs, InkPointer } from '@/components/ink';
 import { getProductTypeList } from '@/lib/db/products';
 import { toCategories } from '@/lib/display';
@@ -76,9 +77,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body suppressHydrationWarning={true} className="overflow-x-hidden font-body text-ink">
         <InkDefs />
         <InkPointer />
-        <Navbar categories={categories} />
+        <HideOnAdmin>
+          <Navbar categories={categories} />
+        </HideOnAdmin>
         {children}
-        <Footer />
+        <HideOnAdmin>
+          <Footer />
+        </HideOnAdmin>
       </body>
     </html>
   );
