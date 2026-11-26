@@ -35,6 +35,19 @@ export function LoginForm({ next, forbidden }: { next: string; forbidden: boolea
         <button className={button} disabled={pending}>
           {pending ? 'Đang gửi…' : 'Gửi mã đăng nhập'}
         </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            const form = e.currentTarget.form;
+            if (!form?.reportValidity()) return;
+            setEmail(String(new FormData(form).get('email') ?? '').trim());
+            setError(null);
+            setStep('code');
+          }}
+          className="mt-3 h-11 w-full text-sm text-ink-2 underline-offset-4 hover:underline"
+        >
+          Đã có mã? Nhập mã
+        </button>
       </form>
     );
   }
