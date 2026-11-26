@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { diffChanges, isStale } from './audit';
+import { diffChanges, isStale, latestTimestamp } from './audit';
 
 test('diffChanges lists only fields that changed', () => {
   expect(diffChanges({ price: 480000, sku: 'a' }, { price: 520000, sku: 'a' })).toEqual({ price: { from: 480000, to: 520000 } });
@@ -28,4 +28,10 @@ test('isStale compares instants, not strings', () => {
 
 test('isStale sees microsecond differences Postgres reports', () => {
   expect(isStale('2026-11-26T10:00:00.123456+00:00', '2026-11-26T10:00:00.123457+00:00')).toBe(true);
+});
+
+test('latestTimestamp returns the newest original string', () => {
+  expect(latestTimestamp(['2026-11-26T10:00:00.1+00:00', '2026-11-26T10:00:00.123457+00:00', '2026-11-26T09:00:00Z'])).toBe(
+    '2026-11-26T10:00:00.123457+00:00',
+  );
 });

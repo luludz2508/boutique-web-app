@@ -3,6 +3,7 @@
 import { withAdmin } from '@/lib/admin/auth';
 import { isStale } from '@/lib/admin/audit';
 import { writeAudit } from '@/lib/admin/data';
+import { hhmm } from '@/lib/admin/format';
 import { parsePrice } from '@/lib/admin/price';
 import { revalidateProduct } from '@/lib/admin/revalidate';
 import { adminDb } from '@/lib/supabase/admin';
@@ -13,8 +14,6 @@ export type InlineResult =
 
 type InlineInput = { variantId: string; field: 'price' | 'inventory_quantity'; raw: string; expectedUpdatedAt: string };
 
-const hhmm = (ts: string) =>
-  new Date(ts).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Ho_Chi_Minh' });
 
 const conflict = (ts: string): InlineResult => ({
   error: 'conflict',

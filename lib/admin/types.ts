@@ -28,3 +28,31 @@ export type AdminListItem = {
 };
 
 export type ListQuery = { search?: string; type?: string; status?: ProductStatus | 'all' };
+
+export type AdminImage = { id: string; url: string; position: number };
+
+export type AdminVariant = {
+  id: string;
+  option1_value: string | null;
+  price: number;
+  compare_at_price: number | null;
+  sku: string | null;
+  inventory_quantity: number;
+  track_inventory: boolean;
+};
+
+/** A product as the admin form sees it. `version` is the concurrency token (newest updated_at of product + variants). */
+export type AdminProduct = {
+  id: string;
+  name_vi: string;
+  slug: string;
+  product_type: string | null;
+  status: ProductStatus;
+  featured: boolean;
+  excerpt_vi: string | null;
+  description_vi: string | null;
+  specs: { label: string; value: string }[];
+  version: string;
+  variants: AdminVariant[];
+  images: AdminImage[];
+};

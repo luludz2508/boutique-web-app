@@ -23,3 +23,8 @@ function toMicros(ts: string): number {
 export function isStale(expectedUpdatedAt: string, actualUpdatedAt: string): boolean {
   return toMicros(actualUpdatedAt) > toMicros(expectedUpdatedAt);
 }
+
+/** The newest of several Postgres timestamps, returned unchanged (full precision) so it can be sent back as a token. */
+export function latestTimestamp(list: string[]): string {
+  return list.reduce((a, b) => (isStale(a, b) ? b : a));
+}
