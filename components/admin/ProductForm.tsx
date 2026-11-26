@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { saveProduct, setStatus, type SaveResult } from '@/app/admin/products/actions';
-import { fromFormState, toFormState, type FormState } from '@/lib/admin/form-state';
+import { fromFormState, toFormState, withVariantIds, type FormState } from '@/lib/admin/form-state';
 import type { ProductFormValues } from '@/lib/admin/schema';
 import { STATUS_LABEL, type AdminImage } from '@/lib/admin/types';
 import { ImageManager } from './ImageManager';
@@ -32,7 +32,7 @@ type Banner = { tone: 'error' | 'ok'; text: string; login?: boolean } | null;
 
 export function ProductForm({ initial, productId, version: initialVersion, types, images }: Props) {
   const router = useRouter();
-  const { register, control, handleSubmit, reset, watch, setValue, getValues, formState } = useForm<FormState>({
+  const { register, control, handleSubmit, reset, resetField, watch, formState, setValue } = useForm<FormState>({
     defaultValues: toFormState(initial),
   });
   const [version, setVersion] = useState(initialVersion);
@@ -52,7 +52,11 @@ export function ProductForm({ initial, productId, version: initialVersion, types
     return () => window.removeEventListener('beforeunload', warn);
   }, [formState.isDirty]);
 
-  const handleResult = (res: SaveResult, after: () => void) => {
+  const serverError = () =>
+    setBanner({ tone: 'error', text: 'Không lưu được do lỗi máy chủ. Những gì bạn gõ vẫn còn, thử lưu lại.' });
+
+  const handleResult = (res: SaveResult | undefined, after: () => void) => {
+    if (!res) return serverError();
     if ('ok' in res) {
       setIssues({});
       after();
@@ -75,17 +79,17 @@ export function ProductForm({ initial, productId, version: initialVersion, types
     }
     start(async () => {
       setBanner(null);
-      let res: SaveResult;
+      let res: SaveResult | undefined;
       try {
         res = await saveProduct({ id: productId, expectedUpdatedAt: version, values: parsed.values });
       } catch {
-        setBanner({ tone: 'error', text: 'Không lưu được do lỗi máy chủ. Những gì bạn gõ vẫn còn, thử lưu lại.' });
-        return;
+        return serverError();
       }
       handleResult(res, () => {
-        if (!('ok' in res)) return;
+        if (!res || !('ok' in res)) return;
         setVersion(res.version);
-        reset({ ...state, slug: res.slug, status: isNew ? 'draft' : state.status });
+        // new variants now have ids; without them the next save would delete and re-create them
+        reset(withVariantIds({ ...state, slug: res.slug, status: isNew ? 'draft' : state.status }, res.variantIds));
         setEditSlug(false);
         if (isNew) {
           router.replace(`/admin/products/${res.id}?created=1`);
@@ -101,12 +105,17 @@ export function ProductForm({ initial, productId, version: initialVersion, types
     if (!productId || !version) return;
     if (!window.confirm('Ẩn sản phẩm khỏi site và chuyển vào Lưu trữ?')) return;
     start(async () => {
-      const res = await setStatus(productId, 'archived', version);
+      let res: SaveResult | undefined;
+      try {
+        res = await setStatus(productId, 'archived', version);
+      } catch {
+        return serverError();
+      }
       handleResult(res, () => {
-        if (!('ok' in res)) return;
+        if (!res || !('ok' in res)) return;
         setVersion(res.version);
-        setValue('status', 'archived', { shouldDirty: false });
-        reset(getValues());
+        // only the status is saved; any other unsaved edits stay marked as unsaved
+        resetField('status', { defaultValue: 'archived' });
         setBanner({ tone: 'ok', text: 'Đã chuyển vào Lưu trữ. Đổi trạng thái để khôi phục.' });
       });
     });

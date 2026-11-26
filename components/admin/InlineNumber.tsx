@@ -8,16 +8,17 @@ type Props = {
   variantId: string;
   field: 'price' | 'inventory_quantity';
   value: number;
-  updatedAt: string;
+  /** concurrency token shared with the other cell of the same variant */
+  token: { get: () => string; set: (ts: string) => void };
   label: string;
 };
 
 const show = (field: Props['field'], n: number) => (field === 'price' ? formatPriceInput(n) : String(n));
 
 /** A number cell that saves itself when you leave it or press Enter. Keeps what you typed if saving fails. */
-export function InlineNumber({ variantId, field, value, updatedAt, label }: Props) {
+export function InlineNumber({ variantId, field, value, token, label }: Props) {
   const [text, setText] = useState(show(field, value));
-  const saved = useRef({ value, updatedAt });
+  const saved = useRef({ value });
   const [status, setStatus] = useState<{ kind: 'idle' | 'saved' | 'error'; message?: string }>({ kind: 'idle' });
   const [pending, start] = useTransition();
 
@@ -30,12 +31,13 @@ export function InlineNumber({ variantId, field, value, updatedAt, label }: Prop
     start(async () => {
       let res: InlineResult;
       try {
-        res = await updateVariantField({ variantId, field, raw: text, expectedUpdatedAt: saved.current.updatedAt });
+        res = await updateVariantField({ variantId, field, raw: text, expectedUpdatedAt: token.get() });
       } catch {
         res = { error: 'invalid', message: 'Không lưu được, thử lại.' };
       }
       if ('ok' in res) {
-        saved.current = { value: res.value, updatedAt: res.updatedAt };
+        saved.current = { value: res.value };
+        token.set(res.updatedAt);
         setText(show(field, res.value));
         setStatus({ kind: 'saved' });
         setTimeout(() => setStatus((s) => (s.kind === 'saved' ? { kind: 'idle' } : s)), 2000);

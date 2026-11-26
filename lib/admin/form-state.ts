@@ -39,3 +39,9 @@ export function fromFormState(s: FormState): { values: ProductFormValues } | { i
   if (Object.keys(issues).length) return { issues };
   return { values: { ...s, variants } };
 }
+
+/** After a save, gives variants created by it the ids the database assigned (same order as sent). */
+export function withVariantIds(s: FormState, ids: string[]): FormState {
+  if (ids.length !== s.variants.length) return s;
+  return { ...s, variants: s.variants.map((v, i) => ({ ...v, id: ids[i] })) };
+}

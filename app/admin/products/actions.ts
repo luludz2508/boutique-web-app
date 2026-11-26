@@ -12,7 +12,7 @@ import type { ProductStatus } from '@/lib/admin/types';
 import { adminDb } from '@/lib/supabase/admin';
 
 export type SaveResult =
-  | { ok: true; id: string; slug: string; version: string }
+  | { ok: true; id: string; slug: string; version: string; variantIds: string[] }
   | { error: 'invalid'; issues: Record<string, string> }
   | { error: 'conflict' | 'auth' | 'invalid'; message: string };
 
@@ -75,7 +75,14 @@ const saveGuarded = withAdmin(async (admin, input: SaveInput): Promise<SaveResul
     },
   });
   if (error) throw new Error(error.message);
-  const res = data as { conflict?: true; updated_at: string; id: string; slug: string; old_slug: string | null };
+  const res = data as {
+    conflict?: true;
+    updated_at: string;
+    id: string;
+    slug: string;
+    old_slug: string | null;
+    variant_ids: string[];
+  };
   if (res.conflict) return { error: 'conflict', message: conflictMessage(res.updated_at) };
 
   const after = snapshot({ ...v, slug, status, description_vi: description });
@@ -87,7 +94,7 @@ const saveGuarded = withAdmin(async (admin, input: SaveInput): Promise<SaveResul
     : after;
   await writeAudit(admin.email, before ? 'product.update' : 'product.create', res.id, changes);
   revalidateProduct([res.slug, res.old_slug]);
-  return { ok: true, id: res.id, slug: res.slug, version: res.updated_at };
+  return { ok: true, id: res.id, slug: res.slug, version: res.updated_at, variantIds: res.variant_ids ?? [] };
 });
 
 export async function saveProduct(input: SaveInput): Promise<SaveResult> {
@@ -109,7 +116,7 @@ const statusGuarded = withAdmin(
     if (error) throw new Error(error.message);
     await writeAudit(admin.email, 'product.status', id, { status: { from: before.status, to: status } });
     revalidateProduct([before.slug]);
-    return { ok: true, id, slug: before.slug, version: data.updated_at };
+    return { ok: true, id, slug: before.slug, version: data.updated_at, variantIds: before.variants.map((x) => x.id) };
   },
 );
 

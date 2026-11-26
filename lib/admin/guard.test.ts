@@ -20,3 +20,8 @@ test('signed-in emails outside the list are forbidden', () => {
 test('listed emails are allowed regardless of case', () => {
   expect(adminRouteDecision('/admin/types', 'A@example.test', allow)).toBe('allow');
 });
+
+test('server action posts pass through so the action itself answers "session expired"', () => {
+  expect(adminRouteDecision('/admin/products/1', null, allow, true)).toBe('pass');
+  expect(adminRouteDecision('/admin', 'x@example.test', allow, true)).toBe('pass');
+});

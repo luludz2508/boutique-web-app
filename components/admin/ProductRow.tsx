@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { STATUS_LABEL, type AdminListItem } from '@/lib/admin/types';
 import { splitProductName } from '@/lib/description';
-import { InlineNumber } from './InlineNumber';
+import { VariantCells } from './VariantCells';
 
 const statusTone = { published: 'text-[#5f7d3a]', draft: 'text-ink-2', archived: 'text-seal' } as const;
 
@@ -36,13 +36,12 @@ export function ProductRow({ product }: { product: AdminListItem }) {
               {v.option1_value && v.option1_value !== 'Default Title' ? v.option1_value : 'Mặc định'}
               {v.sku && <span className="ml-2 font-mono text-xs text-ink-2">{v.sku}</span>}
             </p>
-            <InlineNumber variantId={v.id} field="price" value={v.price} updatedAt={v.updated_at} label="Giá (đ)" />
-            <InlineNumber
+            <VariantCells
               variantId={v.id}
-              field="inventory_quantity"
-              value={v.inventory_quantity}
+              price={v.price}
+              stock={v.inventory_quantity}
+              trackInventory={v.track_inventory}
               updatedAt={v.updated_at}
-              label={v.track_inventory ? 'Tồn kho' : 'Tồn kho (không theo dõi)'}
             />
           </div>
         ))}

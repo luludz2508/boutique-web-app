@@ -108,6 +108,7 @@ declare
   v_version timestamptz;
   v_option1_name text;
   v_keep uuid[];
+  v_ids uuid[] := '{}';
   v jsonb;
   v_vid uuid;
   i int;
@@ -198,12 +199,15 @@ begin
       if not found then
         raise exception 'variant % does not belong to product %', v_vid, v_id;
       end if;
+      v_ids := v_ids || v_vid;
     else
       insert into product_variants (product_id, option1_name, option1_value, price, compare_at_price, sku,
                                     inventory_quantity, track_inventory, position, admin_edited_at)
       values (v_id, v_option1_name, v->>'option1_value', (v->>'price')::numeric, (v->>'compare_at_price')::numeric,
               nullif(v->>'sku', ''), (v->>'inventory_quantity')::int,
-              coalesce((v->>'track_inventory')::boolean, true), i, now());
+              coalesce((v->>'track_inventory')::boolean, true), i, now())
+      returning id into v_vid;
+      v_ids := v_ids || v_vid;
     end if;
   end loop;
 
@@ -221,6 +225,7 @@ begin
     'id', v_id,
     'slug', v_new_slug,
     'old_slug', v_old_slug,
+    'variant_ids', to_jsonb(v_ids),
     'updated_at', admin_product_version(v_id)
   );
 end;

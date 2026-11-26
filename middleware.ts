@@ -6,7 +6,12 @@ import { updateSession } from '@/lib/supabase/middleware';
 export async function middleware(request: NextRequest) {
   const { supabase, user, response } = await updateSession(request);
   const { pathname, search } = request.nextUrl;
-  const decision = adminRouteDecision(pathname, user?.email ?? null, parseAdminEmails(process.env.ADMIN_EMAILS));
+  const decision = adminRouteDecision(
+    pathname,
+    user?.email ?? null,
+    parseAdminEmails(process.env.ADMIN_EMAILS),
+    request.headers.has('next-action'),
+  );
 
   if (decision === 'login') {
     const url = request.nextUrl.clone();

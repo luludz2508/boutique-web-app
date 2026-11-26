@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { fromFormState, toFormState } from './form-state';
+import { fromFormState, toFormState, withVariantIds } from './form-state';
 import { emptyForm } from './seed';
 
 const base = emptyForm();
@@ -29,4 +29,11 @@ test('fromFormState reports unreadable numbers per field', () => {
       'variants.0.inventory_quantity': 'Tồn kho phải là số nguyên ≥ 0',
     },
   });
+});
+
+test('withVariantIds gives newly created variants the ids the database assigned', () => {
+  const s = toFormState({ ...base, variants: [{ ...base.variants[0], id: 'a' }, { ...base.variants[0] }] });
+  const next = withVariantIds(s, ['a', 'b']);
+  expect(next.variants.map((v) => v.id)).toEqual(['a', 'b']);
+  expect(withVariantIds(s, ['a'])).toBe(s); // length mismatch: leave untouched
 });
