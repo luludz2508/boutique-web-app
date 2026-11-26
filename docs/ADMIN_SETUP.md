@@ -73,4 +73,4 @@ Rồi mở trang chủ và `/products` để chắc khách vẫn xem được s�
 
 | Ngày | Việc | Ghi chú |
 |---|---|---|
-| | Trạng thái RLS trước khi chạy 003 | |
+| 2026-11-26 | Chạy 003_admin.sql (SQL Editor) | Kiểm tra: khách đọc đủ 192 sản phẩm; ghi bằng anon key bị chặn; hàm lưu chỉ service role gọi được |
