@@ -5,6 +5,7 @@ import { isStale } from '@/lib/admin/audit';
 import { writeAudit } from '@/lib/admin/data';
 import { hhmm } from '@/lib/admin/format';
 import { parsePrice } from '@/lib/admin/price';
+import { validateTypeRename } from '@/lib/admin/types-rename';
 import { revalidateProduct } from '@/lib/admin/revalidate';
 import { adminDb } from '@/lib/supabase/admin';
 
@@ -64,4 +65,29 @@ const updateVariantFieldGuarded = withAdmin(async (admin, input: InlineInput): P
 
 export async function updateVariantField(input: InlineInput): Promise<InlineResult> {
   return updateVariantFieldGuarded(input);
+}
+
+// ── Product types ───────────────────────────────────────────────────────────
+
+export type RenameResult = { ok: true; count: number } | { error: 'invalid' | 'auth'; message: string };
+
+const renameGuarded = withAdmin(async (admin, from: string, to: string): Promise<RenameResult> => {
+  const problem = validateTypeRename(from, to, []);
+  if (problem) return { error: 'invalid', message: problem };
+  const target = to.trim();
+  const { data, error } = await adminDb()
+    .from('products')
+    .update({ product_type: target, admin_edited_at: new Date().toISOString() })
+    .eq('product_type', from)
+    .select('slug');
+  if (error) throw new Error(error.message);
+  const count = data?.length ?? 0;
+  await writeAudit(admin.email, 'type.rename', null, { type: { from, to: target }, count });
+  revalidateProduct(data?.map((p) => p.slug) ?? []);
+  return { ok: true, count };
+});
+
+/** Renames a product type on every product (any status). Renaming into an existing name merges the two. */
+export async function renameType(from: string, to: string): Promise<RenameResult> {
+  return renameGuarded(from, to);
 }
