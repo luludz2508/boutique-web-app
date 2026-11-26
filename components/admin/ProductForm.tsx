@@ -9,6 +9,7 @@ import { saveProduct, setStatus, type SaveResult } from '@/app/admin/products/ac
 import { fromFormState, toFormState, type FormState } from '@/lib/admin/form-state';
 import type { ProductFormValues } from '@/lib/admin/schema';
 import { STATUS_LABEL, type AdminImage } from '@/lib/admin/types';
+import { ImageManager } from './ImageManager';
 import { SpecsEditor } from './SpecsEditor';
 import { field, ghostButton, label, section, sectionTitle } from './ui';
 import { VariantsEditor } from './VariantsEditor';
@@ -25,13 +26,11 @@ type Props = {
   version?: string;
   types: string[];
   images: AdminImage[];
-  /** photo manager; receives the current order and reports changes */
-  renderImages?: (args: { productId: string; order: string[]; onOrderChange: (ids: string[]) => void }) => React.ReactNode;
 };
 
 type Banner = { tone: 'error' | 'ok'; text: string; login?: boolean } | null;
 
-export function ProductForm({ initial, productId, version: initialVersion, types, images, renderImages }: Props) {
+export function ProductForm({ initial, productId, version: initialVersion, types, images }: Props) {
   const router = useRouter();
   const { register, control, handleSubmit, reset, watch, setValue, getValues, formState } = useForm<FormState>({
     defaultValues: toFormState(initial),
@@ -197,21 +196,13 @@ export function ProductForm({ initial, productId, version: initialVersion, types
         <h2 className={sectionTitle}>Ảnh</h2>
         {isNew ? (
           <p className="text-sm text-ink-2">Lưu sản phẩm trước khi thêm ảnh.</p>
-        ) : renderImages ? (
-          renderImages({
-            productId: productId!,
-            order: watch('image_order'),
-            onOrderChange: (ids) => setValue('image_order', ids, { shouldDirty: true }),
-          })
         ) : (
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
-            {images.map((img, i) => (
-              <div key={img.id} className="relative aspect-square overflow-hidden bg-paper-2">
-                <img src={img.url} alt="" className="h-full w-full object-cover" />
-                {i === 0 && <span className="absolute left-1 top-1 bg-ink px-1.5 py-0.5 text-[10px] text-paper">Ảnh chính</span>}
-              </div>
-            ))}
-          </div>
+          <ImageManager
+            productId={productId!}
+            images={images}
+            order={watch('image_order')}
+            onOrderChange={(ids) => setValue('image_order', ids, { shouldDirty: true })}
+          />
         )}
       </section>
 
