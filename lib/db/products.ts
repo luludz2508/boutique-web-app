@@ -26,6 +26,8 @@ export interface Product {
   tags: string[] | null;
   status: "draft" | "published" | "archived";
   featured: boolean;
+  /** label/value rows edited in the admin; empty for products not yet edited there */
+  specs?: { label: string; value: string }[] | null;
   created_at: string;
   updated_at: string;
 }
@@ -120,6 +122,20 @@ export async function getProductBySlug(slug: string) {
   }
 
   return data as ProductWithDetails;
+}
+
+/**
+ * New slug for a product whose URL was renamed in the admin, or null.
+ */
+export async function getRedirectForSlug(slug: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from("product_slug_redirects")
+    .select("products(slug, status)")
+    .eq("old_slug", slug)
+    .maybeSingle();
+  if (error || !data) return null;
+  const product = data.products as unknown as { slug: string; status: string } | null;
+  return product && product.status === "published" ? product.slug : null;
 }
 
 /**

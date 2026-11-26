@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { splitDescription, splitProductName } from './description';
+import { pickSpecs, splitDescription, splitProductName } from './description';
 
 test('splitProductName keeps the first part as the title and the rest as a detail line', () => {
   expect(splitProductName('TƯỢNG TRẦM HƯƠNG MÃ ĐÁO THÀNH CÔNG - MẪU 1')).toEqual({
@@ -57,4 +57,17 @@ test('splitDescription with no table returns no specs and the cleaned body', () 
 
 test('splitDescription sentence-cases other shouting headings', () => {
   expect(splitDescription('<p><strong>CHÚNG TÔI CAM KẾT</strong></p>').body).toBe('<p><strong>Chúng tôi cam kết</strong></p>');
+});
+
+test('pickSpecs uses saved specs and leaves the description alone', () => {
+  const saved = [{ label: 'A', value: '1' }];
+  expect(pickSpecs(saved, '<table><tr><td>X</td><td>y</td></tr></table><p>x</p>')).toEqual({
+    specs: saved,
+    body: '<table><tr><td>X</td><td>y</td></tr></table><p>x</p>',
+  });
+});
+
+test('pickSpecs falls back to the Haravan table when nothing is saved', () => {
+  expect(pickSpecs([], HTML)).toEqual(splitDescription(HTML));
+  expect(pickSpecs(null, HTML)).toEqual(splitDescription(HTML));
 });

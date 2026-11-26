@@ -1,12 +1,12 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
-import { getAllProducts, getProductBySlug, getProductsByType } from '@/lib/db/products';
+import { getAllProducts, getProductBySlug, getProductsByType, getRedirectForSlug } from '@/lib/db/products';
 import { ProductImageGallery } from '@/components/products/product-image-gallery';
 import { ProductCard } from '@/components/products/product-card';
 import { VariantPicker } from '@/components/products/variant-picker';
 import { Reveal } from '@/components/ink';
 import { toSentenceCase } from '@/lib/display';
-import { splitDescription, splitProductName } from '@/lib/description';
+import { pickSpecs, splitProductName } from '@/lib/description';
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -20,6 +20,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product = await getProductBySlug(slug);
 
   if (!product) {
+    // metadata resolves before the page streams, so a redirect here gets a real 308 status
+    const moved = await getRedirectForSlug(slug);
+    if (moved && moved !== slug) permanentRedirect(`/products/${moved}`);
     return {
       title: 'Product Not Found',
     };
@@ -36,6 +39,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const product = await getProductBySlug(slug);
 
   if (!product) {
+    // renamed in the admin: send old links to the new address
+    const moved = await getRedirectForSlug(slug);
+    if (moved && moved !== slug) permanentRedirect(`/products/${moved}`);
     notFound();
   }
 
@@ -50,7 +56,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   const name = toSentenceCase(product.name_vi);
   const { title, detail } = splitProductName(product.name_vi);
-  const { specs, body } = splitDescription(product.description_vi);
+  const { specs, body } = pickSpecs(product.specs, product.description_vi);
   const type = product.product_type && product.product_type !== 'Khác' ? toSentenceCase(product.product_type) : null;
   const related = product.product_type
     ? (await getProductsByType(product.product_type)).filter((p) => p.id !== product.id).slice(0, 4)

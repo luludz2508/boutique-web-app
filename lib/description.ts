@@ -75,3 +75,9 @@ export function splitDescription(html: string | null | undefined): { specs: Spec
 
   return { specs, body };
 }
+
+/** Specs saved in the admin win; older products fall back to the table inside their Haravan description. */
+export function pickSpecs(specs: Spec[] | null | undefined, html: string | null | undefined): { specs: Spec[]; body: string } {
+  if (specs && specs.length > 0) return { specs, body: html ?? '' };
+  return splitDescription(html);
+}
